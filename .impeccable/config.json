@@ -20,6 +20,18 @@
         ],
         "createdAt": "2026-10-26T21:55:19.734Z",
         "reason": "Claude: same theme tokens as index.html; computed pairs all >=5.48:1 in both schemes"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-10-26T21:56:55.411Z",
+        "reason": "Fonts named in the design spec the user approved on 2026-10-26"
+      },
+      {
+        "rule": "overused-font",
+        "value": "fraunces",
+        "createdAt": "2026-10-26T21:56:55.438Z",
+        "reason": "Fonts named in the design spec the user approved on 2026-10-26"
       }
     ]
   }
