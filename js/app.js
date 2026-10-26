@@ -98,12 +98,13 @@ function renderPager() {
   }
 }
 
-function go(i, { scroll = true } = {}) {
+function go(i, { scroll = true, push = true } = {}) {
   current = Math.max(0, Math.min(chapters.length - 1, i));
   chapters.forEach((c, k) => c.classList.toggle('active', k === current));
   if (!state.visited.includes(current)) state.visited.push(current);
   save();
-  if (location.hash !== `#${chapters[current].id}`) history.replaceState(null, '', `#${chapters[current].id}`);
+  // Eintrag im Browserverlauf, damit die Zurück-Geste am Handy das vorige Kapitel zeigt statt die Seite zu verlassen.
+  if (location.hash !== `#${chapters[current].id}`) history[push ? 'pushState' : 'replaceState'](null, '', `#${chapters[current].id}`);
   if (current === chapters.length - 1) renderSummary();
   renderPager(); renderToc(); renderProgress();
   if (scroll) window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
@@ -175,7 +176,8 @@ function initChrome() {
   });
   toc.addEventListener('click', (e) => { if (e.target.closest('a')) { toc.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); } });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !toc.hidden) { toc.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus(); } });
-  $('[data-prev]').addEventListener('click', () => go(nextIndex(current, -1)));
+  // Zurück geht immer genau ein Kapitel zurück; nur Weiter überspringt optionale Kapitel.
+  $('[data-prev]').addEventListener('click', () => go(current - 1));
   $('[data-next]').addEventListener('click', () => go(nextIndex(current, 1)));
   $('[data-print]').addEventListener('click', () => window.print());
   $$('[data-reset]').forEach((b) => b.addEventListener('click', () => {
@@ -184,10 +186,12 @@ function initChrome() {
     location.hash = '';
     location.reload();
   }));
-  window.addEventListener('hashchange', () => {
+  const fromHash = () => {
     const i = chapters.findIndex((c) => `#${c.id}` === location.hash);
-    if (i >= 0 && i !== current) go(i);
-  });
+    go(i >= 0 ? i : 0, { push: false });
+  };
+  window.addEventListener('hashchange', fromHash);
+  window.addEventListener('popstate', fromHash);
 }
 
 initWidgets();
@@ -197,4 +201,4 @@ initChecklist();
 initChrome();
 applyPersonalization(state.answers);
 const start = chapters.findIndex((c) => `#${c.id}` === location.hash);
-go(start >= 0 ? start : 0, { scroll: false });
+go(start >= 0 ? start : 0, { scroll: false, push: false });
