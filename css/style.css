@@ -50,18 +50,18 @@ strong { font-weight: 650; }
 /* Kopfzeile */
 .topbar {
   position: sticky; top: 0; z-index: 10;
-  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px;
   padding: 10px 16px; background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
 .logo { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; color: var(--ink); text-decoration: none; white-space: nowrap; }
 .logo span { color: var(--accent); }
-.progress { height: 28px; display: flex; align-items: center; gap: 10px; justify-self: center; width: min(100%, 190px); }
-.progress svg { flex: 1; height: 100%; overflow: visible; }
+.progress { min-width: 0; height: 28px; display: flex; align-items: center; gap: 10px; justify-self: center; width: min(100%, 190px); }
+.progress svg { flex: 1; min-width: 0; width: 100%; height: 100%; overflow: visible; }
 .progress-count { font: 600 .8rem var(--sans); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .progress-line { fill: none; stroke: var(--accent); stroke-width: 2.2; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; transition: all .5s ease; }
-.menu-btn { min-height: 44px; padding: 0 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; font: 600 .9rem var(--sans); cursor: pointer; }
+.menu-btn { white-space: nowrap; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; font: 600 .9rem var(--sans); cursor: pointer; }
 
 .toc {
   position: fixed; inset: 57px 0 auto auto; z-index: 9; width: min(360px, 100%);
@@ -214,7 +214,8 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .broker small { display: block; color: var(--muted); margin-top: 4px; }
 .summary-text { hyphens: manual; white-space: pre-wrap; font: .88rem/1.55 var(--sans); background: var(--bg); padding: 14px; border-radius: 10px; margin: 0 0 8px; max-height: 320px; overflow: auto; }
 .kofi { text-align: center; }
-.finale { font-family: var(--serif); font-size: clamp(1.5rem, 6vw, 2.1rem); line-height: 1.25; text-align: center; margin: 48px 0 16px; }
+.finale { hyphens: manual; text-wrap: balance; font-family: var(--serif); font-size: clamp(1.4rem, 5.5vw, 1.85rem); line-height: 1.25; text-align: center; margin: 48px 0 16px; }
+.finale span { display: block; text-wrap: balance; }
 .finale em { color: var(--accent); }
 
 /* Blättern & Footer */

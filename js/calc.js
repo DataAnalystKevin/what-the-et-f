@@ -39,7 +39,7 @@ DAS WICHTIGSTE
 3. Crashs gehören dazu. Liegen lassen statt panisch verkaufen.
 4. Zeit ist dein größter Hebel: Zinseszins wirkt erst spät, dann aber gewaltig.
 5. Worauf achten: breit gestreut, günstig (niedrige TER), thesaurierend, großes Fondsvolumen.
-6. Finger weg von: Market Timing, teuren Bankprodukten, Einzelaktien-Wetten, Themen-ETFs, teuren Kursen.
+6. Finger weg von: Market Timing, teuren Bankprodukten, Einzelaktien-Wetten, Themen-ETFs, teuren Finanz-Seminaren und Coachings.
 
 MEINE RECHNUNG
 ${eur(monthly)} pro Monat, ${years} Jahre, ${pct} % pro Jahr
