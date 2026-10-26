@@ -65,7 +65,7 @@ function renderToc() {
 
 function renderProgress() {
   const n = chapters.length - 1;
-  const done = state.visited.filter((i) => i > 0).length;
+  const done = current; // Position, nicht Anzahl besuchter Kapitel – geht beim Zurückblättern mit zurück
   const pts = ['0,9'];
   for (let k = 1; k <= done; k++) pts.push(`${(k / n) * 100},${(9 - (k / n) * 8 + (k % 2 ? 0.8 : -0.4)).toFixed(2)}`);
   $('.progress-line').setAttribute('points', pts.join(' '));
