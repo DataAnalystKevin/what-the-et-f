@@ -2,7 +2,7 @@
 
 ETFs in 10 kurzen Kapiteln – spielerisch erklärt für Neulinge. Statische Website, kein Tracking, keine Abhängigkeiten.
 
-**Live:** https://dataanalystkevin.github.io/what-the-et-f/
+**Live:** https://whattheetf.de/
 
 ## Anpassen
 
