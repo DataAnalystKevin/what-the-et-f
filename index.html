@@ -47,32 +47,32 @@
       <p class="eyebrow">Hi, schön dass du da bist 👋</p>
       <h1>Aktien? ETFs? <em>What the F?</em></h1>
       <p class="lead">Jemand hat dir diesen Link geschickt, weil du gefragt hast, wie das mit ETFs funktioniert. Super! Hier erkläre ich dir in 10 kurzen Kapiteln, wie ich seit vielen Jahren mein Geld anlege – entspannt, günstig und ohne ständig auf Kurse zu starren.</p>
-      <p>Vier kurze Fragen vorab, damit ich dir die passenden Kapitel zeigen kann. Deine Antworten bleiben nur auf deinem Gerät.</p>
+      <p>Ein paar kurze Fragen vorab, damit ich dir die passenden Kapitel zeigen kann. Deine Antworten bleiben nur auf deinem Gerät.</p>
 
       <form class="checkin" id="checkin">
         <fieldset>
+          <legend>Wie viel willst du wissen?</legend>
+          <label class="choice"><input type="radio" name="tour" value="kurz" required><span>Nur das, was für mich wichtig ist</span></label>
+          <label class="choice"><input type="radio" name="tour" value="voll"><span>Die volle Tour, bitte – alle Kapitel!</span></label>
+        </fieldset>
+        <fieldset data-filter>
           <legend>Wie gut kennst du dich aus?</legend>
           <label class="choice"><input type="radio" name="level" value="neu" required><span>Börse? Hab ich nur in den Nachrichten gehört.</span></label>
           <label class="choice"><input type="radio" name="level" value="grob"><span>Grob schon mal gehört, aber nie gemacht.</span></label>
           <label class="choice"><input type="radio" name="level" value="depot"><span>Ich hab schon ein Depot und will's richtig machen.</span></label>
         </fieldset>
         <fieldset>
-          <legend>Wofür willst du anlegen?</legend>
+          <legend>Wofür willst du anlegen? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
           <label class="choice"><input type="radio" name="goal" value="rente" required><span>Für meine Rente</span></label>
           <label class="choice"><input type="radio" name="goal" value="kinder"><span>Für meine Kinder</span></label>
           <label class="choice"><input type="radio" name="goal" value="vermoegen"><span>Einfach Vermögen aufbauen</span></label>
         </fieldset>
         <fieldset>
-          <legend>Was hält dich bisher ab?</legend>
+          <legend>Was hält dich bisher ab? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
           <label class="choice"><input type="radio" name="worry" value="verlust" required><span>Angst, Geld zu verlieren</span></label>
           <label class="choice"><input type="radio" name="worry" value="kompliziert"><span>Klingt kompliziert</span></label>
           <label class="choice"><input type="radio" name="worry" value="zeit"><span>Keine Zeit, mich damit zu beschäftigen</span></label>
           <label class="choice"><input type="radio" name="worry" value="geld"><span>Ich hab zu wenig Geld dafür</span></label>
-        </fieldset>
-        <fieldset>
-          <legend>Wie viel willst du wissen?</legend>
-          <label class="choice"><input type="radio" name="tour" value="kurz" required><span>Nur das, was für mich wichtig ist</span></label>
-          <label class="choice"><input type="radio" name="tour" value="voll"><span>Die volle Tour, bitte – alle Kapitel!</span></label>
         </fieldset>
 
         <div class="disclaimer-box">
@@ -101,7 +101,7 @@
           <input type="range" min="1" max="40" value="20" data-in="years">
         </label>
         <div class="bars" data-bars></div>
-        <p class="fineprint">Kaufkraft in heutigem Geld. Annahmen: 2 % Inflation, Sparbuch 1 % Zinsen, Aktien weltweit 7 % pro Jahr (historischer Schnitt, keine Garantie).</p>
+        <p class="fineprint">Kaufkraft in heutigem Geld. Annahmen: 2 % Inflation, Sparbuch 1 % Zinsen, Welt-ETF 7 % pro Jahr – bewusst vorsichtiger als der historische Schnitt von fast 10 %, keine Garantie.</p>
       </div>
 
       <p class="aha"><strong>Aha:</strong> Sicher ist das Sparbuch nur in einer Hinsicht – dass es langsam an Wert verliert.</p>
@@ -158,7 +158,7 @@
         <p class="fineprint">Gerundete Näherung des MSCI World in Euro inkl. wiederangelegter Dividenden. Vergangene Entwicklung ist keine Garantie für die Zukunft.</p>
       </div>
 
-      <p>Die meisten Verluste an der Börse entstehen nicht durch Crashs, sondern durch <strong>Panikverkäufe während der Crashs</strong>. Wer verkauft, macht den Buchverlust zu einem echten Verlust – und verpasst meistens die Erholung, die oft schneller kommt als gedacht.</p>
+      <p>Viele Verluste an der Börse entstehen nicht durch Crashs, sondern durch <strong>Panikverkäufe während der Crashs</strong>. Wer verkauft, macht den Buchverlust zu einem echten Verlust – und verpasst meistens die Erholung, die oft schneller kommt als gedacht.</p>
       <p>Deshalb mein wichtigster Tipp: Leg nur Geld an, das du mindestens 10 Jahre nicht brauchst. Halte daneben ein Notfallpolster von etwa drei Monatsausgaben auf dem Tagesgeldkonto. Dann kann dir ein Crash egal sein.</p>
       <p class="aha"><strong>Aha:</strong> „Time in the market beats timing the market.“ Lange dabei sein schlägt den perfekten Zeitpunkt.</p>
     </section>
@@ -286,7 +286,7 @@
         <li><strong>Gewinne entstehen steuerlich erst beim Verkauf.</strong> Und genau das wollen wir ja möglichst lange nicht: Mit einem thesaurierenden ETF wird nichts ausgeschüttet, und solange du nicht verkaufst, realisierst du keine Gewinne. Bis auf die kleine Vorabpauschale (siehe unten) zahlst du also über viele Jahre kaum Steuern, und dein Geld arbeitet ungeschmälert weiter. Relevant wird das Thema erst, wenn du später, etwa im Ruhestand, Anteile verkaufst.</li>
         <li><strong>1.000 € Gewinn pro Jahr sind steuerfrei</strong> (2.000 € für Verheiratete). Das ist der Sparerpauschbetrag. Damit er greift, stellst du bei deinem Broker einen <strong>Freistellungsauftrag</strong> – das ist ein Klick in der App.</li>
         <li><strong>Darüber</strong> fallen rund 26,4 % Abgeltungsteuer inkl. Soli an (plus ggf. Kirchensteuer). Bei Aktien-ETFs sind aber 30 % der Erträge steuerfrei (die sogenannte Teilfreistellung).</li>
-        <li><strong>Vorabpauschale:</strong> Bei thesaurierenden ETFs wird jedes Jahr Anfang Januar ein kleiner Teil der Gewinne „vorab“ versteuert. Beispiel: 10.000 € im Depot × Basiszins 3,2 % × 0,7 = 224 €, davon nach Teilfreistellung 156,80 € steuerpflichtig. Mit Freistellungsauftrag zahlst du darauf meist gar nichts. Beim späteren Verkauf wird das verrechnet, du zahlst also nichts doppelt.</li>
+        <li><strong>Vorabpauschale:</strong> Bei thesaurierenden ETFs wird jedes Jahr Anfang Januar ein kleiner Teil der Gewinne „vorab“ versteuert. Beispiel: 10.000 € im Depot × Basiszins 3,2 % × 0,7 = 224 €, davon nach Teilfreistellung 156,80 € steuerpflichtig. Mit Freistellungsauftrag zahlst du darauf meist gar nichts. Sie fällt nur an, wenn dein ETF im Jahr gestiegen ist, und beim späteren Verkauf wird sie verrechnet. Du zahlst also nichts doppelt. Praktischer Tipp: Lass ein paar Euro auf dem Verrechnungskonto liegen, falls doch Steuer abgebucht wird.</li>
       </ul>
       <p class="aha"><strong>Aha:</strong> Freistellungsauftrag stellen – damit hast du 90 % des Steuerthemas erledigt.</p>
     </section>
@@ -306,7 +306,7 @@
         <div role="tabpanel" id="opt1" aria-labelledby="tab1">
           <p>Ein eigenes Kinderdepot auf den Namen des Kindes. Jede Einzahlung gehört rechtlich dem Kind.</p>
           <ul class="pros-cons">
-            <li class="pro">Das Kind hat eigene Freibeträge: Sparerpauschbetrag und Grundfreibetrag. Die Erträge bleiben so meist komplett steuerfrei.</li>
+            <li class="pro">Das Kind hat eigene Freibeträge: Sparerpauschbetrag und Grundfreibetrag. Die Erträge bleiben so meist komplett steuerfrei. Damit die Bank über 1.000 € hinaus nichts abzieht, beantragst du beim Finanzamt eine Nichtveranlagungs-Bescheinigung (NV-Bescheinigung).</li>
             <li class="pro">Klare Verhältnisse, volle Transparenz für das Kind.</li>
             <li class="con">Ab dem 18. Geburtstag kann das Kind frei über das Geld verfügen – egal, was vorher abgesprochen war.</li>
             <li class="con">Das Geld gehört dem Kind. Du darfst es nicht einfach für dich verwenden.</li>
@@ -363,8 +363,8 @@
         <div role="row" class="compare-head"><span role="columnheader"></span><span role="columnheader">Freies ETF-Depot</span><span role="columnheader">Altersvorsorgedepot</span></div>
         <div role="row"><span role="rowheader">Zugriff aufs Geld</span><span role="cell" class="good">jederzeit</span><span role="cell" class="bad">erst ab 65 (oder früherer Rentenbeginn)</span></div>
         <div role="row"><span role="rowheader">Geld vom Staat</span><span role="cell" class="bad">nein</span><span role="cell" class="good">Zulagen, siehe oben</span></div>
-        <div role="row"><span role="rowheader">Steuern beim Sparen</span><span role="cell">Abgeltungsteuer über dem Freibetrag</span><span role="cell" class="good">keine</span></div>
-        <div role="row"><span role="rowheader">Steuern bei Auszahlung</span><span role="cell" class="good">nur auf Gewinne</span><span role="cell">persönlicher Steuersatz als Rentner</span></div>
+        <div role="row"><span role="rowheader">Steuern beim Sparen</span><span role="cell">kaum – nur die Vorabpauschale über dem Freibetrag</span><span role="cell" class="good">keine</span></div>
+        <div role="row"><span role="rowheader">Steuern bei Auszahlung</span><span role="cell" class="good">Abgeltungsteuer nur auf die Gewinne</span><span role="cell">gesamte Auszahlung zum persönlichen Steuersatz</span></div>
         <div role="row"><span role="rowheader">Auszahlung</span><span role="cell" class="good">wie du willst</span><span role="cell">Rente oder Auszahlplan, max. 30 % auf einmal</span></div>
       </div>
       <p>Wer vorzeitig ans Geld will, muss die Zulagen zurückzahlen. Auch die Kosten der Anbieter solltest du genau vergleichen, sobald es konkrete Angebote gibt.</p>

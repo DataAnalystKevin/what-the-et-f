@@ -137,14 +137,24 @@ function initLinks() {
 
 function initCheckin() {
   const form = $('#checkin');
+  // Volle Tour: Wissensstand filtert nur Kapitel → ausblenden; Ziel/Sorge bleiben als freiwillige Tipps.
+  const syncTour = () => {
+    const full = form.tour.value === 'voll';
+    $('[data-filter]', form).hidden = full;
+    $$('[name=level], [name=goal], [name=worry]', form).forEach((r) => (r.required = !full));
+    $$('.opt-hint', form).forEach((h) => (h.hidden = !full));
+  };
   if (state.answers) {
-    Object.entries(state.answers).forEach(([k, v]) => { const el = form.querySelector(`[name=${k}][value=${v}]`); if (el) el.checked = true; });
+    Object.entries(state.answers).forEach(([k, v]) => { const el = v && form.querySelector(`[name=${k}][value=${v}]`); if (el) el.checked = true; });
     form.disclaimer.checked = true;
   }
+  $$('[name=tour]', form).forEach((r) => r.addEventListener('change', syncTour));
+  syncTour();
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const d = new FormData(form);
-    state.answers = { level: d.get('level'), goal: d.get('goal'), worry: d.get('worry'), tour: d.get('tour') };
+    const tour = d.get('tour');
+    state.answers = { tour, level: tour === 'voll' ? null : d.get('level'), goal: d.get('goal'), worry: d.get('worry') };
     applyPersonalization(state.answers);
     go(nextIndex(0, 1));
   });

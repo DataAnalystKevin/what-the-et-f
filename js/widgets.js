@@ -46,7 +46,7 @@ function basket(w) {
     $('[data-single-value]', w).textContent = crashed ? '0 €' : '10.000 €';
     $('[data-basket-value]', w).textContent = crashed ? '9.992 €' : '10.000 €';
     $('[data-result]', w).textContent = crashed
-      ? 'Einzelaktie: −100 %. Welt-ETF: −0,08 %, denn die Firma war nur eine von rund 1.250. Den Unterschied merkst du kaum.'
+      ? 'Einzelaktie: −100 %. Welt-ETF: hier nur −0,08 %, denn die Firma war eine von rund 1.250. (Wie viel genau, hängt von ihrer Größe im Index ab – spürbar ist es kaum.)'
       : '';
     btn.textContent = crashed ? '↺ Nochmal' : '💥 Firma geht pleite (à la Wirecard)';
   });
@@ -127,10 +127,10 @@ function calc(w) {
     const line = (plan) => plan.series.map((s) => `${x(s.year)},${y(s.total)}`).join(' ');
 
     svg.replaceChildren(
-      svgEl('polygon', { points: area('total'), fill: 'var(--accent)', 'fill-opacity': .85 }),
-      svgEl('polygon', { points: area('paidIn'), fill: 'var(--muted)', 'fill-opacity': .45 }),
-      svgEl('polyline', { points: line(lo), fill: 'none', stroke: 'var(--band)', 'stroke-width': 2, 'stroke-dasharray': '4 3' }),
-      svgEl('polyline', { points: line(hi), fill: 'none', stroke: 'var(--band)', 'stroke-width': 2, 'stroke-dasharray': '4 3' }),
+      svgEl('polygon', { points: area('total'), fill: 'var(--accent)' }),
+      svgEl('polygon', { points: area('paidIn'), fill: 'var(--paid)' }),
+      svgEl('polyline', { points: line(lo), fill: 'none', stroke: 'var(--band)', 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }),
+      svgEl('polyline', { points: line(hi), fill: 'none', stroke: 'var(--band)', 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }),
       svgEl('text', { x: W - P.r, y: y(hi.total) - 5, 'text-anchor': 'end' }, `9 %: ${eur(hi.total)}`),
       svgEl('text', { x: P.l, y: H - 5 }, 'heute'),
       svgEl('text', { x: W - P.r, y: H - 5, 'text-anchor': 'end' }, `in ${v.years} J.`),

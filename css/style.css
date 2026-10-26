@@ -12,7 +12,8 @@
   --accent-ink: #FFFFFF;
   --danger: #B4413C;
   --danger-soft: #F7E5E3;
-  --band: #9DBFAF;
+  --band: #1F2421;
+  --paid: #3B5B92;
   --radius: 14px;
   --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
   --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -22,7 +23,7 @@
   :root {
     --bg: #151916; --surface: #1D2320; --ink: #ECEAE4; --muted: #A3ABA6; --line: #2E3631;
     --accent: #5FBF94; --accent-soft: #1F3A2F; --accent-ink: #0E1311;
-    --danger: #E3807A; --danger-soft: #3A2423; --band: #3F6B58;
+    --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9;
   }
 }
 
@@ -107,6 +108,7 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 /* Check-in */
 .checkin fieldset { border: 0; padding: 0; margin: 0 0 24px; }
 .checkin legend { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+.opt-hint { font: 500 .85rem var(--sans); color: var(--muted); }
 .choice { display: block; margin-bottom: 8px; cursor: pointer; }
 .choice input { position: absolute; opacity: 0; }
 .choice span { display: block; padding: 14px 16px; min-height: 48px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); transition: border-color .15s, background .15s; }
@@ -151,9 +153,9 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .82rem; color: var(--muted); align-items: center; }
 .legend span { white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
 .key { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
-.key-paid { background: var(--muted); opacity: .45; }
+.key-paid { background: var(--paid); }
 .key-gain { background: var(--accent); }
-.key-band { background: var(--band); height: 3px; }
+.key-band { background: var(--band); height: 3px; opacity: .6; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0 8px; }
 .stats div { background: var(--bg); border-radius: 10px; padding: 8px 10px; }
 .stats dt { font-size: .75rem; color: var(--muted); }
