@@ -98,6 +98,42 @@ function crash(w) {
   draw();
 }
 
+// --- Kapitel 3: Haltedauer -----------------------------------------------
+// DAI-Renditedreieck MSCI World (Sparplan), Stand 31.12.2024: Rendite p.a. [Jahre, min, Ø, max]
+const HORIZON = [[1, -42.2, 10.3, 51.7], [5, -13.0, 10.2, 29.9], [10, -6.2, 9.8, 20.3], [15, -0.7, 9.0, 16.0], [20, 2.2, 8.6, 15.4], [25, 3.8, 8.2, 15.0], [30, 6.2, 7.9, 10.1]];
+function horizon(w) {
+  const input = $('[data-in=step]', w);
+  const svg = $('[data-chart]', w);
+  const W = 320, P = 12;
+  const x = (v) => P + ((v + 45) / 100) * (W - 2 * P); // Achse −45 % … +55 %
+  const fmt = (v) => `${v > 0 ? '+' : ''}${v.toLocaleString('de-DE', { minimumFractionDigits: 1 })} %`;
+  const render = () => {
+    const [years, min, avg, max] = HORIZON[+input.value];
+    $('[data-out=years]', w).textContent = `${years} ${years === 1 ? 'Jahr' : 'Jahre'}`;
+    svg.replaceChildren(
+      svgEl('line', { x1: x(0), x2: x(0), y1: 6, y2: 50, stroke: 'currentColor', 'stroke-opacity': .35, 'stroke-dasharray': '3 3' }),
+      svgEl('text', { x: x(0), y: 64, 'text-anchor': 'middle' }, '0 %'),
+      svgEl('text', { x: x(-40), y: 64, 'text-anchor': 'middle' }, '−40 %'),
+      svgEl('text', { x: x(50), y: 64, 'text-anchor': 'middle' }, '+50 %'),
+      ...(min < 0 ? [svgEl('rect', { x: x(min), y: 18, width: x(0) - x(min), height: 18, rx: 4, fill: 'var(--danger)' })] : []),
+      svgEl('rect', { x: x(Math.max(min, 0)), y: 18, width: x(max) - x(Math.max(min, 0)), height: 18, rx: 4, fill: 'var(--accent)' }),
+      svgEl('circle', { cx: x(avg), cy: 27, r: 5, fill: 'var(--bg)', stroke: 'var(--ink)', 'stroke-width': 2 }),
+    );
+    $('[data-stat=min]', w).textContent = fmt(min);
+    $('[data-stat=avg]', w).textContent = fmt(avg);
+    $('[data-stat=max]', w).textContent = fmt(max);
+    $('[data-result]', w).textContent = years === 1
+      ? 'Kurzfristig ist alles drin – auch dicke Verluste. Das ist Glücksspiel-Terrain.'
+      : min < -1
+        ? 'Verluste sind noch möglich, aber die Spanne schrumpft mit jedem Jahr. Schieb weiter!'
+      : min < 0
+        ? 'Fast geschafft: Selbst im schlechtesten Fall nur ein minimales Minus pro Jahr.'
+        : 'Selbst im schlechtesten aller bisherigen Zeiträume warst du im Plus. Zeit ist dein Sicherheitsgurt.';
+  };
+  input.addEventListener('input', render);
+  render();
+}
+
 // --- Kapitel 4: Sparrechner ----------------------------------------------
 let calcInputs;
 let calcRender = () => {};
@@ -197,7 +233,7 @@ function av(w) {
   render();
 }
 
-const WIDGETS = { inflation, basket, crash, calc, tabs, av };
+const WIDGETS = { inflation, basket, crash, horizon, calc, tabs, av };
 export function initWidgets() {
   $$('[data-widget]').forEach((w) => WIDGETS[w.dataset.widget]?.(w));
   flips();
