@@ -1,0 +1,204 @@
+import { savingsPlan, realValue, avSubsidy, eur } from './calc.js';
+
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const NS = 'http://www.w3.org/2000/svg';
+const pct = (n, d = 0) => `${n.toLocaleString('de-DE', { maximumFractionDigits: d })} %`;
+
+function svgEl(tag, attrs, text) {
+  const el = document.createElementNS(NS, tag);
+  Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+  if (text != null) el.textContent = text;
+  return el;
+}
+
+// --- Kapitel 1: Kaufkraft -------------------------------------------------
+function inflation(w) {
+  const input = $('[data-in=years]', w);
+  const rows = [
+    { label: 'Girokonto (0 %)', rate: 0, cls: 'bad' },
+    { label: 'Sparbuch (1 %)', rate: 0.01, cls: '' },
+    { label: 'Welt-ETF (Ø 7 %)', rate: 0.07, cls: 'good' },
+  ];
+  const render = () => {
+    const y = +input.value;
+    $('[data-out=years]', w).textContent = y;
+    const vals = rows.map((r) => realValue(10000 * Math.pow(1 + r.rate, y), y, 0.02));
+    const max = Math.max(...vals, 10000);
+    $('[data-bars]', w).innerHTML = rows.map((r, i) => `
+      <div><div class="bar-label"><span>${r.label}</span><strong>${eur(vals[i])}</strong></div>
+      <div class="bar-track"><div class="bar-fill ${r.cls}" style="width:${(vals[i] / max) * 100}%"></div></div></div>`).join('');
+  };
+  input.addEventListener('input', render);
+  render();
+}
+
+// --- Kapitel 2: Obstkorb --------------------------------------------------
+function basket(w) {
+  const dots = $('[data-dots]', w);
+  dots.innerHTML = '<i></i>'.repeat(100);
+  const btn = $('[data-crash]', w);
+  let crashed = false;
+  btn.addEventListener('click', () => {
+    crashed = !crashed;
+    $('[data-single]', w).classList.toggle('gone', crashed);
+    dots.children[37].classList.toggle('gone', crashed);
+    $('[data-single-value]', w).textContent = crashed ? '0 €' : '10.000 €';
+    $('[data-basket-value]', w).textContent = crashed ? '9.992 €' : '10.000 €';
+    $('[data-result]', w).textContent = crashed
+      ? 'Einzelaktie: −100 %. Welt-ETF: −0,08 %, denn die Firma war nur eine von rund 1.250. Den Unterschied merkst du kaum.'
+      : '';
+    btn.textContent = crashed ? '↺ Nochmal' : '💥 Firma geht pleite (à la Wirecard)';
+  });
+}
+
+// --- Kapitel 3: Crash-Simulator ------------------------------------------
+// Gerundete Näherung MSCI World (EUR, Net Return), Monate ab Jan 2020, Start = 100.
+const COVID = [[0, 100], [1.6, 109], [2.75, 72], [4, 82], [6, 89], [8, 95], [10, 92], [12, 106], [15, 115], [18, 121], [21, 125], [24, 139]];
+function crash(w) {
+  const svg = $('[data-chart]', w);
+  const W = 320, H = 160, P = { l: 8, r: 8, t: 14, b: 22 };
+  const x = (m) => P.l + (m / 24) * (W - P.l - P.r);
+  const y = (v) => P.t + (1 - (v - 60) / (145 - 60)) * (H - P.t - P.b);
+  const line = (pts) => pts.map(([m, v]) => `${x(m)},${y(v)}`).join(' ');
+
+  const draw = (choice) => {
+    svg.replaceChildren(
+      svgEl('line', { x1: P.l, x2: W - P.r, y1: y(100), y2: y(100), stroke: 'currentColor', 'stroke-opacity': .2, 'stroke-dasharray': '3 3' }),
+      svgEl('text', { x: P.l, y: H - 6 }, 'Jan 2020'),
+      svgEl('text', { x: x(12), y: H - 6, 'text-anchor': 'middle' }, 'Jan 2021'),
+      svgEl('text', { x: W - P.r, y: H - 6, 'text-anchor': 'end' }, 'Ende 2021'),
+    );
+    const upToCrash = COVID.slice(0, 3);
+    if (!choice) {
+      svg.append(svgEl('polyline', { points: line(upToCrash), fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
+    } else {
+      svg.append(svgEl('polyline', { points: line(COVID), fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-opacity': choice === 'sell' ? .35 : 1 }));
+      if (choice === 'sell') svg.append(svgEl('polyline', { points: line([...upToCrash, [24, 72]]), fill: 'none', stroke: 'var(--danger)', 'stroke-width': 2.5 }));
+      const end = choice === 'sell' ? 72 : 139;
+      svg.append(svgEl('text', { x: W - P.r, y: y(end) - 6, 'text-anchor': 'end' }, `${eur(end * 100)}`));
+    }
+    svg.append(svgEl('circle', { cx: x(2.75), cy: y(72), r: 4, fill: 'var(--danger)' }),
+      svgEl('text', { x: x(2.75) + 7, y: y(72) + 3 }, 'März 2020: −34 %'));
+  };
+
+  const result = $('[data-result]', w);
+  const step = $('.crash-step', w);
+  $$('[data-choice]', w).forEach((b) => b.addEventListener('click', () => {
+    const c = b.dataset.choice;
+    draw(c);
+    step.hidden = true;
+    result.innerHTML = c === 'hold'
+      ? '🎉 Gute Nerven! Ende 2020 lag dein Depot schon wieder bei ca. 10.600 €, Ende 2021 bei ca. 13.900 €. Die Pandemie war aus Anlegersicht nach rund einem Jahr Geschichte.'
+      : '😬 Du hast 7.200 € gerettet – und 2.800 € Verlust endgültig gemacht. Wer liegen ließ, hatte Ende 2021 ca. 13.900 €. Und ehrlich: Wann hättest du dich getraut, wieder einzusteigen?';
+    const again = Object.assign(document.createElement('button'), { type: 'button', className: 'link-btn', textContent: '↺ Nochmal von vorn' });
+    again.onclick = () => { draw(); step.hidden = false; result.textContent = ''; };
+    result.append(document.createElement('br'), again);
+  }));
+  draw();
+}
+
+// --- Kapitel 4: Sparrechner ----------------------------------------------
+let calcInputs;
+let calcRender = () => {};
+export const getCalcValues = () => calcInputs
+  ? { monthly: +calcInputs.monthly.value, years: +calcInputs.years.value, ratePa: +calcInputs.rate.value / 100 }
+  : { monthly: 200, years: 20, ratePa: 0.07 };
+export function setCalcMonthly(n) { if (calcInputs) { calcInputs.monthly.value = n; calcRender(); } }
+
+function calc(w) {
+  calcInputs = { monthly: $('[data-in=monthly]', w), years: $('[data-in=years]', w), rate: $('[data-in=rate]', w) };
+  const svg = $('[data-chart]', w);
+  const W = 320, H = 180, P = { l: 4, r: 4, t: 18, b: 20 };
+
+  calcRender = () => {
+    const v = getCalcValues();
+    $('[data-out=monthly]', w).textContent = eur(v.monthly);
+    $('[data-out=years]', w).textContent = `${v.years} ${v.years === 1 ? 'Jahr' : 'Jahre'}`;
+    $('[data-out=rate]', w).textContent = pct(v.ratePa * 100, 1);
+
+    const main = savingsPlan(v);
+    const lo = savingsPlan({ ...v, ratePa: 0.04 });
+    const hi = savingsPlan({ ...v, ratePa: 0.09 });
+    const max = Math.max(hi.total, main.total, 1);
+    const x = (yr) => P.l + (yr / v.years) * (W - P.l - P.r);
+    const y = (val) => P.t + (1 - val / max) * (H - P.t - P.b);
+    const area = (key) => `${x(0)},${y(0)} ${main.series.map((s) => `${x(s.year)},${y(s[key])}`).join(' ')} ${x(v.years)},${y(0)}`;
+    const line = (plan) => plan.series.map((s) => `${x(s.year)},${y(s.total)}`).join(' ');
+
+    svg.replaceChildren(
+      svgEl('polygon', { points: area('total'), fill: 'var(--accent)', 'fill-opacity': .85 }),
+      svgEl('polygon', { points: area('paidIn'), fill: 'var(--muted)', 'fill-opacity': .45 }),
+      svgEl('polyline', { points: line(lo), fill: 'none', stroke: 'var(--band)', 'stroke-width': 2, 'stroke-dasharray': '4 3' }),
+      svgEl('polyline', { points: line(hi), fill: 'none', stroke: 'var(--band)', 'stroke-width': 2, 'stroke-dasharray': '4 3' }),
+      svgEl('text', { x: W - P.r, y: y(hi.total) - 5, 'text-anchor': 'end' }, `9 %: ${eur(hi.total)}`),
+      svgEl('text', { x: P.l, y: H - 5 }, 'heute'),
+      svgEl('text', { x: W - P.r, y: H - 5, 'text-anchor': 'end' }, `in ${v.years} J.`),
+    );
+
+    $('[data-stat=total]', w).textContent = eur(main.total);
+    $('[data-stat=paid]', w).textContent = eur(main.paidIn);
+    $('[data-stat=gains]', w).textContent = eur(main.gains);
+    const share = main.total > 0 ? (main.gains / main.total) * 100 : 0;
+    let msg = `${pct(share)} deines Endbetrags sind Kursgewinne – Geld, das für dich gearbeitet hat.`;
+    if (v.years > 10) {
+      const late = savingsPlan({ ...v, years: v.years - 10 });
+      msg += ` Fängst du 10 Jahre später an, hast du am Ende ${eur(main.total - late.total)} weniger.`;
+    }
+    $('[data-result]', w).textContent = msg;
+  };
+  Object.values(calcInputs).forEach((i) => i.addEventListener('input', calcRender));
+  calcRender();
+}
+
+// --- Kapitel 6: Flip-Karten ----------------------------------------------
+function flips() {
+  $$('.flip').forEach((b) => b.addEventListener('click', () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')));
+}
+
+// --- Kapitel 8: Tabs -----------------------------------------------------
+function tabs(w) {
+  const tabsEls = $$('[role=tab]', w);
+  const select = (t) => {
+    tabsEls.forEach((o) => {
+      const on = o === t;
+      o.setAttribute('aria-selected', on);
+      o.tabIndex = on ? 0 : -1;
+      document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
+    });
+  };
+  tabsEls.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const n = tabsEls[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabsEls.length) % tabsEls.length];
+      select(n); n.focus();
+    });
+  });
+}
+
+// --- Kapitel 9: AV-Zulagen -----------------------------------------------
+function av(w) {
+  const m = $('[data-in=monthly]', w), k = $('[data-in=kids]', w), u = $('[data-in=under25]', w);
+  const render = () => {
+    const annual = +m.value * 12;
+    const z = avSubsidy({ annual, kids: +k.value, under25: u.checked });
+    $('[data-out=monthly]', w).textContent = eur(+m.value);
+    $('[data-out=kids]', w).textContent = k.value;
+    $('[data-stat=base]', w).textContent = eur(z.base);
+    $('[data-stat=kids]', w).textContent = eur(z.kids);
+    $('[data-stat=starter]', w).textContent = eur(z.starter);
+    const yearly = z.base + z.kids;
+    $('[data-result]', w).textContent = !z.eligible
+      ? 'Unter 10 € im Monat (120 € im Jahr) gibt es leider keine Zulage.'
+      : `Der Staat legt ${eur(yearly)} pro Jahr dazu${z.starter ? ` (plus einmalig ${eur(z.starter)})` : ''}. Das sind ${pct((yearly / annual) * 100)} auf deine ${eur(annual)} – bevor dein ETF auch nur einen Cent Rendite gemacht hat.`;
+  };
+  [m, k, u].forEach((i) => i.addEventListener('input', render));
+  render();
+}
+
+const WIDGETS = { inflation, basket, crash, calc, tabs, av };
+export function initWidgets() {
+  $$('[data-widget]').forEach((w) => WIDGETS[w.dataset.widget]?.(w));
+  flips();
+}

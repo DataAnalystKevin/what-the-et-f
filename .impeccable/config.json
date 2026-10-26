@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-26T21:54:28.875Z",
+        "reason": "Claude: scanner pairs dark-mode tokens with light bg; computed token pairs all >=5.48:1 in both schemes"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "{impressum,datenschutz}.html"
+        ],
+        "createdAt": "2026-10-26T21:55:19.734Z",
+        "reason": "Claude: same theme tokens as index.html; computed pairs all >=5.48:1 in both schemes"
+      }
+    ]
+  }
+}
