@@ -35,12 +35,13 @@ const PERSONAL = {
 function applyPersonalization(a) {
   if (!a) return;
   chapters.forEach((c) => delete c.dataset.optional);
-  if (a.level === 'depot') [1, 2].forEach((i) => (chapters[i].dataset.optional = 'true'));
-  if (a.goal !== 'kinder') chapters[8].dataset.optional = 'true';
+  if (a.tour !== 'voll' && a.level === 'depot') [1, 2].forEach((i) => (chapters[i].dataset.optional = 'true'));
+  if (a.tour !== 'voll' && a.goal !== 'kinder') chapters[8].dataset.optional = 'true';
   if (a.worry === 'geld') setCalcMonthly(25);
 
   const box = $('[data-personal]');
-  box.replaceChildren(...[PERSONAL.level[a.level], PERSONAL.goal[a.goal], PERSONAL.worry[a.worry]]
+  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 10 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
+  box.replaceChildren(...[levelNote, PERSONAL.goal[a.goal], PERSONAL.worry[a.worry]]
     .filter(Boolean).map((t) => Object.assign(document.createElement('p'), { textContent: t })));
   box.hidden = false;
   // Persönlicher Hinweis steht oben im ersten Kapitel, das für diese Person nicht optional ist.
@@ -69,6 +70,7 @@ function renderProgress() {
   for (let k = 1; k <= done; k++) pts.push(`${(k / n) * 100},${(9 - (k / n) * 8 + (k % 2 ? 0.8 : -0.4)).toFixed(2)}`);
   $('.progress-line').setAttribute('points', pts.join(' '));
   $('.progress').setAttribute('aria-valuenow', Math.round((done / n) * 100));
+  $('[data-count]').textContent = `${done}/${n}`;
 }
 
 function nextIndex(from, dir) {
@@ -142,7 +144,7 @@ function initCheckin() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const d = new FormData(form);
-    state.answers = { level: d.get('level'), goal: d.get('goal'), worry: d.get('worry') };
+    state.answers = { level: d.get('level'), goal: d.get('goal'), worry: d.get('worry'), tour: d.get('tour') };
     applyPersonalization(state.answers);
     go(nextIndex(0, 1));
   });
