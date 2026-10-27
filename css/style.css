@@ -107,7 +107,8 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 
 /* Check-in */
 .checkin fieldset { border: 0; padding: 0; margin: 0 0 24px; }
-.checkin legend { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+.checkin legend { float: left; width: 100%; padding: 0; font-family: var(--serif); font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+.checkin .choice { clear: both; }
 .opt-hint { font: 500 .85rem var(--sans); color: var(--muted); }
 .choice { display: block; margin-bottom: 8px; cursor: pointer; }
 .choice input { position: absolute; opacity: 0; }
@@ -120,12 +121,17 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 .disclaimer-box h2 { font-size: 1.2rem; }
 .disclaimer-box p { font-size: .95rem; }
 .checkin .btn-primary { width: 100%; }
-.checkin .btn-primary:disabled { background: var(--line); border-color: var(--line); color: var(--muted); opacity: 1; }
-/* Offene Pflichtangaben sichtbar machen, bis sie erledigt sind */
-.checkin fieldset:has(input:required):not(:has(input:checked)) legend::after { content: ' · Pflicht'; font: 600 .8rem var(--sans); color: var(--danger); }
-.checkin fieldset:has(input:required):not(:has(input:checked)) .choice span { border-color: color-mix(in srgb, var(--danger) 55%, var(--line)); }
-.disclaimer-box:has(input:required:not(:checked)) { border-color: var(--danger); background: var(--danger-soft); }
-.disclaimer-box:has(input:required:not(:checked)) .check span::after { content: ' · Pflicht'; font-weight: 600; color: var(--danger); }
+.checkin-progress { font: 600 .8rem var(--sans); letter-spacing: .04em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+.checkin-nav { display: flex; justify-content: space-between; gap: 12px; }
+.checkin-nav [data-step-skip], .checkin-nav [data-step-next] { margin-left: auto; }
+.checkin-error { color: var(--danger); font-weight: 600; margin: 0 0 12px; }
+/* Fehlende Pflichtangaben erst nach dem Startversuch markieren */
+.checkin.tried fieldset:has(:invalid), .checkin.tried .disclaimer-box:has(:invalid) { box-shadow: 0 0 0 2px var(--danger); background: var(--danger-soft); border-radius: var(--radius); padding: 14px; }
+.checkin.tried fieldset:has(:invalid) legend::after { display: block; content: 'Bitte wähle eine Antwort'; font: 600 .85rem var(--sans); color: var(--danger); }
+.checkin.tried fieldset:has(:invalid) .choice span { border-color: var(--danger); }
+.checkin.tried .disclaimer-box:has(:invalid) .check input { outline: 2px solid var(--danger); outline-offset: 2px; }
+.shake { animation: shake .4s ease; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
 /* Widgets */
 .widget, .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 16px; margin: 24px 0; }

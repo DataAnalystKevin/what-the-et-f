@@ -49,25 +49,26 @@
       <p class="lead">Jemand hat dir diesen Link geschickt, weil du gefragt hast, wie das mit ETFs funktioniert. Super! Hier erkläre ich dir in 10 kurzen Kapiteln, wie ich seit vielen Jahren mein Geld anlege – entspannt, günstig und ohne ständig auf Kurse zu starren.</p>
       <p>Ein paar kurze Fragen vorab, damit ich dir die passenden Kapitel zeigen kann. Deine Antworten bleiben nur auf deinem Gerät.</p>
 
-      <form class="checkin" id="checkin">
-        <fieldset>
+      <form class="checkin" id="checkin" novalidate autocomplete="off">
+        <p class="checkin-progress" data-stepinfo aria-live="polite" hidden></p>
+        <fieldset data-step="tour">
           <legend>Wie viel willst du wissen?</legend>
           <label class="choice"><input type="radio" name="tour" value="kurz" required><span>Nur das, was für mich wichtig ist</span></label>
           <label class="choice"><input type="radio" name="tour" value="voll"><span>Die volle Tour, bitte – alle Kapitel!</span></label>
         </fieldset>
-        <fieldset data-filter>
+        <fieldset data-step="level">
           <legend>Wie gut kennst du dich aus?</legend>
           <label class="choice"><input type="radio" name="level" value="neu" required><span>Börse? Hab ich nur in den Nachrichten gehört.</span></label>
           <label class="choice"><input type="radio" name="level" value="grob"><span>Grob schon mal gehört, aber nie gemacht.</span></label>
           <label class="choice"><input type="radio" name="level" value="depot"><span>Ich hab schon ein Depot und will's richtig machen.</span></label>
         </fieldset>
-        <fieldset>
+        <fieldset data-step="goal">
           <legend>Wofür willst du anlegen? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
           <label class="choice"><input type="radio" name="goal" value="rente" required><span>Für meine Rente</span></label>
           <label class="choice"><input type="radio" name="goal" value="kinder"><span>Für meine Kinder</span></label>
           <label class="choice"><input type="radio" name="goal" value="vermoegen"><span>Einfach Vermögen aufbauen</span></label>
         </fieldset>
-        <fieldset>
+        <fieldset data-step="worry">
           <legend>Was hält dich bisher ab? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
           <label class="choice"><input type="radio" name="worry" value="verlust" required><span>Angst, Geld zu verlieren</span></label>
           <label class="choice"><input type="radio" name="worry" value="kompliziert"><span>Klingt kompliziert</span></label>
@@ -75,13 +76,21 @@
           <label class="choice"><input type="radio" name="worry" value="geld"><span>Ich hab zu wenig Geld dafür</span></label>
         </fieldset>
 
+        <div class="checkin-final" data-step="final">
         <div class="disclaimer-box">
           <h2>Kurz, aber wichtig</h2>
           <p>Ich bin kein Finanzberater. Was du hier liest, sind <strong>meine persönlichen Erfahrungen und meine Meinung</strong> – keine Anlageberatung und keine Empfehlung, ein bestimmtes Produkt zu kaufen. Geldanlage an der Börse ist mit Risiken verbunden, bis hin zum Verlust. Alle Zahlen sind sorgfältig recherchiert (Stand Oktober 2026), aber ohne Gewähr. Bitte informiere dich zusätzlich selbst und entscheide eigenverantwortlich.</p>
           <label class="check"><input type="checkbox" name="disclaimer" required><span>Verstanden – das hier ist Erfahrung, keine Beratung.</span></label>
         </div>
 
+        <p class="checkin-error" data-error role="alert" hidden>Fast! Bitte noch die rot markierte Angabe machen.</p>
         <button class="btn btn-primary" type="submit">Los geht's →</button>
+        </div>
+        <div class="checkin-nav" hidden>
+          <button class="link-btn" type="button" data-step-back>← Zurück</button>
+          <button class="link-btn" type="button" data-step-skip>Überspringen →</button>
+          <button class="link-btn" type="button" data-step-next>Weiter →</button>
+        </div>
       </form>
     </section>
 

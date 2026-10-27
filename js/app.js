@@ -138,25 +138,75 @@ function initLinks() {
 
 function initCheckin() {
   const form = $('#checkin');
-  // Volle Tour: Wissensstand filtert nur Kapitel → ausblenden; Ziel/Sorge bleiben als freiwillige Tipps.
+  const steps = $$('[data-step]', form);
+  const nav = $('.checkin-nav', form);
+  const full = () => form.tour.value === 'voll';
+  // Entscheidungsbaum: Bei voller Tour entfällt der Wissensstand (filtert nur Kapitel).
+  const path = () => steps.filter((s) => !(s.dataset.step === 'level' && full()));
+  let idx = 0;
+
   const syncTour = () => {
-    const full = form.tour.value === 'voll';
-    $('[data-filter]', form).hidden = full;
-    $$('[name=level], [name=goal], [name=worry]', form).forEach((r) => (r.required = !full));
-    $$('.opt-hint', form).forEach((h) => (h.hidden = !full));
-    syncButton();
+    $$('[name=level], [name=goal], [name=worry]', form).forEach((r) => (r.required = !full()));
+    $$('.opt-hint', form).forEach((h) => (h.hidden = !full()));
   };
-  // Ausgegraut, bis alle Pflichtangaben gemacht sind
-  const syncButton = () => ($('button[type=submit]', form).disabled = !form.checkValidity());
-  form.addEventListener('change', syncButton);
+
+  const render = () => {
+    const list = path();
+    idx = Math.max(0, Math.min(idx, list.length - 1));
+    const cur = list[idx];
+    steps.forEach((s) => (s.hidden = s !== cur));
+    const info = $('[data-stepinfo]', form);
+    info.hidden = false;
+    info.textContent = cur.dataset.step === 'final' ? 'Letzter Schritt – gleich geht’s los' : `Frage ${idx + 1} von ${list.length - 1}`;
+    const answered = !!$('input:checked', cur);
+    const optional = cur.tagName === 'FIELDSET' && !$('input:required', cur);
+    nav.hidden = false;
+    $('[data-step-back]', nav).hidden = idx === 0;
+    $('[data-step-skip]', nav).hidden = !(optional && !answered);
+    $('[data-step-next]', nav).hidden = !(cur.tagName === 'FIELDSET' && answered);
+  };
+  const step = (d) => {
+    form.classList.remove('tried'); // Rot nur direkt nach einem gescheiterten Start
+    $('[data-error]', form).hidden = true;
+    idx += d; render(); form.scrollIntoView({ block: 'nearest' });
+  };
+
+  // Rot erst nach einem Startversuch mit fehlenden Pflichtangaben
+  const showErrors = () => {
+    form.classList.add('tried');
+    const valid = form.checkValidity();
+    $('[data-error]', form).hidden = valid;
+    return valid;
+  };
+
   if (state.answers) {
     Object.entries(state.answers).forEach(([k, v]) => { const el = v && form.querySelector(`[name=${k}][value=${v}]`); if (el) el.checked = true; });
     form.disclaimer.checked = true;
   }
-  $$('[name=tour]', form).forEach((r) => r.addEventListener('change', syncTour));
   syncTour();
+  idx = state.answers ? path().length - 1 : 0;
+  render();
+
+  form.addEventListener('change', (e) => {
+    if (e.target.name === 'tour') syncTour();
+    if (form.classList.contains('tried')) showErrors();
+    if (e.target.type === 'radio') setTimeout(() => step(1), 220); // Antwort angetippt → nächste Frage
+    else render();
+  });
+  $('[data-step-back]', nav).addEventListener('click', () => step(-1));
+  $('[data-step-skip]', nav).addEventListener('click', () => step(1));
+  $('[data-step-next]', nav).addEventListener('click', () => step(1));
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (!showErrors()) {
+      const list = path();
+      idx = list.findIndex((s) => $(':invalid', s));
+      render();
+      const cur = list[idx];
+      cur.classList.remove('shake'); void cur.offsetWidth; cur.classList.add('shake');
+      return;
+    }
     const d = new FormData(form);
     const tour = d.get('tour');
     state.answers = { tour, level: tour === 'voll' ? null : d.get('level'), goal: d.get('goal'), worry: d.get('worry') };
