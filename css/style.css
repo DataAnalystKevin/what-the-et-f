@@ -120,6 +120,12 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 .disclaimer-box h2 { font-size: 1.2rem; }
 .disclaimer-box p { font-size: .95rem; }
 .checkin .btn-primary { width: 100%; }
+.checkin .btn-primary:disabled { background: var(--line); border-color: var(--line); color: var(--muted); opacity: 1; }
+/* Offene Pflichtangaben sichtbar machen, bis sie erledigt sind */
+.checkin fieldset:has(input:required):not(:has(input:checked)) legend::after { content: ' · Pflicht'; font: 600 .8rem var(--sans); color: var(--danger); }
+.checkin fieldset:has(input:required):not(:has(input:checked)) .choice span { border-color: color-mix(in srgb, var(--danger) 55%, var(--line)); }
+.disclaimer-box:has(input:required:not(:checked)) { border-color: var(--danger); background: var(--danger-soft); }
+.disclaimer-box:has(input:required:not(:checked)) .check span::after { content: ' · Pflicht'; font-weight: 600; color: var(--danger); }
 
 /* Widgets */
 .widget, .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 16px; margin: 24px 0; }

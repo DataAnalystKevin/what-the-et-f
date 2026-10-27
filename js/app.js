@@ -144,7 +144,11 @@ function initCheckin() {
     $('[data-filter]', form).hidden = full;
     $$('[name=level], [name=goal], [name=worry]', form).forEach((r) => (r.required = !full));
     $$('.opt-hint', form).forEach((h) => (h.hidden = !full));
+    syncButton();
   };
+  // Ausgegraut, bis alle Pflichtangaben gemacht sind
+  const syncButton = () => ($('button[type=submit]', form).disabled = !form.checkValidity());
+  form.addEventListener('change', syncButton);
   if (state.answers) {
     Object.entries(state.answers).forEach(([k, v]) => { const el = v && form.querySelector(`[name=${k}][value=${v}]`); if (el) el.checked = true; });
     form.disclaimer.checked = true;
