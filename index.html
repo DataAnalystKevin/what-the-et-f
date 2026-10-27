@@ -19,56 +19,73 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/literata.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('wtetf:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
   <script type="module" src="js/app.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <header class="topbar">
-    <a class="logo" href="#kapitel-0" aria-label="What the (ET)F? – zum Anfang">What the (<span>ET</span>)F?</a>
-    <div class="progress" role="progressbar" aria-label="Fortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-      <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><polyline class="progress-line" points="0,9"/></svg>
-      <span class="progress-count" data-count>0/10</span>
+    <div class="topbar-inner">
+      <a class="logo" href="#kapitel-0" aria-label="What the (ET)F? – zum Anfang">What the (<span>ET</span>)F?</a>
+      <div class="progress" role="progressbar" aria-label="Fortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Check-in">
+        <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><polyline class="progress-line" points="0,9"/></svg>
+        <span class="progress-count" data-count aria-hidden="true">0/10</span>
+      </div>
+      <button class="menu-btn" type="button" aria-controls="toc" aria-expanded="false">Menü</button>
     </div>
-    <button class="menu-btn" type="button" aria-controls="toc" aria-expanded="false">Kapitel</button>
   </header>
 
-  <nav id="toc" class="toc" hidden aria-label="Kapitelübersicht">
+  <nav id="toc" class="toc" hidden aria-label="Menü">
+    <a class="toc-jump" href="#kapitel-10" data-jump>Direkt zu den 4 Schritten →</a>
+    <p class="toc-label">Kapitel</p>
     <ol></ol>
+    <fieldset class="theme-pick">
+      <legend class="toc-label">Darstellung</legend>
+      <label><input type="radio" name="theme" value="auto" checked><span>Automatisch</span></label>
+      <label><input type="radio" name="theme" value="light"><span>Hell</span></label>
+      <label><input type="radio" name="theme" value="dark"><span>Dunkel</span></label>
+    </fieldset>
     <button class="link-btn" type="button" data-reset>Alles zurücksetzen</button>
   </nav>
 
   <main id="main">
+    <div class="consent" data-consent hidden>
+      <h2 id="consent-title" tabindex="-1">Kurz vorab</h2>
+      <p>Was du hier liest, sind <strong>meine persönlichen Erfahrungen und meine Meinung</strong> – keine Anlageberatung und keine Empfehlung, ein bestimmtes Produkt zu kaufen. Geldanlage an der Börse ist mit Risiken verbunden, bis hin zum Verlust.</p>
+      <div class="btn-row">
+        <button class="btn btn-primary" type="button" data-consent-ok>Verstanden, zum Kapitel</button>
+        <a class="btn" href="#kapitel-0">Lieber mit dem Check-in starten</a>
+      </div>
+    </div>
 
     <!-- 0 · Check-in -->
     <section class="chapter" id="kapitel-0" data-title="Check-in">
-      <p class="eyebrow">Hi, schön dass du da bist 👋</p>
-      <h1>Aktien? ETFs?<br><em>What the F?</em></h1>
-      <p class="lead">Jemand hat dir diesen Link geschickt, weil du gefragt hast, wie das mit ETFs funktioniert. Super! Hier erkläre ich dir in 10 kurzen Kapiteln, wie ich seit vielen Jahren mein Geld anlege – entspannt, günstig und ohne ständig auf Kurse zu starren.</p>
+      <h1 tabindex="-1">Aktien? ETFs?<br><em>What the F?</em></h1>
+      <p class="lead">Schön, dass du da bist! Jemand hat dir diesen Link geschickt, weil du gefragt hast, wie das mit ETFs funktioniert. Super! Hier erkläre ich dir in 10 kurzen Kapiteln, wie ich seit vielen Jahren mein Geld anlege – entspannt, günstig und ohne ständig auf Kurse zu starren.</p>
       <p>Ein paar kurze Fragen vorab, damit ich dir die passenden Kapitel zeigen kann. Deine Antworten bleiben nur auf deinem Gerät.</p>
 
       <form class="checkin" id="checkin" novalidate autocomplete="off">
         <p class="checkin-progress" data-stepinfo aria-live="polite" hidden></p>
         <fieldset data-step="tour">
-          <legend>Wie viel willst du wissen?</legend>
+          <legend tabindex="-1">Wie viel willst du wissen?</legend>
           <label class="choice"><input type="radio" name="tour" value="kurz" required><span>Nur das, was für mich wichtig ist</span></label>
           <label class="choice"><input type="radio" name="tour" value="voll"><span>Die volle Tour, bitte – alle Kapitel!</span></label>
         </fieldset>
         <fieldset data-step="level">
-          <legend>Wie gut kennst du dich aus?</legend>
+          <legend tabindex="-1">Wie gut kennst du dich aus?</legend>
           <label class="choice"><input type="radio" name="level" value="neu" required><span>Börse? Hab ich nur in den Nachrichten gehört.</span></label>
           <label class="choice"><input type="radio" name="level" value="grob"><span>Grob schon mal gehört, aber nie gemacht.</span></label>
           <label class="choice"><input type="radio" name="level" value="depot"><span>Ich hab schon ein Depot und will's richtig machen.</span></label>
         </fieldset>
         <fieldset data-step="goal">
-          <legend>Wofür willst du anlegen? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
+          <legend tabindex="-1">Wofür willst du anlegen? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
           <label class="choice"><input type="radio" name="goal" value="rente" required><span>Für meine Rente</span></label>
           <label class="choice"><input type="radio" name="goal" value="kinder"><span>Für meine Kinder</span></label>
           <label class="choice"><input type="radio" name="goal" value="vermoegen"><span>Einfach Vermögen aufbauen</span></label>
         </fieldset>
         <fieldset data-step="worry">
-          <legend>Was hält dich bisher ab? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
+          <legend tabindex="-1">Was hält dich bisher ab? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
           <label class="choice"><input type="radio" name="worry" value="verlust" required><span>Angst, Geld zu verlieren</span></label>
           <label class="choice"><input type="radio" name="worry" value="kompliziert"><span>Klingt kompliziert</span></label>
           <label class="choice"><input type="radio" name="worry" value="zeit"><span>Keine Zeit, mich damit zu beschäftigen</span></label>
@@ -77,7 +94,7 @@
 
         <div class="checkin-final" data-step="final">
         <div class="disclaimer-box">
-          <h2>Kurz, aber wichtig</h2>
+          <h2 tabindex="-1">Kurz, aber wichtig</h2>
           <p>Ich bin kein Finanzberater. Was du hier liest, sind <strong>meine persönlichen Erfahrungen und meine Meinung</strong> – keine Anlageberatung und keine Empfehlung, ein bestimmtes Produkt zu kaufen. Geldanlage an der Börse ist mit Risiken verbunden, bis hin zum Verlust. Alle Zahlen sind sorgfältig recherchiert (Stand Oktober 2026), aber ohne Gewähr. Bitte informiere dich zusätzlich selbst und entscheide eigenverantwortlich.</p>
           <label class="check"><input type="checkbox" name="disclaimer" required><span>Verstanden – das hier ist Erfahrung, keine Beratung.</span></label>
         </div>
@@ -96,8 +113,7 @@
     <!-- 1 · Warum überhaupt? -->
     <section class="chapter" id="kapitel-1" data-title="Warum überhaupt?">
       <div class="personal" data-personal hidden></div>
-      <p class="eyebrow">Kapitel 1</p>
-      <h2>Warum überhaupt investieren?</h2>
+      <h2 tabindex="-1">Warum überhaupt investieren?</h2>
       <p class="lead">Weil Nichtstun auch etwas kostet – nur leiser.</p>
       <p>Jedes Jahr werden Brötchen, Miete und Urlaub ein bisschen teurer. Das nennt sich Inflation. Liegt dein Geld auf dem Girokonto oder Sparbuch, steht da zwar immer die gleiche Zahl – aber du kannst dir jedes Jahr weniger dafür kaufen.</p>
       <p>Unternehmen dagegen wachsen, erfinden Neues und verdienen Geld. Wenn du Anteile an ihnen besitzt, wächst dein Geld mit. Weltweit haben Aktien seit 1900 im Schnitt rund <strong>5 % pro Jahr <em>über</em> der Inflation</strong> gebracht – vor Inflation waren es fast 10 %. Kein Sparbuch der Welt kommt da mit.</p>
@@ -117,8 +133,7 @@
 
     <!-- 2 · Was ist ein ETF? -->
     <section class="chapter" id="kapitel-2" data-title="Was ist ein ETF?">
-      <p class="eyebrow">Kapitel 2</p>
-      <h2>Was ist ein ETF?</h2>
+      <h2 tabindex="-1">Was ist ein ETF?</h2>
       <p class="lead">Stell dir einen Obstkorb vor, statt eines einzelnen Apfels.</p>
       <p>Ein <strong>ETF</strong> (Exchange Traded Fund) ist ein Fonds, den du an der Börse kaufen kannst. Er kauft automatisch alle Firmen eines Index nach – zum Beispiel des <strong>MSCI World</strong> mit rund 1.250 großen Unternehmen aus 23 Industrieländern. Mit einem einzigen Kauf besitzt du also ein winziges Stück von Apple, Nestlé, Toyota, SAP und über tausend weiteren.</p>
       <p>Niemand entscheidet da nach Bauchgefühl, was gekauft wird. Der ETF bildet den Index einfach nach. Deshalb ist er so <strong>günstig</strong> und so <strong>berechenbar</strong>.</p>
@@ -129,7 +144,7 @@
         <div class="basket-grid">
           <div class="basket-col">
             <p class="basket-label">Du hast nur <strong>eine Aktie</strong></p>
-            <div class="single" data-single aria-hidden="true">🍎</div>
+            <div class="single" data-single aria-hidden="true"><i></i></div>
             <p class="basket-value" data-single-value>10.000 €</p>
           </div>
           <div class="basket-col">
@@ -138,7 +153,7 @@
             <p class="basket-value" data-basket-value>10.000 €</p>
           </div>
         </div>
-        <button class="btn" type="button" data-crash>💥 Firma geht pleite (à la Wirecard)</button>
+        <button class="btn" type="button" data-crash>Firma geht pleite (à la Wirecard)</button>
         <p class="widget-result" data-result aria-live="polite"></p>
       </div>
 
@@ -148,8 +163,7 @@
 
     <!-- 3 · Crash -->
     <section class="chapter" id="kapitel-3" data-title="Und wenn's crasht?">
-      <p class="eyebrow">Kapitel 3</p>
-      <h2>Und wenn's crasht?</h2>
+      <h2 tabindex="-1">Und wenn's crasht?</h2>
       <p class="lead">Dann bleibst du sitzen. Das ist der ganze Trick.</p>
       <p>Kurse schwanken. Manchmal heftig. Das gehört dazu und ist genau der Grund, warum es langfristig mehr Rendite gibt als auf dem Sparbuch. Lass uns das am härtesten Test der letzten Jahre durchspielen: der Corona-Pandemie.</p>
 
@@ -159,11 +173,11 @@
         <div class="crash-step" data-step="1">
           <p>… und dann kommt der März 2020. Die Welt steht still, Lieferketten reißen, die Nachrichten überschlagen sich. Dein Depot zeigt nur noch <strong>ca. 7.200 €</strong>. Was tust du?</p>
           <div class="btn-row">
-            <button class="btn btn-danger" type="button" data-choice="sell">😱 Alles verkaufen, bevor es schlimmer wird</button>
-            <button class="btn btn-primary" type="button" data-choice="hold">🧘 Nichts. Liegen lassen.</button>
+            <button class="btn" type="button" data-choice="sell">Alles verkaufen, bevor es schlimmer wird</button>
+            <button class="btn" type="button" data-choice="hold">Nichts tun. Liegen lassen.</button>
           </div>
         </div>
-        <p class="widget-result" data-result aria-live="polite"></p>
+        <p class="widget-result" data-result tabindex="-1"></p>
         <p class="fineprint">Gerundete Näherung des MSCI World in Euro inkl. wiederangelegter Dividenden. Vergangene Entwicklung ist keine Garantie für die Zukunft.</p>
       </div>
 
@@ -180,7 +194,7 @@
           <div><dt>Durchschnitt</dt><dd data-stat="avg"></dd></div>
           <div><dt>Bester Fall</dt><dd data-stat="max"></dd></div>
         </dl>
-        <p class="widget-result" data-result aria-live="polite"></p>
+        <p class="widget-result" data-result></p>
         <p class="fineprint">Rendite pro Jahr eines MSCI-World-Sparplans über alle historischen Zeiträume der jeweiligen Länge. Quelle: Deutsches Aktieninstitut, Renditedreieck MSCI World, Stand 31.12.2024. Ohne Kosten, Steuern und Inflation. Keine Garantie für die Zukunft.</p>
       </div>
 
@@ -190,8 +204,7 @@
 
     <!-- 4 · Zinseszins -->
     <section class="chapter" id="kapitel-4" data-title="Die Magie: Zinseszins">
-      <p class="eyebrow">Kapitel 4</p>
-      <h2>Die Magie: Zinseszins</h2>
+      <h2 tabindex="-1">Die Magie: Zinseszins</h2>
       <p class="lead">Dein Geld verdient Geld. Und dieses Geld verdient wieder Geld.</p>
       <p>Wir Menschen sind schlecht darin, uns exponentielles Wachstum vorzustellen. Am Anfang passiert scheinbar wenig, nach 20, 30 Jahren aber explodiert die Kurve. Probier's selbst aus:</p>
 
@@ -218,7 +231,7 @@
           <div><dt>Eingezahlt</dt><dd data-stat="paid"></dd></div>
           <div><dt>Kursgewinne</dt><dd data-stat="gains"></dd></div>
         </dl>
-        <p class="widget-result" data-result aria-live="polite"></p>
+        <p class="widget-result" data-result></p>
         <p class="fineprint">Modellrechnung mit gleichbleibender Rendite, vor Steuern und Kosten. Echte Märkte schwanken – die Spanne zeigt eine pessimistische (4 %) und optimistische (9 %) Variante.</p>
       </div>
 
@@ -228,28 +241,8 @@
 
     <!-- 5 · Welcher ETF? -->
     <section class="chapter" id="kapitel-5" data-title="Welcher ETF?">
-      <p class="eyebrow">Kapitel 5</p>
-      <h2>Welcher ETF?</h2>
-      <p class="lead">Es gibt tausende ETFs. Du brauchst genau einen. Vier Kriterien reichen.</p>
-
-      <div class="criteria">
-        <details>
-          <summary><span class="num">1</span> Breit gestreut</summary>
-          <p>Ein Index über die ganze Welt mit tausenden Firmen, vielen Ländern und Branchen. Der <strong>MSCI World</strong> deckt Industrieländer ab (ca. 1.250 Firmen). <strong>FTSE All-World</strong> oder <strong>MSCI ACWI</strong> nehmen zusätzlich Schwellenländer wie China, Indien und Brasilien mit. Finger weg von Nischen wie nur DAX, nur „Green Energy“ oder nur KI: höheres Risiko, ohne dass du dafür mehr Rendite erwarten kannst.</p>
-        </details>
-        <details>
-          <summary><span class="num">2</span> Günstig</summary>
-          <p>Achte auf die <strong>TER</strong> (Total Expense Ratio), die laufenden Kosten pro Jahr. Gute Welt-ETFs liegen bei <strong>0,05–0,25 %</strong>. Aktiv gemanagte Fonds von der Bank kosten oft 1,5–2 % – und schlagen den Markt langfristig in den allermeisten Fällen trotzdem nicht. Über 30 Jahre können die Mehrkosten zehntausende Euro ausmachen.</p>
-        </details>
-        <details>
-          <summary><span class="num">3</span> Thesaurierend</summary>
-          <p><strong>Thesaurierend</strong> heißt: Dividenden werden automatisch wieder angelegt, und der Zinseszins läuft von allein. <strong>Ausschüttend</strong> heißt: Die Dividenden landen auf deinem Konto. Das fühlt sich schön an, aber du musst sie selbst wieder anlegen. Für den langfristigen Vermögensaufbau finde ich thesaurierend einfacher.</p>
-        </details>
-        <details>
-          <summary><span class="num">4</span> Groß und bewährt</summary>
-          <p>Ein Fondsvolumen von mehreren Milliarden Euro und einige Jahre Historie sprechen dafür, dass der ETF nicht plötzlich geschlossen wird. Bei den großen Welt-ETFs ist das kein Thema.</p>
-        </details>
-      </div>
+      <h2 tabindex="-1">Welcher ETF?</h2>
+      <p class="lead">Es gibt tausende ETFs. Du brauchst genau einen.</p>
 
       <div class="card mine">
         <h3>Zwei gute Kandidaten – such dir <em>einen</em> aus</h3>
@@ -269,63 +262,77 @@
         <p class="fineprint">Das sind Beispiele, die ich guten Gewissens nennen würde, keine Anlageberatung. Ich verdiene an keinem der Anbieter etwas. Es gibt gleichwertige Alternativen anderer Anbieter, teils sogar noch günstiger.</p>
       </div>
 
+      <h3>Woran du einen guten ETF erkennst</h3>
+      <ul class="checks">
+        <li><strong>Breit gestreut:</strong> tausende Firmen aus vielen Ländern und Branchen.</li>
+        <li><strong>Günstig:</strong> laufende Kosten (TER) unter 0,25&nbsp;% pro Jahr.</li>
+        <li><strong>Thesaurierend:</strong> Dividenden werden automatisch wieder angelegt.</li>
+        <li><strong>Groß und bewährt:</strong> mehrere Milliarden Euro Fondsvolumen.</li>
+      </ul>
+      <details class="more">
+        <summary>Die vier Kriterien genauer erklärt</summary>
+        <p><strong>Breit gestreut.</strong> Ein Index über die ganze Welt mit tausenden Firmen, vielen Ländern und Branchen. Der <strong>MSCI World</strong> deckt Industrieländer ab (ca. 1.250 Firmen). <strong>FTSE All-World</strong> oder <strong>MSCI ACWI</strong> nehmen zusätzlich Schwellenländer wie China, Indien und Brasilien mit. Finger weg von Nischen wie nur DAX, nur „Green Energy“ oder nur KI: höheres Risiko, ohne dass du dafür mehr Rendite erwarten kannst.</p>
+        <p><strong>Günstig.</strong> Achte auf die <strong>TER</strong> (Total Expense Ratio), die laufenden Kosten pro Jahr. Gute Welt-ETFs liegen bei <strong>0,05–0,25&nbsp;%</strong>. Aktiv gemanagte Fonds von der Bank kosten oft 1,5–2&nbsp;% – und schlagen den Markt langfristig in den allermeisten Fällen trotzdem nicht. Über 30 Jahre können die Mehrkosten zehntausende Euro ausmachen.</p>
+        <p><strong>Thesaurierend.</strong> Dividenden werden automatisch wieder angelegt, und der Zinseszins läuft von allein. <strong>Ausschüttend</strong> heißt: Die Dividenden landen auf deinem Konto. Das fühlt sich schön an, aber du musst sie selbst wieder anlegen. Für den langfristigen Vermögensaufbau finde ich thesaurierend einfacher.</p>
+        <p><strong>Groß und bewährt.</strong> Ein Fondsvolumen von mehreren Milliarden Euro und einige Jahre Historie sprechen dafür, dass der ETF nicht plötzlich geschlossen wird. Bei den großen Welt-ETFs ist das kein Thema.</p>
+      </details>
+
       <h3>Was kann schiefgehen?</h3>
-      <p>Ehrlich gesagt: Auch ein Welt-ETF ist kein Sparbuch. Hier sind die Risiken, die du kennen solltest, und warum ich trotzdem entspannt bleibe.</p>
-      <div class="risks">
-        <details>
-          <summary>🇺🇸 Rund 72 % stecken in den USA</summary>
-          <p>Der MSCI World ist stark USA-lastig. Läuft es dort schlecht, spürst du das deutlich.</p>
-          <p><strong>Warum ich entspannt bleibe:</strong> Das ist kein Zufall, sondern das Ergebnis echter Wertschöpfung. iPhones, Windows, die Google-Suche oder die Chips von Nvidia werden weltweit milliardenfach genutzt, wahrscheinlich auch von dir, heute schon. Diese Firmen verdienen ihr Geld auf der ganzen Welt, nicht nur in den USA. Außerdem gewichtet der Index nach Börsenwert: Verlieren die USA an Bedeutung, sinkt ihr Anteil automatisch. Wer trotzdem breiter aufgestellt sein will, nimmt den FTSE All-World mit Schwellenländern.</p>
-        </details>
-        <details>
-          <summary>💻 Wenige Tech-Riesen haben viel Gewicht</summary>
-          <p>Die zehn größten Firmen machen gut ein Viertel des MSCI World aus, fast alle aus der Tech-Branche.</p>
-          <p><strong>Warum ich entspannt bleibe:</strong> Auch hier sortiert der Index selbst aus. Wer schwächelt, verliert Gewicht, wer aufsteigt, bekommt mehr. Von den größten Firmen des Jahres 2000 sind heute viele nicht mehr in den Top 10, und das hat der Index ganz von allein erledigt.</p>
-        </details>
-        <details>
-          <summary>⏳ Es kann lange dauern</summary>
-          <p>Nach dem Platzen der Dotcom-Blase 2000 (−54 %) und der Finanzkrise 2008 (−48 %) dauerte es insgesamt über 13 Jahre, bis der MSCI World wieder auf altem Höchststand war. Wer im Jahr 2000 alles auf einmal investiert hat, brauchte sehr viel Geduld.</p>
-          <p><strong>Warum ich entspannt bleibe:</strong> Mit einem monatlichen Sparplan kaufst du in solchen Phasen automatisch günstig nach und bist deutlich früher wieder im Plus. Und: Ich lege nur Geld an, das ich lange nicht brauche.</p>
-        </details>
-        <details>
-          <summary>💱 Dollar und Euro schwanken</summary>
-          <p>Die meisten Aktien im Index werden in Dollar gehandelt. Steigt der Euro, sinkt der Wert deines ETFs in Euro, auch wenn die Aktien gleich bleiben.</p>
-          <p><strong>Warum ich entspannt bleibe:</strong> Das geht in beide Richtungen und gleicht sich über lange Zeiträume oft aus. Zudem verdienen die Firmen ihr Geld in vielen Währungen.</p>
-        </details>
-        <details>
-          <summary>🏦 Und wenn der ETF-Anbieter pleitegeht?</summary>
-          <p>Dann ist dein Geld trotzdem sicher. ETFs sind gesetzlich <strong>Sondervermögen</strong>: Die Aktien gehören den Anlegern, nicht dem Anbieter, und werden getrennt verwahrt. Bei einer Pleite fällt nichts davon in die Insolvenzmasse.</p>
-        </details>
-      </div>
+      <p>Ehrlich gesagt: Auch ein Welt-ETF ist kein Sparbuch. Hier sind die Risiken – und warum ich trotzdem ruhig schlafe.</p>
+      <ul class="risks">
+        <li>
+          <p class="risk">Der ETF-Anbieter geht pleite.</p>
+          <p class="calm">Dein Geld ist trotzdem sicher. ETFs sind gesetzlich <strong>Sondervermögen</strong>: Die Aktien gehören den Anlegern, nicht dem Anbieter, werden getrennt verwahrt und fallen nicht in die Insolvenzmasse.</p>
+        </li>
+        <li>
+          <p class="risk">Rund 72&nbsp;% stecken in den USA.</p>
+          <p class="calm">Das ist echte Wertschöpfung: iPhones, Windows, die Google-Suche oder die Chips von Nvidia werden weltweit milliardenfach genutzt, wahrscheinlich auch von dir. Verlieren die USA an Bedeutung, sinkt ihr Anteil automatisch.</p>
+          <details class="more"><summary>Mehr dazu</summary><p>Der MSCI World ist stark USA-lastig. Läuft es dort schlecht, spürst du das deutlich. Die Firmen verdienen ihr Geld aber auf der ganzen Welt, nicht nur in den USA. Wer trotzdem breiter aufgestellt sein will, nimmt den FTSE All-World mit Schwellenländern.</p></details>
+        </li>
+        <li>
+          <p class="risk">Wenige Tech-Riesen haben viel Gewicht.</p>
+          <p class="calm">Der Index sortiert selbst aus: Wer schwächelt, verliert Gewicht, wer aufsteigt, bekommt mehr. Von den größten Firmen des Jahres 2000 sind heute viele nicht mehr in den Top 10.</p>
+          <details class="more"><summary>Mehr dazu</summary><p>Die zehn größten Firmen machen gut ein Viertel des MSCI World aus, fast alle aus der Tech-Branche.</p></details>
+        </li>
+        <li>
+          <p class="risk">Es kann lange dauern.</p>
+          <p class="calm">Mit einem monatlichen Sparplan kaufst du in schwachen Phasen automatisch günstig nach und bist deutlich früher wieder im Plus.</p>
+          <details class="more"><summary>Mehr dazu</summary><p>Nach dem Platzen der Dotcom-Blase 2000 (−54&nbsp;%) und der Finanzkrise 2008 (−48&nbsp;%) dauerte es insgesamt über 13 Jahre, bis der MSCI World wieder auf altem Höchststand war. Wer im Jahr 2000 alles auf einmal investiert hat, brauchte sehr viel Geduld. Darum lege ich nur Geld an, das ich lange nicht brauche.</p></details>
+        </li>
+        <li>
+          <p class="risk">Dollar und Euro schwanken.</p>
+          <p class="calm">Das geht in beide Richtungen und gleicht sich über lange Zeiträume oft aus.</p>
+          <details class="more"><summary>Mehr dazu</summary><p>Die meisten Aktien im Index werden in Dollar gehandelt. Steigt der Euro, sinkt der Wert deines ETFs in Euro, auch wenn die Aktien gleich bleiben. Zudem verdienen die Firmen ihr Geld in vielen Währungen.</p></details>
+        </li>
+      </ul>
 
       <p class="aha"><strong>Aha:</strong> Langweilig ist hier ein Kompliment. Ein Welt-ETF, ein Sparplan, fertig.</p>
     </section>
 
     <!-- 6 · Fallen -->
     <section class="chapter" id="kapitel-6" data-title="Die Fallen">
-      <p class="eyebrow">Kapitel 6</p>
-      <h2>Die fünf Anfängerfallen</h2>
+      <h2 tabindex="-1">Die fünf Anfängerfallen</h2>
       <p class="lead">Tipp auf eine Karte, um zu sehen, warum sie dich Geld kostet.</p>
 
       <div class="flips">
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front"><span class="flip-icon">⏱️</span>„Ich warte auf den perfekten Einstieg.“</span>
+          <span class="flip-front">„Ich warte auf den perfekten Einstieg.“</span>
           <span class="flip-back">Den kennt niemand – auch Profis nicht. Wer wartet, verpasst oft die besten Tage. Mit einem monatlichen Sparplan kaufst du automatisch mal teuer, mal günstig.</span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front"><span class="flip-icon">🏦</span>„Ich frag mal meinen Bankberater.“</span>
+          <span class="flip-front">„Ich frag mal meinen Bankberater.“</span>
           <span class="flip-back">Der ist meistens Verkäufer und lebt von Provisionen. Oft gibt es teure aktive Fonds mit Ausgabeaufschlag. Frag lieber direkt nach den Gesamtkosten – oder eröffne dein Depot selbst online.</span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front"><span class="flip-icon">🎯</span>„Ich kauf lieber die eine Aktie, die alle kennen.“</span>
+          <span class="flip-front">„Ich kauf lieber die eine Aktie, die alle kennen.“</span>
           <span class="flip-back">Einzelaktien sind Wetten. Der ETF hält die Gewinner sowieso – ohne dass du raten musst, wer sie sind.</span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front"><span class="flip-icon">🚀</span>„KI / Wasserstoff / Cannabis – das ist die Zukunft!“</span>
+          <span class="flip-front">„KI / Wasserstoff / Cannabis – das ist die Zukunft!“</span>
           <span class="flip-back">Themen-ETFs kauft man meist, wenn der Hype schon eingepreist ist. Sie sind teurer und schwanken stärker. Wenn ein Thema groß wird, steckt es ohnehin im Welt-ETF.</span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front"><span class="flip-icon">🎓</span>„Ich buch erst mal ein Börsen-Seminar für 999 €.“</span>
+          <span class="flip-front">„Ich buch erst mal ein Börsen-Seminar für 999 €.“</span>
           <span class="flip-back">Brauchst du nicht. Alles Nötige gibt's kostenlos – zum Beispiel bei Finanzfluss auf YouTube. Wer dir Reichtum für Geld verspricht, verdient vor allem an dir.</span>
         </button>
       </div>
@@ -334,9 +341,9 @@
 
     <!-- 7 · Steuern -->
     <section class="chapter" id="kapitel-7" data-title="Steuern in einfach">
-      <p class="eyebrow">Kapitel 7 <span class="badge" data-stand>Stand: Oktober 2026</span></p>
-      <h2>Steuern – in einfach</h2>
+      <h2 tabindex="-1">Steuern – in einfach</h2>
       <p class="lead">Klingt schlimm, läuft aber fast komplett automatisch.</p>
+      <p class="meta"><span class="badge" data-stand>Stand: Oktober 2026</span></p>
       <ul class="facts">
         <li><strong>Steuern zahlst du nur auf Gewinne</strong>, nicht auf das, was du einzahlst. Bei einem deutschen Depot zieht die Bank sie automatisch ab. Du musst nichts in die Steuererklärung schreiben.</li>
         <li><strong>Gewinne entstehen steuerlich erst beim Verkauf.</strong> Und genau das wollen wir ja möglichst lange nicht: Mit einem thesaurierenden ETF wird nichts ausgeschüttet, und solange du nicht verkaufst, realisierst du keine Gewinne. Bis auf die kleine Vorabpauschale (siehe unten) zahlst du also über viele Jahre kaum Steuern, und dein Geld arbeitet ungeschmälert weiter. Relevant wird das Thema erst, wenn du später, etwa im Ruhestand, Anteile verkaufst.</li>
@@ -349,9 +356,9 @@
 
     <!-- 8 · Kinder -->
     <section class="chapter" id="kapitel-8" data-title="Für die Kinder">
-      <p class="eyebrow">Kapitel 8 <span class="badge" data-stand>Stand: Oktober 2026</span></p>
-      <h2>Für die Kinder anlegen</h2>
+      <h2 tabindex="-1">Für die Kinder anlegen</h2>
       <p class="lead">Bei Kindern ist der Zinseszins am stärksten – sie haben die meiste Zeit.</p>
+      <p class="meta"><span class="badge" data-stand>Stand: Oktober 2026</span></p>
       <p>Schon 25 € im Monat ab Geburt können bis zum 18. Geburtstag ein ordentliches Startkapital ergeben. Und wenn das Kind später selbst weiterspart, wird es richtig spannend. Es gibt zwei Wege:</p>
 
       <div class="widget tabs" data-widget="tabs">
@@ -389,9 +396,9 @@
 
     <!-- 9 · Altersvorsorgedepot -->
     <section class="chapter" id="kapitel-9" data-title="Das neue Altersvorsorgedepot">
-      <p class="eyebrow">Kapitel 9 <span class="badge" data-stand>Stand: Oktober 2026</span></p>
-      <h2>Das neue Altersvorsorgedepot</h2>
+      <h2 tabindex="-1">Das neue Altersvorsorgedepot</h2>
       <p class="lead">Ab 2027 legt der Staat Geld dazu, wenn du fürs Alter in ETFs sparst.</p>
+      <p class="meta"><span class="badge" data-stand>Stand: Oktober 2026</span></p>
       <p>Vielleicht hast du davon in den Nachrichten gehört: Ab dem <strong>1. Januar 2027</strong> gibt es das Altersvorsorgedepot. Es ersetzt die alte Riester-Rente für neue Verträge – aber diesmal ohne teure Garantien und mit ETFs. Das Gesetz ist beschlossen, die ersten Anbieter stehen in den Startlöchern.</p>
 
       <div class="widget" data-widget="av">
@@ -410,7 +417,7 @@
           <div><dt>Kinderzulage</dt><dd data-stat="kids"></dd></div>
           <div><dt>Startbonus (einmalig)</dt><dd data-stat="starter"></dd></div>
         </dl>
-        <p class="widget-result" data-result aria-live="polite"></p>
+        <p class="widget-result" data-result></p>
         <p class="fineprint">Regeln laut Altersvorsorgereformgesetz: 50 % Zulage auf die ersten 360 € im Jahr, 25 % auf den Teil bis 1.800 € (max. 540 €). Zulagen erst ab 120 € Eigenbeitrag im Jahr. Kinderzulage 1 € je 1 € Beitrag, bis 300 € pro Kind. Einzahlen kannst du bis 6.840 € im Jahr, gefördert werden davon aber nur 1.800 €.</p>
       </div>
 
@@ -418,7 +425,7 @@
       <div class="compare" role="table" aria-label="Vergleich">
         <div role="row" class="compare-head"><span role="columnheader"></span><span role="columnheader">Freies ETF-Depot</span><span role="columnheader">Altersvorsorgedepot</span></div>
         <div role="row"><span role="rowheader">Zugriff aufs Geld</span><span role="cell" class="good">jederzeit</span><span role="cell" class="bad">erst ab 65 (oder früherer Rentenbeginn)</span></div>
-        <div role="row"><span role="rowheader">Geld vom Staat</span><span role="cell" class="bad">nein</span><span role="cell" class="good">Zulagen, siehe oben</span></div>
+        <div role="row"><span role="rowheader">Geld vom Staat</span><span role="cell">nein</span><span role="cell" class="good">Zulagen, siehe oben</span></div>
         <div role="row"><span role="rowheader">Steuern beim Sparen</span><span role="cell">kaum – nur die Vorabpauschale über dem Freibetrag</span><span role="cell" class="good">keine</span></div>
         <div role="row"><span role="rowheader">Steuern bei Auszahlung</span><span role="cell" class="good">Abgeltungsteuer nur auf die Gewinne</span><span role="cell">gesamte Auszahlung zum persönlichen Steuersatz</span></div>
         <div role="row"><span role="rowheader">Auszahlung</span><span role="cell" class="good">wie du willst</span><span role="cell">Rente oder Auszahlplan, max. 30 % auf einmal</span></div>
@@ -430,45 +437,41 @@
 
     <!-- 10 · Los geht's -->
     <section class="chapter" id="kapitel-10" data-title="Los geht's">
-      <p class="eyebrow">Kapitel 10</p>
-      <h2>Los geht's – in 4 Schritten</h2>
+      <h2 tabindex="-1">Los geht's – in 4 Schritten</h2>
       <p class="lead">Du weißt jetzt mehr über Geldanlage als die meisten. Jetzt fehlt nur noch eine Stunde Umsetzung.</p>
 
-      <ol class="steps" data-checklist>
-        <li><label class="check"><input type="checkbox" data-step="depot"><span><strong>Depot eröffnen</strong> – bei einem Online-Broker oder einer Direktbank, nicht bei der Filialbank. Dauert ca. 15 Minuten inklusive Video-Ident.</span></label></li>
-        <li><label class="check"><input type="checkbox" data-step="freistellung"><span><strong>Freistellungsauftrag</strong> stellen (1.000 € bzw. 2.000 €).</span></label></li>
-        <li><label class="check"><input type="checkbox" data-step="sparplan"><span><strong>Sparplan</strong> auf einen breiten, günstigen, thesaurierenden Welt-ETF einrichten. Lieber klein anfangen als gar nicht.</span></label></li>
-        <li><label class="check"><input type="checkbox" data-step="vergessen"><span><strong>Laufen lassen.</strong> App löschen, wenn's sein muss. 😉 Einmal im Jahr reicht als Check.</span></label></li>
-      </ol>
+      <div class="steps-card" id="schritte">
+        <p class="steps-count" data-steps-count aria-live="polite">0 von 4 erledigt</p>
+        <ol class="steps" data-checklist>
+          <li><label class="check"><input type="checkbox" data-step="depot"><span><strong>Depot eröffnen</strong> – bei einem Online-Broker oder einer Direktbank, nicht bei der Filialbank. Dauert ca. 15 Minuten inklusive Video-Ident.</span></label></li>
+          <li><label class="check"><input type="checkbox" data-step="freistellung"><span><strong>Freistellungsauftrag</strong> stellen (1.000 € bzw. 2.000 €).</span></label></li>
+          <li><label class="check"><input type="checkbox" data-step="sparplan"><span><strong>Sparplan</strong> auf einen breiten, günstigen, thesaurierenden Welt-ETF einrichten. Lieber klein anfangen als gar nicht.</span></label></li>
+          <li><label class="check"><input type="checkbox" data-step="vergessen"><span><strong>Laufen lassen.</strong> Einmal im Jahr reinschauen reicht völlig.</span></label></li>
+        </ol>
+        <p class="steps-done" data-steps-done hidden>Geschafft. Ab jetzt arbeitet dein Geld für dich – und deine einzige Aufgabe ist, nichts zu tun.</p>
+      </div>
 
       <h3>Wo eröffnen?</h3>
       <p>Sparpläne gibt es inzwischen bei vielen Anbietern kostenlos, zum Beispiel bei Neobrokern wie <strong>Trade Republic</strong> und <strong>Scalable Capital</strong> oder bei Direktbanken wie <strong>ING</strong> und <strong>Consorsbank</strong>. Achte darauf, dass dein ETF dort kostenlos besparbar ist.</p>
       <div class="brokers" data-brokers hidden></div>
-
-      <div class="card">
-        <h3>Weiterlernen – kostenlos</h3>
-        <p>Wenn du tiefer einsteigen willst, kann ich dir den YouTube-Kanal <a href="https://www.youtube.com/@Finanzfluss" rel="noopener" target="_blank">Finanzfluss</a> von Thomas Kehl uneingeschränkt empfehlen. Und: Für dieses Thema brauchst du keine kostenpflichtigen Seminare oder Coachings.</p>
-      </div>
-
-      <div class="card summary" id="zusammenfassung">
-        <h3>Deine Zusammenfassung zum Mitnehmen</h3>
-        <pre class="summary-text" data-summary></pre>
-        <div class="btn-row no-print">
-          <a class="btn btn-primary" data-mail href="#">✉️ An mich mailen</a>
-          <button class="btn" type="button" data-print>📄 Als PDF speichern</button>
-        </div>
-        <p class="fineprint no-print">„An mich mailen“ öffnet dein eigenes Mailprogramm – trag dort einfach deine Adresse ein. Für die PDF wählst du im Druckdialog „Als PDF sichern“ (am iPhone: Teilen → Drucken → nochmal Teilen).</p>
-      </div>
-
-      <div class="card kofi" data-kofi hidden>
-        <h3>Hat's dir geholfen?</h3>
-        <p>Diese Seite ist kostenlos und werbefrei. Wenn du magst, kannst du mir einen Kaffee ausgeben – freiwillig, versprochen.</p>
-        <a class="btn" data-kofi-link href="#" rel="noopener" target="_blank">☕ Kaffee spendieren auf Ko-fi</a>
-      </div>
+      <p><strong>Weiterlernen, kostenlos:</strong> Wenn du tiefer einsteigen willst, kann ich dir den YouTube-Kanal <a href="https://www.youtube.com/@Finanzfluss" rel="noopener" target="_blank">Finanzfluss</a> von Thomas Kehl uneingeschränkt empfehlen. Für dieses Thema brauchst du keine kostenpflichtigen Seminare oder Coachings.</p>
 
       <blockquote class="finale">
         <span>Der beste Zeitpunkt anzufangen war gestern.</span> <span>Der zweitbeste ist <em>heute</em>.</span>
       </blockquote>
+
+      <div class="card summary" id="zusammenfassung">
+        <h3>Alles auf einer Seite</h3>
+        <p class="no-print">Die wichtigsten Punkte, deine Rechnung aus Kapitel 4 und die 4 Schritte – zum Nachlesen, wann immer du willst.</p>
+        <pre class="summary-text" data-summary></pre>
+        <div class="btn-row no-print">
+          <a class="btn btn-primary" data-mail href="#">An mich mailen</a>
+          <button class="btn" type="button" data-print>Als PDF speichern</button>
+        </div>
+        <p class="fineprint no-print">„An mich mailen“ öffnet dein eigenes Mailprogramm – trag dort einfach deine Adresse ein. Für die PDF wählst du im Druckdialog „Als PDF sichern“ (am iPhone: Teilen → Drucken → nochmal Teilen).</p>
+      </div>
+
+      <p class="kofi-line" data-kofi hidden>Hat’s dir geholfen? Die Seite ist kostenlos und werbefrei. Wenn du magst: <a data-kofi-link href="#" rel="noopener" target="_blank">einen Kaffee auf Ko&#8209;fi spendieren</a>.</p>
     </section>
 
     <nav class="pager" aria-label="Kapitel blättern" hidden>
@@ -479,7 +482,7 @@
 
   <footer class="footer">
     <p><strong>Meine persönlichen Erfahrungen – keine Anlageberatung.</strong> Alle Angaben ohne Gewähr, Stand Oktober 2026.</p>
-    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <button class="link-btn" type="button" data-reset>Fortschritt zurücksetzen</button></p>
+    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <button class="link-btn" type="button" data-theme-cycle>Darstellung: Automatisch</button> · <button class="link-btn" type="button" data-reset>Fortschritt zurücksetzen</button></p>
   </footer>
 </body>
 </html>

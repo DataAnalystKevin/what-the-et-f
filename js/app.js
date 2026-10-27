@@ -7,6 +7,7 @@ const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* privat/blockiert: Seite läuft ohne Fortschritt */ } };
 
 const state = { answers: null, visited: [], steps: {}, ...load() };
+state.consent ??= !!state.answers; // Wer den Check-in gemacht hat, hat den Hinweis schon bestätigt
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
@@ -70,6 +71,7 @@ function renderProgress() {
   for (let k = 1; k <= done; k++) pts.push(`${(k / n) * 100},${(9 - (k / n) * 8 + (k % 2 ? 0.8 : -0.4)).toFixed(2)}`);
   $('.progress-line').setAttribute('points', pts.join(' '));
   $('.progress').setAttribute('aria-valuenow', Math.round((done / n) * 100));
+  $('.progress').setAttribute('aria-valuetext', done ? `Kapitel ${done} von ${n}` : 'Check-in');
   $('[data-count]').textContent = `${done}/${n}`;
 }
 
@@ -98,16 +100,23 @@ function renderPager() {
   }
 }
 
-function go(i, { scroll = true, push = true } = {}) {
+function go(i, { scroll = true, push = true, focus = true } = {}) {
   current = Math.max(0, Math.min(chapters.length - 1, i));
   chapters.forEach((c, k) => c.classList.toggle('active', k === current));
+  // Ohne bestätigten Hinweis (z. B. geteilter Direktlink) erst den Disclaimer zeigen
+  const gate = current > 0 && !state.consent;
+  $('main').classList.toggle('needs-consent', gate);
+  $('[data-consent]').hidden = !gate;
   if (!state.visited.includes(current)) state.visited.push(current);
   save();
   // Eintrag im Browserverlauf, damit die Zurück-Geste am Handy das vorige Kapitel zeigt statt die Seite zu verlassen.
   if (location.hash !== `#${chapters[current].id}`) history[push ? 'pushState' : 'replaceState'](null, '', `#${chapters[current].id}`);
   if (current === chapters.length - 1) renderSummary();
   renderPager(); renderToc(); renderProgress();
+  if (gate) pager.hidden = true;
   if (scroll) window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  // Fokus auf die neue Überschrift, damit Tastatur und Screenreader mitkommen
+  if (focus) (gate ? $('#consent-title') : $('h1, h2', chapters[current]))?.focus({ preventScroll: true });
 }
 
 function renderSummary() {
@@ -165,11 +174,16 @@ function initCheckin() {
     $('[data-step-skip]', nav).hidden = !(optional && !answered);
     $('[data-step-next]', nav).hidden = !(cur.tagName === 'FIELDSET' && answered);
   };
+  const focusStep = () => $('legend, h2', path()[idx])?.focus({ preventScroll: true });
   const step = (d) => {
     form.classList.remove('tried'); // Rot nur direkt nach einem gescheiterten Start
     $('[data-error]', form).hidden = true;
-    idx += d; render(); form.scrollIntoView({ block: 'nearest' });
+    idx += d; render(); form.scrollIntoView({ block: 'nearest' }); focusStep();
   };
+  // Automatisch weiter nur nach Tippen/Klicken – Pfeiltasten wählen in Ruhe aus
+  let viaPointer = false;
+  form.addEventListener('pointerdown', () => (viaPointer = true));
+  form.addEventListener('keydown', () => (viaPointer = false));
 
   // Rot erst nach einem Startversuch mit fehlenden Pflichtangaben
   const showErrors = () => {
@@ -190,7 +204,7 @@ function initCheckin() {
   form.addEventListener('change', (e) => {
     if (e.target.name === 'tour') syncTour();
     if (form.classList.contains('tried')) showErrors();
-    if (e.target.type === 'radio') setTimeout(() => step(1), 220); // Antwort angetippt → nächste Frage
+    if (e.target.type === 'radio' && viaPointer) setTimeout(() => step(1), 220); // Antwort angetippt → nächste Frage
     else render();
   });
   $('[data-step-back]', nav).addEventListener('click', () => step(-1));
@@ -205,20 +219,50 @@ function initCheckin() {
       render();
       const cur = list[idx];
       cur.classList.remove('shake'); void cur.offsetWidth; cur.classList.add('shake');
+      focusStep();
       return;
     }
     const d = new FormData(form);
     const tour = d.get('tour');
     state.answers = { tour, level: tour === 'voll' ? null : d.get('level'), goal: d.get('goal'), worry: d.get('worry') };
+    state.consent = true;
     applyPersonalization(state.answers);
     go(nextIndex(0, 1));
   });
 }
 
 function initChecklist() {
-  $$('[data-checklist] input').forEach((cb) => {
+  const boxes = $$('[data-checklist] input');
+  const sync = (celebrate) => {
+    const n = boxes.filter((b) => b.checked).length;
+    $('[data-steps-count]').textContent = `${n} von ${boxes.length} erledigt`;
+    const done = n === boxes.length;
+    $('[data-steps-done]').hidden = !done;
+    $('.steps-card').classList.toggle('complete', done);
+    if (done && celebrate) $('.steps-card').classList.add('celebrate');
+  };
+  boxes.forEach((cb) => {
     cb.checked = !!state.steps[cb.dataset.step];
-    cb.addEventListener('change', () => { state.steps[cb.dataset.step] = cb.checked; save(); });
+    cb.addEventListener('change', () => { state.steps[cb.dataset.step] = cb.checked; save(); sync(true); });
+  });
+  sync(false);
+}
+
+// Darstellung: automatisch (System), hell oder dunkel – lokal gemerkt
+const THEMES = { auto: 'Automatisch', light: 'Hell', dark: 'Dunkel' };
+function setTheme(t) {
+  if (t === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
+  try { t === 'auto' ? localStorage.removeItem('wtetf:theme') : localStorage.setItem('wtetf:theme', t); } catch { /* egal */ }
+  $$('[name=theme]').forEach((r) => (r.checked = r.value === t));
+  $('[data-theme-cycle]').textContent = `Darstellung: ${THEMES[t]}`;
+}
+function initTheme() {
+  const cur = () => document.documentElement.dataset.theme || 'auto';
+  setTheme(cur());
+  $$('[name=theme]').forEach((r) => r.addEventListener('change', () => setTheme(r.value)));
+  $('[data-theme-cycle]').addEventListener('click', () => {
+    const keys = Object.keys(THEMES);
+    setTheme(keys[(keys.indexOf(cur()) + 1) % keys.length]);
   });
 }
 
@@ -227,8 +271,17 @@ function initChrome() {
     const open = toc.hidden;
     toc.hidden = !open;
     menuBtn.setAttribute('aria-expanded', open);
+    if (open) $('a', toc)?.focus();
   });
   toc.addEventListener('click', (e) => { if (e.target.closest('a')) { toc.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); } });
+  $('[data-jump]').addEventListener('click', (e) => {
+    e.preventDefault();
+    go(chapters.length - 1, { scroll: false, focus: false });
+    $('#schritte').scrollIntoView({ block: 'start' });
+    $('[data-steps-count]').setAttribute('tabindex', '-1');
+    $('[data-steps-count]').focus({ preventScroll: true });
+  });
+  $('[data-consent-ok]').addEventListener('click', () => { state.consent = true; save(); go(current, { push: false }); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !toc.hidden) { toc.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus(); } });
   // Zurück geht immer genau ein Kapitel zurück; nur Weiter überspringt optionale Kapitel.
   $('[data-prev]').addEventListener('click', () => go(current - 1));
@@ -253,6 +306,7 @@ initLinks();
 initCheckin();
 initChecklist();
 initChrome();
+initTheme();
 applyPersonalization(state.answers);
 const start = chapters.findIndex((c) => `#${c.id}` === location.hash);
-go(start >= 0 ? start : 0, { scroll: false, push: false });
+go(start >= 0 ? start : 0, { scroll: false, push: false, focus: false });
