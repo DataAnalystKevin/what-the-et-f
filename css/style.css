@@ -292,12 +292,15 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .broker strong { color: var(--accent); }
 .broker small { display: block; color: var(--muted); margin-top: 4px; }
 .summary-text { hyphens: manual; white-space: pre-wrap; font: var(--fs-small)/1.55 var(--font); background: var(--bg); padding: 14px; border-radius: var(--radius); margin: 0 0 8px; max-height: 320px; overflow: auto; }
-.kofi-line { text-align: center; color: var(--muted); font-size: var(--fs-small); margin: 24px auto 0; max-width: 46ch; }
+.kofi { border: 1.5px solid var(--accent); text-align: center; margin-top: 8px; }
+.kofi h3 { margin-top: 0; }
+.kofi p { max-width: 46ch; margin: 0 auto 4px; }
+.kofi .btn-block { margin: 12px 0 0; }
 .chart .chart-strong { font-weight: 600; fill: var(--ink); }
 .chart .chart-on-fill { fill: var(--surface); }
 /* Beschriftung mit Hintergrund in Kartenfarbe – Linien laufen sichtbar dahinter durch */
 .chart .chart-halo { paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; fill: var(--ink); }
-.finale { hyphens: manual; text-wrap: balance; font-weight: 700; letter-spacing: -0.01em; font-size: clamp(1.5rem, 5.5vw, 2rem); line-height: 1.2; text-align: center; margin: 48px 0 16px; }
+.finale { hyphens: manual; text-wrap: balance; font-weight: 700; letter-spacing: -0.01em; font-size: clamp(1.5rem, 5.5vw, 2rem); line-height: 1.2; text-align: center; margin: 48px 0 32px; }
 .finale span { display: block; text-wrap: balance; }
 .finale em { color: var(--accent); }
 
@@ -335,5 +338,5 @@ main.needs-consent .chapter.active { display: none; }
   .summary { border: 0; padding: 0; }
   .summary-text { display: block; max-height: none; overflow: visible; background: none; font-size: 11pt; }
   .summary-peek > summary { display: none; }
-  .finale, .kofi-line, .consent { display: none !important; }
+  .finale, .kofi, .consent { display: none !important; }
 }
