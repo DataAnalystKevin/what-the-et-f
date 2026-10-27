@@ -51,7 +51,7 @@ MEINE NÄCHSTEN SCHRITTE
 [ ] Freistellungsauftrag einrichten
 [ ] Sparplan auf einen breiten Welt-ETF anlegen
 [ ] Laufen lassen und nicht ständig reinschauen
-[ ] Weiterlernen, kostenlos: Finanzfluss auf YouTube
+[ ] Weiterlernen – ohne dafür Geld auszugeben: Finanzfluss auf YouTube
 
 Wichtig: Das sind persönliche Erfahrungen, keine Anlageberatung.`;
 }

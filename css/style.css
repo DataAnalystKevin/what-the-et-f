@@ -292,10 +292,13 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 /* Anbieter und Hinweise unter einem Listenpunkt: bündig mit dem Text neben der Checkbox */
 .steps .brokers, .steps .step-note { margin-left: 34px; }
 /* In der Liste kompakter, damit Schritt 1 nicht ausufert */
-.steps .brokers { gap: 8px; margin-top: 8px; margin-bottom: 8px; }
+.steps .brokers { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; margin-bottom: 8px; }
 .steps .broker { padding: 12px 14px; gap: 2px; }
 .steps .broker strong { font-size: 1.125rem; }
 .steps .broker-go { margin-top: 4px; }
+.broker strong, .broker-go { hyphens: manual; }
+.broker-go { white-space: nowrap; }
+@media (max-width: 559px) { .steps .brokers { margin-left: 0; } }
 .steps .step-note { margin-top: 4px; margin-bottom: 6px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .broker { display: flex; flex-direction: column; gap: 4px; padding: 16px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .2s ease; }
