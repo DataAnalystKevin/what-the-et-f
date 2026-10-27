@@ -300,8 +300,9 @@ function initChrome() {
   $('[data-print]').addEventListener('click', () => window.print());
   $$('[data-reset]').forEach((b) => b.addEventListener('click', () => {
     if (!confirm('Fortschritt und Antworten auf diesem Gerät löschen?')) return;
+    // Adresse ohne hashchange zurücksetzen – sonst speichert go() die alten Antworten vor dem Neuladen wieder
+    history.replaceState(null, '', location.pathname);
     try { localStorage.removeItem(KEY); } catch { /* egal */ }
-    location.hash = '';
     location.reload();
   }));
   const fromHash = () => {
