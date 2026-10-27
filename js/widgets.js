@@ -203,7 +203,7 @@ function calc(w) {
   calcRender();
 }
 
-// --- Kapitel 6: Flip-Karten ----------------------------------------------
+// --- Kapitel 7: Flip-Karten ----------------------------------------------
 function flips() {
   $$('.flip').forEach((b) => {
     const sync = () => {
@@ -216,7 +216,7 @@ function flips() {
   });
 }
 
-// --- Kapitel 8: Tabs -----------------------------------------------------
+// --- Kapitel 9: Tabs -----------------------------------------------------
 function tabs(w) {
   const tabsEls = $$('[role=tab]', w);
   const select = (t) => {
@@ -239,7 +239,7 @@ function tabs(w) {
   });
 }
 
-// --- Kapitel 9: AV-Zulagen -----------------------------------------------
+// --- Kapitel 10: AV-Zulagen-----------------------------------------------
 function av(w) {
   const m = $('[data-in=monthly]', w), k = $('[data-in=kids]', w), u = $('[data-in=under25]', w);
   const render = () => {

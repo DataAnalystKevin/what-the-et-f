@@ -23,13 +23,13 @@ const PERSONAL = {
   worry: {
     verlust: 'Du hast Sorge, Geld zu verlieren – völlig normal. Kapitel 3 („Und wenn’s crasht?“) ist genau für dich gemacht.',
     kompliziert: 'Klingt kompliziert? Versprochen: Am Ende ist es ein ETF und ein Sparplan. Kapitel 5 zeigt, wie einfach das ist.',
-    zeit: 'Keine Zeit? Perfekt – ETF-Sparen kostet dich einmal eine Stunde und danach praktisch nichts mehr. Die 4 Schritte stehen in Kapitel 10.',
+    zeit: 'Keine Zeit? Perfekt – ETF-Sparen kostet dich einmal eine Stunde und danach praktisch nichts mehr. Die 4 Schritte warten am Ende auf dich.',
     geld: 'Zu wenig Geld? Schon 25 € im Monat machen einen Unterschied. Der Rechner in Kapitel 4 startet deshalb mit 25 €.',
   },
   level: { depot: 'Du hast schon ein Depot – die Grundlagen in Kapitel 1 und 2 sind für dich optional.' },
   goal: {
-    kinder: 'Weil du für deine Kinder sparen willst, gibt’s Kapitel 8 extra für dich.',
-    rente: 'Für die Rente lohnt sich besonders Kapitel 9 – das neue Altersvorsorgedepot.',
+    kinder: 'Weil du für deine Kinder sparen willst, gibt’s Kapitel 9 extra für dich.',
+    rente: 'Für die Rente lohnt sich besonders Kapitel 10 – das neue Altersvorsorgedepot.',
   },
 };
 
@@ -37,7 +37,7 @@ function applyPersonalization(a) {
   if (!a) return;
   chapters.forEach((c) => delete c.dataset.optional);
   if (a.tour !== 'voll' && a.level === 'depot') [1, 2].forEach((i) => (chapters[i].dataset.optional = 'true'));
-  if (a.tour !== 'voll' && a.goal !== 'kinder') chapters[8].dataset.optional = 'true';
+  if (a.tour !== 'voll' && a.goal !== 'kinder') $('#kapitel-9').dataset.optional = 'true';
   if (a.worry === 'geld') setCalcMonthly(25);
 
   const box = $('[data-personal]');
@@ -56,7 +56,7 @@ function renderToc() {
     const li = document.createElement('li');
     const a = document.createElement('a');
     a.href = `#${c.id}`;
-    a.innerHTML = `<span class="tick">${state.visited.includes(i) ? '✓' : i}</span><span></span>${isOptional(i) ? '<span class="opt">optional</span>' : ''}`;
+    a.innerHTML = `<span class="tick">${state.visited.includes(i) ? '✓' : c.classList.contains('outro') ? '→' : i}</span><span></span>${isOptional(i) ? '<span class="opt">optional</span>' : ''}`;
     a.children[1].textContent = c.dataset.title;
     if (i === current) a.setAttribute('aria-current', 'step');
     li.append(a);
@@ -65,14 +65,15 @@ function renderToc() {
 }
 
 function renderProgress() {
-  const n = chapters.length - 1;
-  const done = current; // Position, nicht Anzahl besuchter Kapitel – geht beim Zurückblättern mit zurück
+  const n = chapters.length - 2; // Lektionen ohne Check-in und Abschlussseite
+  const done = Math.min(current, n); // Position, nicht Anzahl besuchter Kapitel – geht beim Zurückblättern mit zurück
+  const outro = current > n;
   const pts = ['0,9'];
   for (let k = 1; k <= done; k++) pts.push(`${(k / n) * 100},${(9 - (k / n) * 8 + (k % 2 ? 0.8 : -0.4)).toFixed(2)}`);
   $('.progress-line').setAttribute('points', pts.join(' '));
   $('.progress').setAttribute('aria-valuenow', Math.round((done / n) * 100));
-  $('.progress').setAttribute('aria-valuetext', done ? `Kapitel ${done} von ${n}` : 'Check-in');
-  $('[data-count]').textContent = `${done}/${n}`;
+  $('.progress').setAttribute('aria-valuetext', outro ? 'Alle Kapitel gelesen – nächste Schritte' : done ? `Kapitel ${done} von ${n}` : 'Check-in');
+  $('[data-count]').textContent = outro ? 'fertig' : `${done}/${n}`;
 }
 
 function nextIndex(from, dir) {
