@@ -32,6 +32,15 @@
         "value": "fraunces",
         "createdAt": "2026-10-26T21:56:55.438Z",
         "reason": "Fonts named in the design spec the user approved on 2026-10-26"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-27T07:30:19.908Z",
+        "reason": "Claude: only hit is .compare grid rows; every cell span has 10px padding, text is inset"
       }
     ]
   }
