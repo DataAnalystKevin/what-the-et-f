@@ -89,7 +89,7 @@ function renderPager() {
   prev.disabled = current === 0;
   const n = nextIndex(current, 1);
   next.hidden = n >= chapters.length;
-  if (n < chapters.length) next.textContent = `Weiter: ${chapters[n].dataset.title}\u00a0→`;
+  if (n < chapters.length) { next.textContent = 'Weiter\u00a0→'; next.append(Object.assign(document.createElement('small'), { textContent: chapters[n].dataset.title })); }
   $('.skip-link', pager)?.remove();
   if (n > current + 1) {
     const s = document.createElement('button');
