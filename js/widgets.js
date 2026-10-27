@@ -49,7 +49,8 @@ function basket(w) {
     $('[data-result]', w).textContent = crashed
       ? 'Einzelaktie: −100 %. Welt-ETF: hier nur −0,08 %, denn die Firma war eine von rund 1.250. (Wie viel genau, hängt von ihrer Größe im Index ab – spürbar ist es kaum.)'
       : '';
-    btn.textContent = crashed ? 'Nochmal' : 'Firma geht pleite (à la Wirecard)';
+    btn.textContent = crashed ? 'Nochmal von vorn' : 'Probier’s aus: Lass eine Firma pleitegehen (à la Wirecard) →';
+    btn.classList.toggle('btn-primary', !crashed); // nach dem Klick zurückhaltend – die Aktion ist erledigt
   });
 }
 
