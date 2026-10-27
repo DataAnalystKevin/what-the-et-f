@@ -29,7 +29,7 @@
     <div class="topbar-inner">
       <a class="logo" href="#kapitel-0" aria-label="What the (ET)F? – zum Anfang">What the (<span>ET</span>)F?</a>
       <div class="progress" role="progressbar" aria-label="Fortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Check-in">
-        <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><polyline class="progress-line" points="0,9"/></svg>
+        <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><line class="progress-track" x1="0" y1="9" x2="100" y2="9"/><polyline class="progress-line" points="0,9"/></svg>
         <span class="progress-count" data-count aria-hidden="true">0/10</span>
       </div>
       <button class="menu-btn" type="button" aria-controls="toc" aria-expanded="false">Menü</button>
@@ -37,7 +37,7 @@
   </header>
 
   <nav id="toc" class="toc" hidden aria-label="Menü">
-    <a class="toc-jump" href="#kapitel-10" data-jump>Direkt zu den 4 Schritten →</a>
+    <a class="toc-jump" href="#kapitel-10" data-jump><span>Direkt zu den 4 Schritten →</span><small>Depot eröffnen, Sparplan einrichten – zum Abhaken in Kapitel 10</small></a>
     <p class="toc-label">Kapitel</p>
     <ol></ol>
     <fieldset class="theme-pick">
@@ -246,15 +246,15 @@
 
       <div class="card mine">
         <h3>Zwei gute Kandidaten – such dir <em>einen</em> aus</h3>
-        <p>Beide erfüllen alle vier Kriterien, stammen von zwei verschiedenen großen Anbietern und sind bei fast jedem Broker als Sparplan zu haben. Du brauchst nur einen davon.</p>
+        <p>Beide erfüllen die vier Kriterien, auf die es ankommt: <strong>breit gestreut, günstig, thesaurierend</strong> (das „Acc“ im Namen) <strong>und groß</strong>. Sie stammen von zwei verschiedenen Anbietern und sind bei fast jedem Broker als Sparplan zu haben. Du brauchst nur einen davon.</p>
         <div class="etf-table" role="table" aria-label="Zwei Welt-ETFs zur Auswahl">
           <div role="row" class="etf-row">
             <div role="cell"><strong>Vanguard FTSE All-World (Acc)</strong><br><span class="mono">WKN A2PKXG · ISIN IE00BK5BQT80</span></div>
-            <div role="cell"><span class="pill">ca. 3.700 Firmen</span> <span class="pill">TER 0,14 %</span> <span class="pill">Industrie- + Schwellenländer</span></div>
+            <div role="cell"><span class="pill">ca. 3.700 Firmen</span> <span class="pill">Kosten 0,14&nbsp;% pro Jahr</span> <span class="pill">Industrie- + Schwellenländer</span></div>
           </div>
           <div role="row" class="etf-row">
             <div role="cell"><strong>iShares Core MSCI World (Acc)</strong><br><span class="mono">WKN A0RPWH · ISIN IE00B4L5Y983</span></div>
-            <div role="cell"><span class="pill">ca. 1.250 Firmen</span> <span class="pill">TER 0,20 %</span> <span class="pill">nur Industrieländer</span></div>
+            <div role="cell"><span class="pill">ca. 1.250 Firmen</span> <span class="pill">Kosten 0,20&nbsp;% pro Jahr</span> <span class="pill">nur Industrieländer</span></div>
           </div>
         </div>
         <p><strong>Welchen?</strong> Willst du die ganze Welt inklusive Schwellenländern wie China und Indien, nimm den All-World. Reichen dir die Industrieländer, nimm den MSCI World. Beides ist eine gute Wahl. Wichtiger als die Entscheidung ist, dass du anfängst.</p>
@@ -262,13 +262,6 @@
         <p class="fineprint">Das sind Beispiele, die ich guten Gewissens nennen würde, keine Anlageberatung. Ich verdiene an keinem der Anbieter etwas. Es gibt gleichwertige Alternativen anderer Anbieter, teils sogar noch günstiger.</p>
       </div>
 
-      <h3>Woran du einen guten ETF erkennst</h3>
-      <ul class="checks">
-        <li><strong>Breit gestreut:</strong> tausende Firmen aus vielen Ländern und Branchen.</li>
-        <li><strong>Günstig:</strong> laufende Kosten (TER) unter 0,25&nbsp;% pro Jahr.</li>
-        <li><strong>Thesaurierend:</strong> Dividenden werden automatisch wieder angelegt.</li>
-        <li><strong>Groß und bewährt:</strong> mehrere Milliarden Euro Fondsvolumen.</li>
-      </ul>
       <details class="more">
         <summary>Die vier Kriterien genauer erklärt</summary>
         <p><strong>Breit gestreut.</strong> Ein Index über die ganze Welt mit tausenden Firmen, vielen Ländern und Branchen. Der <strong>MSCI World</strong> deckt Industrieländer ab (ca. 1.250 Firmen). <strong>FTSE All-World</strong> oder <strong>MSCI ACWI</strong> nehmen zusätzlich Schwellenländer wie China, Indien und Brasilien mit. Finger weg von Nischen wie nur DAX, nur „Green Energy“ oder nur KI: höheres Risiko, ohne dass du dafür mehr Rendite erwarten kannst.</p>
@@ -442,13 +435,17 @@
 
       <div class="steps-card" id="schritte">
         <p class="steps-count" data-steps-count aria-live="polite">0 von 4 erledigt</p>
+        <p class="steps-when">Heute</p>
         <ol class="steps" data-checklist>
           <li><label class="check"><input type="checkbox" data-step="depot"><span><strong>Depot eröffnen</strong> – bei einem Online-Broker oder einer Direktbank, nicht bei der Filialbank. Dauert ca. 15 Minuten inklusive Video-Ident.</span></label></li>
+        </ol>
+        <p class="steps-when">Danach, in Ruhe</p>
+        <ol class="steps" data-checklist start="2">
           <li><label class="check"><input type="checkbox" data-step="freistellung"><span><strong>Freistellungsauftrag</strong> stellen (1.000 € bzw. 2.000 €).</span></label></li>
           <li><label class="check"><input type="checkbox" data-step="sparplan"><span><strong>Sparplan</strong> auf einen breiten, günstigen, thesaurierenden Welt-ETF einrichten. Lieber klein anfangen als gar nicht.</span></label></li>
           <li><label class="check"><input type="checkbox" data-step="vergessen"><span><strong>Laufen lassen.</strong> Einmal im Jahr reinschauen reicht völlig.</span></label></li>
         </ol>
-        <p class="steps-done" data-steps-done hidden>Geschafft. Ab jetzt arbeitet dein Geld für dich – und deine einzige Aufgabe ist, nichts zu tun.</p>
+        <p class="steps-done" data-steps-done hidden></p>
       </div>
 
       <h3>Wo eröffnen?</h3>
@@ -456,14 +453,13 @@
       <div class="brokers" data-brokers hidden></div>
       <p><strong>Weiterlernen, kostenlos:</strong> Wenn du tiefer einsteigen willst, kann ich dir den YouTube-Kanal <a href="https://www.youtube.com/@Finanzfluss" rel="noopener" target="_blank">Finanzfluss</a> von Thomas Kehl uneingeschränkt empfehlen. Für dieses Thema brauchst du keine kostenpflichtigen Seminare oder Coachings.</p>
 
-      <blockquote class="finale">
-        <span>Der beste Zeitpunkt anzufangen war gestern.</span> <span>Der zweitbeste ist <em>heute</em>.</span>
-      </blockquote>
-
       <div class="card summary" id="zusammenfassung">
         <h3>Alles auf einer Seite</h3>
         <p class="no-print">Die wichtigsten Punkte, deine Rechnung aus Kapitel 4 und die 4 Schritte – zum Nachlesen, wann immer du willst.</p>
-        <pre class="summary-text" data-summary></pre>
+        <details class="more summary-peek" data-summary-peek>
+          <summary>Zusammenfassung ansehen</summary>
+          <pre class="summary-text" data-summary></pre>
+        </details>
         <div class="btn-row no-print">
           <a class="btn btn-primary" data-mail href="#">An mich mailen</a>
           <button class="btn" type="button" data-print>Als PDF speichern</button>
@@ -472,6 +468,10 @@
       </div>
 
       <p class="kofi-line" data-kofi hidden>Hat’s dir geholfen? Die Seite ist kostenlos und werbefrei. Wenn du magst: <a data-kofi-link href="#" rel="noopener" target="_blank">einen Kaffee auf Ko&#8209;fi spendieren</a>.</p>
+
+      <blockquote class="finale">
+        <span>Der beste Zeitpunkt anzufangen war gestern.</span> <span>Der zweitbeste ist <em>heute</em>.</span>
+      </blockquote>
     </section>
 
     <nav class="pager" aria-label="Kapitel blättern" hidden>
@@ -482,7 +482,7 @@
 
   <footer class="footer">
     <p><strong>Meine persönlichen Erfahrungen – keine Anlageberatung.</strong> Alle Angaben ohne Gewähr, Stand Oktober 2026.</p>
-    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <button class="link-btn" type="button" data-theme-cycle>Darstellung: Automatisch</button> · <button class="link-btn" type="button" data-reset>Fortschritt zurücksetzen</button></p>
+    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <button class="link-btn" type="button" data-theme-open>Darstellung: Automatisch</button> · <button class="link-btn" type="button" data-reset>Fortschritt zurücksetzen</button></p>
   </footer>
 </body>
 </html>

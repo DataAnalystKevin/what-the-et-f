@@ -49,7 +49,7 @@ function basket(w) {
     $('[data-result]', w).textContent = crashed
       ? 'Einzelaktie: −100 %. Welt-ETF: hier nur −0,08 %, denn die Firma war eine von rund 1.250. (Wie viel genau, hängt von ihrer Größe im Index ab – spürbar ist es kaum.)'
       : '';
-    btn.textContent = crashed ? '↺ Nochmal' : '💥 Firma geht pleite (à la Wirecard)';
+    btn.textContent = crashed ? 'Nochmal' : 'Firma geht pleite (à la Wirecard)';
   });
 }
 
@@ -95,7 +95,7 @@ function crash(w) {
     result.innerHTML = c === 'hold'
       ? 'Gute Nerven! Ende 2020 lag dein Depot schon wieder bei ca. 10.600 €, Ende 2021 bei ca. 13.900 €. Die Pandemie war aus Anlegersicht nach rund einem Jahr Geschichte.'
       : 'Du hast 7.200 € gerettet – und 2.800 € Verlust endgültig gemacht. Wer liegen ließ, hatte Ende 2021 ca. 13.900 €. Und ehrlich: Wann hättest du dich getraut, wieder einzusteigen?';
-    const again = Object.assign(document.createElement('button'), { type: 'button', className: 'link-btn', textContent: '↺ Nochmal von vorn' });
+    const again = Object.assign(document.createElement('button'), { type: 'button', className: 'link-btn', textContent: 'Nochmal von vorn' });
     again.onclick = () => { draw(); step.hidden = false; result.textContent = ''; $('[data-choice]', w).focus(); };
     result.append(document.createElement('br'), again);
     result.focus(); // Der geklickte Button verschwindet – Fokus aufs Ergebnis
@@ -230,8 +230,10 @@ function tabs(w) {
   tabsEls.forEach((t, i) => {
     t.addEventListener('click', () => select(t));
     t.addEventListener('keydown', (e) => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      const n = tabsEls[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabsEls.length) % tabsEls.length];
+      const k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabsEls.length - 1 }[e.key];
+      if (k === undefined) return;
+      e.preventDefault();
+      const n = tabsEls[(k + tabsEls.length) % tabsEls.length];
       select(n); n.focus();
     });
   });

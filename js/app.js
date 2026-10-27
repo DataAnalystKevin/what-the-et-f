@@ -107,7 +107,7 @@ function go(i, { scroll = true, push = true, focus = true } = {}) {
   const gate = current > 0 && !state.consent;
   $('main').classList.toggle('needs-consent', gate);
   $('[data-consent]').hidden = !gate;
-  if (!state.visited.includes(current)) state.visited.push(current);
+  if (!gate && !state.visited.includes(current)) state.visited.push(current);
   save();
   // Eintrag im Browserverlauf, damit die Zurück-Geste am Handy das vorige Kapitel zeigt statt die Seite zu verlassen.
   if (location.hash !== `#${chapters[current].id}`) history[push ? 'pushState' : 'replaceState'](null, '', `#${chapters[current].id}`);
@@ -237,9 +237,16 @@ function initChecklist() {
     const n = boxes.filter((b) => b.checked).length;
     $('[data-steps-count]').textContent = `${n} von ${boxes.length} erledigt`;
     const done = n === boxes.length;
-    $('[data-steps-done]').hidden = !done;
+    const depot = boxes[0].checked;
+    // Schon Schritt 1 verdient Zuspruch – er ist der einzige, der Überwindung kostet
+    const msg = done ? 'Geschafft. Ab jetzt arbeitet dein Geld für dich – und deine einzige Aufgabe ist, nichts zu tun.'
+      : depot ? 'Stark – der schwierigste Schritt ist geschafft. Der Rest ist Routine und dauert zusammen keine halbe Stunde.' : '';
+    const out = $('[data-steps-done]');
+    const changed = out.textContent !== msg;
+    out.textContent = msg;
+    out.hidden = !msg;
     $('.steps-card').classList.toggle('complete', done);
-    if (done && celebrate) $('.steps-card').classList.add('celebrate');
+    if (celebrate && changed && msg) { out.classList.remove('rise'); void out.offsetWidth; out.classList.add('rise'); }
   };
   boxes.forEach((cb) => {
     cb.checked = !!state.steps[cb.dataset.step];
@@ -248,32 +255,36 @@ function initChecklist() {
   sync(false);
 }
 
+function openMenu() { toc.hidden = false; menuBtn.setAttribute('aria-expanded', 'true'); }
+function closeMenu() { toc.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); }
+
 // Darstellung: automatisch (System), hell oder dunkel – lokal gemerkt
 const THEMES = { auto: 'Automatisch', light: 'Hell', dark: 'Dunkel' };
 function setTheme(t) {
   if (t === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
   try { t === 'auto' ? localStorage.removeItem('wtetf:theme') : localStorage.setItem('wtetf:theme', t); } catch { /* egal */ }
   $$('[name=theme]').forEach((r) => (r.checked = r.value === t));
-  $('[data-theme-cycle]').textContent = `Darstellung: ${THEMES[t]}`;
+  $('[data-theme-open]').textContent = `Darstellung: ${THEMES[t]}`;
 }
 function initTheme() {
   const cur = () => document.documentElement.dataset.theme || 'auto';
   setTheme(cur());
   $$('[name=theme]').forEach((r) => r.addEventListener('change', () => setTheme(r.value)));
-  $('[data-theme-cycle]').addEventListener('click', () => {
-    const keys = Object.keys(THEMES);
-    setTheme(keys[(keys.indexOf(cur()) + 1) % keys.length]);
-  });
+  // Footer-Link öffnet das Menü bei der Darstellungswahl – eine Stelle, ein Verhalten
+  $('[data-theme-open]').addEventListener('click', () => { openMenu(); $('[name=theme]:checked').focus(); });
 }
 
 function initChrome() {
-  menuBtn.addEventListener('click', () => {
-    const open = toc.hidden;
-    toc.hidden = !open;
-    menuBtn.setAttribute('aria-expanded', open);
-    if (open) $('a', toc)?.focus();
-  });
-  toc.addEventListener('click', (e) => { if (e.target.closest('a')) { toc.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); } });
+  menuBtn.addEventListener('click', () => (toc.hidden ? (openMenu(), $('a', toc)?.focus()) : closeMenu()));
+  toc.addEventListener('click', (e) => { if (e.target.closest('a')) closeMenu(); });
+  // Schließen bei Klick daneben oder wenn der Fokus das Menü verlässt
+  document.addEventListener('pointerdown', (e) => { if (!toc.hidden && !toc.contains(e.target) && !menuBtn.contains(e.target) && !e.target.closest('[data-theme-open]')) closeMenu(); });
+  toc.addEventListener('focusout', (e) => { if (e.relatedTarget && !toc.contains(e.relatedTarget) && e.relatedTarget !== menuBtn) closeMenu(); });
+  // PDF enthält die Zusammenfassung immer, auch wenn sie zugeklappt ist
+  const peek = $('[data-summary-peek]');
+  let wasOpen = false;
+  window.addEventListener('beforeprint', () => { wasOpen = peek.open; peek.open = true; });
+  window.addEventListener('afterprint', () => { peek.open = wasOpen; });
   $('[data-jump]').addEventListener('click', (e) => {
     e.preventDefault();
     go(chapters.length - 1, { scroll: false, focus: false });
@@ -282,7 +293,7 @@ function initChrome() {
     $('[data-steps-count]').focus({ preventScroll: true });
   });
   $('[data-consent-ok]').addEventListener('click', () => { state.consent = true; save(); go(current, { push: false }); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !toc.hidden) { toc.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus(); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !toc.hidden) { closeMenu(); menuBtn.focus(); } });
   // Zurück geht immer genau ein Kapitel zurück; nur Weiter überspringt optionale Kapitel.
   $('[data-prev]').addEventListener('click', () => go(current - 1));
   $('[data-next]').addEventListener('click', () => go(nextIndex(current, 1)));
