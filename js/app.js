@@ -25,11 +25,12 @@ const PERSONAL = {
     kompliziert: 'Klingt kompliziert? Versprochen: Am Ende ist es ein ETF und ein Sparplan. Kapitel 5 zeigt, wie einfach das ist.',
     zeit: 'Keine Zeit? Perfekt – ETF-Sparen ist einmal kurz eingerichtet und kostet dich danach praktisch keine Zeit mehr. Die 5 Schritte warten am Ende auf dich.',
     geld: 'Zu wenig Geld? Schon 25 € im Monat machen einen Unterschied. Der Rechner in Kapitel 4 startet deshalb mit 25 €.',
+    nichts: 'Du willst dein Wissen auffrischen? Sehr gut – blätter ruhig zügig durch. Auf der letzten Seite steht alles noch mal kompakt zusammengefasst.',
   },
   level: { depot: 'Du hast schon ein Depot – die Grundlagen in Kapitel 1 und 2 sind für dich optional.' },
   goal: {
     kinder: 'Weil du für deine Kinder sparen willst, gibt’s Kapitel 9 extra für dich.',
-    rente: 'Für die Rente lohnt sich besonders Kapitel 10 – das neue Altersvorsorgedepot.',
+    rente: 'Für die Rente lohnen sich besonders Kapitel 10 und 11 – das neue Altersvorsorgedepot und wo du es am besten abschließt.',
   },
 };
 
@@ -41,7 +42,7 @@ function applyPersonalization(a) {
   if (a.worry === 'geld') setCalcMonthly(25);
 
   const box = $('[data-personal]');
-  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 10 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
+  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 11 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
   box.replaceChildren(...[levelNote, PERSONAL.goal[a.goal], PERSONAL.worry[a.worry]]
     .filter(Boolean).map((t) => Object.assign(document.createElement('p'), { textContent: t })));
   box.hidden = false;

@@ -40,6 +40,7 @@ DAS WICHTIGSTE
 4. Zeit ist dein größter Hebel: Zinseszins wirkt erst spät, dann aber gewaltig.
 5. Worauf achten: breit gestreut, günstig (niedrige TER), thesaurierend, großes Fondsvolumen.
 6. Finger weg von: Market Timing, teuren Bankprodukten, Einzelaktien-Wetten, Themen-ETFs, teuren Finanz-Seminaren und Coachings.
+7. Ab 2027: Altersvorsorgedepot mit 150 € im Monat → volle Zulage. Günstig bei einem Neobroker, mit einem Welt-ETF.
 
 MEINE RECHNUNG
 ${eur(monthly)} pro Monat, ${years} Jahre, ${pct} % pro Jahr
