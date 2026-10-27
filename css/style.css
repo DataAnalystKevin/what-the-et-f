@@ -17,6 +17,8 @@
   --danger-soft: #F7E5E3;
   --band: #1F2421;
   --paid: #3B5B92;
+  --gold: #B08A2E;          /* Rahmen für die empfohlene Wahl */
+  --gold-ink: #7E6114;      /* Gold als Schrift, kontraststark */
   --radius: 6px;          /* eine Form für Karten, Buttons, Pillen, Felder */
   --font: 'Literata', Charter, 'Iowan Old Style', Georgia, serif;
   --fs-meta: .8125rem;   /* 13px Kleingedrucktes, Labels */
@@ -33,7 +35,7 @@
     --bg: #151916; --surface: #1D2320; --ink: #ECEAE4; --muted: #A3ABA6; --line: #2E3631;
     --accent: #5FBF94; --accent-soft: #1F3A2F; --accent-ink: #0E1311; --accent-fill: #469873;
     --tile: #262D29;
-    --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9;
+    --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9; --gold: #D4AF5A; --gold-ink: #E2C47A;
     color-scheme: dark;
   }
 }
@@ -41,7 +43,7 @@
   --bg: #151916; --surface: #1D2320; --ink: #ECEAE4; --muted: #A3ABA6; --line: #2E3631;
   --accent: #5FBF94; --accent-soft: #1F3A2F; --accent-ink: #0E1311; --accent-fill: #469873;
   --tile: #262D29;
-  --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9;
+  --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9; --gold: #D4AF5A; --gold-ink: #E2C47A;
   color-scheme: dark;
 }
 
@@ -322,6 +324,8 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .broker { display: flex; flex-direction: column; gap: 4px; padding: 16px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .2s ease; }
 .broker:hover, .broker:focus-visible { border-color: var(--accent); }
+.broker.broker-top, .broker.broker-top:hover { border: 2px solid var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 18%, transparent); }
+.broker-pick { font-size: var(--fs-meta); color: var(--gold-ink); font-weight: 600; }
 .broker strong { font-size: var(--fs-h3); line-height: 1.2; }
 .broker strong small { font-size: var(--fs-meta); font-weight: 400; color: var(--muted); }
 .broker-kind { font-size: var(--fs-meta); color: var(--muted); }
