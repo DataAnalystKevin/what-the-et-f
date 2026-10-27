@@ -23,7 +23,7 @@ const PERSONAL = {
   worry: {
     verlust: 'Du hast Sorge, Geld zu verlieren – völlig normal. Kapitel 3 („Und wenn’s crasht?“) ist genau für dich gemacht.',
     kompliziert: 'Klingt kompliziert? Versprochen: Am Ende ist es ein ETF und ein Sparplan. Kapitel 5 zeigt, wie einfach das ist.',
-    zeit: 'Keine Zeit? Perfekt – ETF-Sparen kostet dich einmal eine Stunde und danach praktisch nichts mehr. Die 4 Schritte warten am Ende auf dich.',
+    zeit: 'Keine Zeit? Perfekt – ETF-Sparen kostet dich einmal eine Stunde und danach praktisch nichts mehr. Die 5 Schritte warten am Ende auf dich.',
     geld: 'Zu wenig Geld? Schon 25 € im Monat machen einen Unterschied. Der Rechner in Kapitel 4 startet deshalb mit 25 €.',
   },
   level: { depot: 'Du hast schon ein Depot – die Grundlagen in Kapitel 1 und 2 sind für dich optional.' },
