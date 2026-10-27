@@ -112,7 +112,7 @@ function horizon(w) {
   const svg = $('[data-chart]', w);
   const W = 320, P = 12;
   const x = (v) => P + ((v + 45) / 100) * (W - 2 * P); // Achse −45 % … +55 %
-  const fmt = (v) => `${v > 0 ? '+' : ''}${v.toLocaleString('de-DE', { minimumFractionDigits: 1 })} %`;
+  const fmt = (v) => `${v > 0 ? '+' : ''}${v.toLocaleString('de-DE', { minimumFractionDigits: 1 }).replace('-', '−')} %`; // echtes Minus
   const render = () => {
     const [years, min, avg, max] = HORIZON[+input.value];
     $('[data-out=years]', w).textContent = `${years} ${years === 1 ? 'Jahr' : 'Jahre'}`;
@@ -209,7 +209,7 @@ function worries(w) {
   const cards = $$('.worry', w);
   const seen = new Set(); // einmal aufgedeckt zählt als entkräftet, auch wenn wieder zugeklappt
   const sync = () => {
-    $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen entkräftet`;
+    $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen geprüft`;
     $$('.worry-bar i', w).forEach((seg, i) => seg.classList.toggle('on', i < seen.size));
     const done = $('[data-worries-done]', w);
     if (seen.size === cards.length && done.hidden) { done.hidden = false; done.classList.add('rise'); }
@@ -217,12 +217,14 @@ function worries(w) {
   cards.forEach((card, i) => {
     const btn = $('.worry-btn', card);
     const answer = $('.worry-a', card);
+    const q = $('.worry-q', card).textContent;
     btn.addEventListener('click', () => {
       const open = btn.getAttribute('aria-expanded') !== 'true';
       btn.setAttribute('aria-expanded', open);
       answer.hidden = !open;
       card.classList.toggle('open', open);
       btn.textContent = open ? 'Zuklappen' : 'Nochmal lesen';
+      btn.setAttribute('aria-label', `${btn.textContent}: ${q}`); // Screenreader: wovon
       if (open) { seen.add(i); card.classList.add('resolved'); answer.classList.remove('rise'); void answer.offsetWidth; answer.classList.add('rise'); }
       sync();
     });
@@ -289,7 +291,14 @@ function av(w) {
 }
 
 const WIDGETS = { inflation, basket, crash, horizon, calc, worries, tabs, av };
+// Diagramm-Text in fester Größe: --u = viewBox-Breite / gerenderte Breite (greift auch, sobald ein Kapitel sichtbar wird)
+const chartScale = new ResizeObserver((entries) => entries.forEach((e) => {
+  const vb = e.target.viewBox.baseVal.width;
+  if (e.contentRect.width) e.target.style.setProperty('--u', (vb / e.contentRect.width).toFixed(3));
+}));
+
 export function initWidgets() {
+  $$('svg.chart').forEach((svg) => chartScale.observe(svg));
   $$('[data-widget]').forEach((w) => WIDGETS[w.dataset.widget]?.(w));
   flips();
 }

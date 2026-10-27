@@ -28,7 +28,7 @@
           "index.html"
         ],
         "createdAt": "2026-10-27T07:30:19.908Z",
-        "reason": "Claude: only hit is .compare grid rows; every cell span has 10px padding, text is inset"
+        "reason": "Claude: hits are grid/flex wrappers (.compare rows, .card, .worries-head) whose children carry their own padding; rendered text is inset in light and dark (critique 2026-10-27)"
       }
     ]
   }
