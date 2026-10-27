@@ -287,10 +287,15 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .steps li { border-top: 1px solid var(--line); padding: 6px 0; }
 .steps li:first-child { border-top: 0; }
 .steps input:checked + span { color: var(--muted); }
-.brokers { display: grid; gap: 10px; margin: 12px 0 24px; }
-.broker { display: block; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none; }
-.broker strong { color: var(--accent); }
-.broker small { display: block; color: var(--muted); margin-top: 4px; }
+.brokers { display: grid; gap: 10px; margin: 12px 0 10px; }
+@media (min-width: 720px) { .brokers { grid-template-columns: repeat(3, 1fr); } }
+.broker { display: flex; flex-direction: column; gap: 4px; padding: 16px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .2s ease; }
+.broker:hover, .broker:focus-visible { border-color: var(--accent); }
+.broker strong { font-size: var(--fs-h3); line-height: 1.2; }
+.broker strong small { font-size: var(--fs-meta); font-weight: 400; color: var(--muted); }
+.broker-kind { font-size: var(--fs-meta); color: var(--muted); }
+.broker > span:not([class]) { font-size: var(--fs-small); flex: 1; }
+.broker-go { margin-top: 8px; color: var(--accent); font-weight: 600; }
 .summary-text { hyphens: manual; white-space: pre-wrap; font: var(--fs-small)/1.55 var(--font); background: var(--bg); padding: 14px; border-radius: var(--radius); margin: 0 0 8px; max-height: 320px; overflow: auto; }
 .kofi { border: 1.5px solid var(--accent); text-align: center; margin-top: 8px; }
 .kofi h3 { margin-top: 0; }

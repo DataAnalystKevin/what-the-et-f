@@ -5,9 +5,4 @@ export default {
 
   kofi: 'https://ko-fi.com/wasdutunkannst',
 
-  // Referral-Links: URL eintragen, sobald du deinen persönlichen Link hast.
-  brokers: [
-    { name: 'Trade Republic', url: '', text: 'Kostenlose Sparpläne, sehr einfache App, Kinderdepot möglich.' },
-    { name: 'Scalable Capital', url: '', text: 'Kostenlose Sparpläne, große ETF-Auswahl, Kinderdepot möglich.' },
-  ],
 };

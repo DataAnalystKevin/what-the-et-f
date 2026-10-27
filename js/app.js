@@ -129,19 +129,6 @@ function renderSummary() {
 }
 
 function initLinks() {
-  const list = config.brokers.filter((b) => b.url);
-  if (list.length) {
-    const wrap = $('[data-brokers]');
-    wrap.innerHTML = '<p class="fineprint">Affiliate-Links: Wenn du darüber ein Depot eröffnest, bekomme ich ggf. eine kleine Prämie – für dich ändert sich nichts, oft gibt’s sogar einen Bonus.</p>';
-    list.forEach((b) => {
-      const a = Object.assign(document.createElement('a'), { className: 'broker', href: b.url, target: '_blank', rel: 'noopener sponsored' });
-      a.innerHTML = '<strong></strong> <span>(Affiliate-Link)</span><small></small>';
-      a.querySelector('strong').textContent = b.name;
-      a.querySelector('small').textContent = b.text;
-      wrap.append(a);
-    });
-    wrap.hidden = false;
-  }
   if (config.kofi) { $('[data-kofi-link]').href = config.kofi; $('[data-kofi]').hidden = false; }
   $$('[data-stand]').forEach((b) => (b.textContent = `Stand: ${config.stand}`));
 }
