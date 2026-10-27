@@ -204,7 +204,33 @@ function calc(w) {
   calcRender();
 }
 
-// --- Kapitel 7: Flip-Karten ----------------------------------------------
+// --- Kapitel 6: Sorgen-Check ---------------------------------------------
+function worries(w) {
+  const cards = $$('.worry', w);
+  const seen = new Set(); // einmal aufgedeckt zählt als entkräftet, auch wenn wieder zugeklappt
+  const sync = () => {
+    $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen entkräftet`;
+    $$('.worry-bar i', w).forEach((seg, i) => seg.classList.toggle('on', i < seen.size));
+    const done = $('[data-worries-done]', w);
+    if (seen.size === cards.length && done.hidden) { done.hidden = false; done.classList.add('rise'); }
+  };
+  cards.forEach((card, i) => {
+    const btn = $('.worry-btn', card);
+    const answer = $('.worry-a', card);
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', open);
+      answer.hidden = !open;
+      card.classList.toggle('open', open);
+      btn.textContent = open ? 'Zuklappen' : 'Nochmal lesen';
+      if (open) { seen.add(i); card.classList.add('resolved'); answer.classList.remove('rise'); void answer.offsetWidth; answer.classList.add('rise'); }
+      sync();
+    });
+  });
+  sync();
+}
+
+// --- Kapitel 7: Flip-Karten----------------------------------------------
 function flips() {
   $$('.flip').forEach((b) => {
     const sync = () => {
@@ -262,7 +288,7 @@ function av(w) {
   render();
 }
 
-const WIDGETS = { inflation, basket, crash, horizon, calc, tabs, av };
+const WIDGETS = { inflation, basket, crash, horizon, calc, worries, tabs, av };
 export function initWidgets() {
   $$('[data-widget]').forEach((w) => WIDGETS[w.dataset.widget]?.(w));
   flips();
