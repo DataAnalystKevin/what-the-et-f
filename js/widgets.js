@@ -84,7 +84,7 @@ function crash(w) {
       svg.append(svgEl('text', { x: W - P.r, y: y(end) - 6, 'text-anchor': 'end' }, `${eur(end * 100)}`));
     }
     svg.append(svgEl('circle', { cx: x(2.75), cy: y(72), r: 4, fill: 'var(--danger)' }),
-      svgEl('text', { x: x(2.75) + 7, y: y(72) + 3 }, 'März 2020: −34 %'));
+      svgEl('text', { x: x(2.75) + 7, y: y(72) + 4, class: 'chart-halo' }, 'März 2020: −34 %'));
   };
 
   const result = $('[data-result]', w);
