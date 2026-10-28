@@ -35,19 +35,55 @@ function inflation(w) {
 }
 
 // --- Kapitel 2: Obstkorb --------------------------------------------------
+// Ein Apfel im 20×20-Raster; der äußere <g> positioniert, der innere fault per CSS.
+const apple = (x, y, size, kind) => `<g transform="translate(${x - size / 2} ${y - size / 2}) scale(${size / 20})"><g class="apple ${kind}">
+  <path class="apple-body" d="M10 6.2C8.4 4.9 3.2 4.6 2.6 9.6 2.1 14 5 18.6 7.6 18.9c1 .1 1.6-.4 2.4-.4s1.4.5 2.4.4c2.6-.3 5.5-4.9 5-9.3C16.8 4.6 11.6 4.9 10 6.2z"/>
+  <path class="apple-stem" d="M10 6.4C10 4.6 10.6 3 11.6 1.8"/>
+  <path class="apple-leaf" d="M10.8 3.6c1.2-1.6 3.4-2 4.8-1.4-.8 1.6-3 2.4-4.8 1.4z"/>
+  <ellipse class="apple-shine" cx="6.2" cy="10" rx="1.1" ry="2" transform="rotate(20 6.2 10)"/>
+  <circle class="apple-spot" cx="12.4" cy="12.6" r="1.9"/><circle class="apple-spot" cx="8" cy="15.4" r="1.2"/>
+</g></g>`;
+
+// 100 Äpfel als gewölbter Haufen, von unten nach oben.
+function basketApples() {
+  const rows = [14, 14, 13, 13, 12, 11, 10, 8, 5];
+  const out = [];
+  rows.forEach((n, r) => {
+    for (let k = 0; k < n; k++) {
+      const i = out.length;
+      const jitter = (((i * 37) % 5) - 2) * 0.5;
+      out.push({ x: 130 + (k - (n - 1) / 2) * 15.5 + jitter, y: 150 - r * 12 + ((i * 13) % 3) * 0.6, kind: `a${(i * 7) % 3}` });
+    }
+  });
+  return out;
+}
+
 function basket(w) {
-  const dots = $('[data-dots]', w);
-  dots.innerHTML = '<i></i>'.repeat(100);
+  const single = $('[data-single]', w);
+  const fruit = $('[data-basket]', w);
+  single.innerHTML = apple(60, 62, 92, 'a1');
+  const apples = basketApples();
+  const ROT = 64; // gut sichtbar oben im Haufen
+  fruit.innerHTML = `
+    <path class="wicker-back" d="M18 146h224"/>
+    ${apples.map((a) => apple(a.x, a.y, 16, a.kind)).join('')}
+    <path class="wicker" d="M14 146h232l-18 46H32z"/>
+    <path class="wicker-weave" d="M24 158h212M30 170h200M36 182h188M58 146l6 46M90 146l3 46M130 146v46M170 146l-3 46M202 146l-6 46"/>
+    <path class="wicker-rim" d="M12 146h236"/>
+    <circle class="rot-ring" cx="${apples[ROT].x}" cy="${apples[ROT].y}" r="13"/>`;
+  const rotten = fruit.querySelectorAll('.apple')[ROT];
+  const ring = $('.rot-ring', fruit);
   const btn = $('[data-crash]', w);
   let crashed = false;
   btn.addEventListener('click', () => {
     crashed = !crashed;
-    $('[data-single]', w).classList.toggle('gone', crashed);
-    dots.children[37].classList.toggle('gone', crashed);
+    single.querySelector('.apple').classList.toggle('rotten', crashed);
+    rotten.classList.toggle('rotten', crashed);
+    ring.classList.toggle('on', crashed);
     $('[data-single-value]', w).textContent = crashed ? '0 €' : '10.000 €';
     $('[data-basket-value]', w).textContent = crashed ? '9.992 €' : '10.000 €';
     $('[data-result]', w).textContent = crashed
-      ? 'Einzelaktie: −100 %. Welt-ETF: hier nur −0,08 %, denn die Firma war eine von rund 1.250. (Wie viel genau, hängt von ihrer Größe im Index ab – spürbar ist es kaum.)'
+      ? 'Dein einzelner Apfel ist faul: −100 %. Im Korb fällt der eine faule Apfel kaum auf: nur −0,08 %, denn die Firma war eine von rund 1.250. (Wie viel genau, hängt von ihrer Größe im Index ab – spürbar ist es kaum.)'
       : '';
     btn.textContent = crashed ? 'Nochmal von vorn' : 'Probier’s aus: Lass eine Firma pleitegehen (à la Wirecard)\u00a0→';
     btn.classList.toggle('btn-primary', !crashed); // nach dem Klick zurückhaltend – die Aktion ist erledigt
@@ -218,7 +254,7 @@ function worries(w) {
     const btn = $('.worry-btn', card);
     const answer = $('.worry-a', card);
     const q = $('.worry-q', card).textContent;
-    btn.addEventListener('click', () => {
+    const toggle = () => {
       const open = btn.getAttribute('aria-expanded') !== 'true';
       btn.setAttribute('aria-expanded', open);
       answer.hidden = !open;
@@ -227,6 +263,13 @@ function worries(w) {
       btn.setAttribute('aria-label', `${btn.textContent}: ${q}`); // Screenreader: wovon
       if (open) { seen.add(i); card.classList.add('resolved'); answer.classList.remove('rise'); void answer.offsetWidth; answer.classList.add('rise'); }
       sync();
+    };
+    btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+    // Die ganze Kachel klappt auf und wieder zu – nur „Mehr dazu“ und Links bleiben eigenständig.
+    // Der Button bleibt für Tastatur und Screenreader, offen ist er nur bei Tastaturfokus sichtbar.
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('details, a') || String(getSelection()).trim()) return;
+      toggle();
     });
   });
   sync();

@@ -19,6 +19,9 @@
   --paid: #3B5B92;
   --gold: #B08A2E;          /* Rahmen für die empfohlene Wahl */
   --gold-ink: #7E6114;      /* Gold als Schrift, kontraststark */
+  --apple-0: #C2463C; --apple-1: #6FA44A; --apple-2: #E0A93B;  /* Obstkorb: rot, grün, gelb */
+  --leaf: #4E8A3A; --stem: #6B4A2B; --rot: #7A5B3C; --rot-spot: #4A3422;
+  --wicker: #C69A5E; --wicker-dark: #9C7440;
   --radius: 6px;          /* eine Form für Karten, Buttons, Pillen, Felder */
   --font: 'Literata', Charter, 'Iowan Old Style', Georgia, serif;
   --fs-meta: .8125rem;   /* 13px Kleingedrucktes, Labels */
@@ -35,7 +38,7 @@
     --bg: #151916; --surface: #1D2320; --ink: #ECEAE4; --muted: #A3ABA6; --line: #2E3631;
     --accent: #5FBF94; --accent-soft: #1F3A2F; --accent-ink: #0E1311; --accent-fill: #469873;
     --tile: #262D29;
-    --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9; --gold: #D4AF5A; --gold-ink: #E2C47A;
+    --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9; --gold: #D4AF5A; --gold-ink: #E2C47A; --apple-0: #D9645A; --apple-1: #82B85C; --apple-2: #E8B95A; --leaf: #6BA453; --stem: #A07A55; --rot: #6E5640; --rot-spot: #3C2C1E; --wicker: #A9824F; --wicker-dark: #7C5E36;
     color-scheme: dark;
   }
 }
@@ -43,7 +46,7 @@
   --bg: #151916; --surface: #1D2320; --ink: #ECEAE4; --muted: #A3ABA6; --line: #2E3631;
   --accent: #5FBF94; --accent-soft: #1F3A2F; --accent-ink: #0E1311; --accent-fill: #469873;
   --tile: #262D29;
-  --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9; --gold: #D4AF5A; --gold-ink: #E2C47A;
+  --danger: #E3807A; --danger-soft: #3A2423; --band: #ECEAE4; --paid: #7F9FD9; --gold: #D4AF5A; --gold-ink: #E2C47A; --apple-0: #D9645A; --apple-1: #82B85C; --apple-2: #E8B95A; --leaf: #6BA453; --stem: #A07A55; --rot: #6E5640; --rot-spot: #3C2C1E; --wicker: #A9824F; --wicker-dark: #7C5E36;
   color-scheme: dark;
 }
 
@@ -155,6 +158,9 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 .choice input { position: absolute; opacity: 0; }
 .choice span { display: block; padding: 14px 16px; min-height: 48px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); transition: border-color .15s, background .15s; }
 .choice input:checked + span { border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+.choice input[type=checkbox] + span::before { content: ''; display: inline-block; width: 1em; height: 1em; margin: 0 10px -2px 0; border: 1.5px solid var(--muted); border-radius: 3px; }
+.choice input[type=checkbox]:checked + span::before { content: '✓'; border-color: var(--accent); background: var(--accent); color: var(--accent-ink); font-size: .8em; line-height: 1.15em; text-align: center; }
+.multi-hint { display: block; font: 400 var(--fs-small) var(--font); letter-spacing: 0; color: var(--muted); margin-top: 2px; }
 .choice input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
 .check { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; min-height: 44px; padding: 6px 0; }
 .check input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--accent); flex: none; }
@@ -198,14 +204,29 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .basket-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; align-items: stretch; margin-bottom: 12px; }
 .basket-col { display: flex; flex-direction: column; }
 .basket-col .dots, .basket-col .single { flex: 1; }
-.single { display: grid; place-items: center; }  /* einzelne Aktie mittig, Beträge unten auf einer Linie */
 .basket-label { font-size: var(--fs-small); margin: 0 0 8px; }
 .basket-value { font-weight: 600; font-variant-numeric: tabular-nums lining-nums; margin: 8px 0 0; }
-.single i { display: block; width: 64px; height: 64px; border-radius: 50%; background: var(--accent); transition: transform .6s ease, opacity .6s ease, background .6s ease; }
-.single.gone i { background: var(--danger); transform: translateY(12px) scale(.85); opacity: .5; }
-.dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
-.dots i { aspect-ratio: 1; border-radius: 50%; background: var(--accent); opacity: .85; transition: opacity .6s, transform .6s, background .6s; }
-.dots i.gone { background: var(--danger); transform: translateY(6px); opacity: .5; }
+.basket-label small { display: block; color: var(--muted); }
+.single, .fruit-basket { display: block; width: 100%; height: auto; }
+.single { max-width: 120px; margin: auto; } /* Apfel mittig, Beträge unten auf einer Linie */
+.apple { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .7s ease; }
+.apple-body { fill: var(--apple-1); transition: fill .7s ease; }
+.apple.a0 .apple-body { fill: var(--apple-0); }
+.apple.a2 .apple-body { fill: var(--apple-2); }
+.apple-stem { fill: none; stroke: var(--stem); stroke-width: 1.3; stroke-linecap: round; }
+.apple-leaf { fill: var(--leaf); transition: fill .7s ease; }
+.apple-shine { fill: #fff; opacity: .35; transition: opacity .7s ease; }
+.apple-spot { fill: var(--rot-spot); opacity: 0; transition: opacity .7s ease .2s; }
+.apple.rotten { transform: scale(.9, .78) rotate(-8deg); }
+.apple.rotten .apple-body, .apple.rotten .apple-leaf { fill: var(--rot); }
+.apple.rotten .apple-shine { opacity: 0; }
+.apple.rotten .apple-spot { opacity: .9; }
+.rot-ring { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 3; opacity: 0; transition: opacity .5s ease .4s; }
+.rot-ring.on { opacity: .7; }
+.wicker-back { stroke: var(--wicker-dark); stroke-width: 4; stroke-linecap: round; }
+.wicker { fill: var(--wicker); }
+.wicker-weave { fill: none; stroke: var(--wicker-dark); stroke-width: 1.5; opacity: .7; }
+.wicker-rim { stroke: var(--wicker-dark); stroke-width: 6; stroke-linecap: round; }
 
 .crash-step p { margin-top: 0; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: var(--fs-meta); color: var(--muted); align-items: center; }
@@ -246,7 +267,10 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 /* Zurückhaltend: Rahmen-Button in Akzentfarbe, gefüllt bleibt nur 'Weiter' */
 .worry-btn { border-color: var(--accent); color: var(--accent); }
 .worry.resolved .worry-btn { border-color: var(--line); color: var(--muted); }
+.worry { cursor: pointer; }
+.worry .more { cursor: auto; }
 .worry.open .worry-btn { width: auto; border-color: transparent; background: none; padding-left: 0; padding-right: 0; text-decoration: underline; text-underline-offset: 3px; font-weight: 400; }
+.worry.open .worry-btn:not(:focus-visible) { position: absolute; width: 1px; height: 1px; min-height: 0; padding: 0; margin: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 /* Die ehrliche Sorge bleibt neutral – kein 'grünes Häkchen'-Gefühl */
 .worry.partial.open { background: var(--surface); }
 .worry.partial.resolved { border-color: color-mix(in srgb, var(--line) 50%, var(--ink)); }
