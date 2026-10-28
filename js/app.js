@@ -114,6 +114,8 @@ function go(i, { scroll = true, push = true, focus = true } = {}) {
   // Eintrag im Browserverlauf, damit die Zurück-Geste am Handy das vorige Kapitel zeigt statt die Seite zu verlassen.
   if (location.hash !== `#${chapters[current].id}`) history[push ? 'pushState' : 'replaceState'](null, '', `#${chapters[current].id}`);
   if (current === chapters.length - 1) renderSummary();
+  // Auf der Abschlussseite steht die Ko-fi-Karte schon im Inhalt – im Footer dort nicht doppeln
+  $('[data-kofi-foot]').hidden = !config.kofi || current === chapters.length - 1;
   renderPager(); renderToc(); renderProgress();
   if (gate) pager.hidden = true;
   if (scroll) window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
@@ -130,7 +132,7 @@ function renderSummary() {
 }
 
 function initLinks() {
-  if (config.kofi) { $('[data-kofi-link]').href = config.kofi; $('[data-kofi]').hidden = false; }
+  if (config.kofi) { $$('[data-kofi-link]').forEach((a) => (a.href = config.kofi)); $('[data-kofi]').hidden = false; }
   $$('[data-stand]').forEach((b) => (b.textContent = `Stand: ${config.stand}`));
 }
 
