@@ -72,8 +72,8 @@
         <p class="checkin-progress" data-stepinfo aria-live="polite" hidden></p>
         <fieldset data-step="tour">
           <legend tabindex="-1">Wie viel willst du wissen?</legend>
-          <label class="choice"><input type="radio" name="tour" value="kurz" required><span>Nur das, was für mich wichtig ist</span></label>
-          <label class="choice"><input type="radio" name="tour" value="voll"><span>Die volle Tour, bitte – alle Kapitel!</span></label>
+          <label class="choice"><input type="radio" name="tour" value="voll" required><span>Die volle Tour, bitte – alle Kapitel!</span></label>
+          <label class="choice"><input type="radio" name="tour" value="kurz"><span>Nur das, was für mich wichtig ist</span></label>
         </fieldset>
         <fieldset data-step="level">
           <legend tabindex="-1">Wie gut kennst du dich aus?</legend>
@@ -82,10 +82,10 @@
           <label class="choice"><input type="radio" name="level" value="depot"><span>Ich hab schon ein Depot und will’s richtig machen.</span></label>
         </fieldset>
         <fieldset data-step="goal">
-          <legend tabindex="-1">Wofür willst du anlegen? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
-          <label class="choice"><input type="radio" name="goal" value="rente" required><span>Für meine Rente</span></label>
-          <label class="choice"><input type="radio" name="goal" value="kinder"><span>Für meine Kinder</span></label>
-          <label class="choice"><input type="radio" name="goal" value="vermoegen"><span>Einfach Vermögen aufbauen</span></label>
+          <legend tabindex="-1">Wofür willst du anlegen? <small class="multi-hint">Mehrfachauswahl möglich</small> <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
+          <label class="choice"><input type="checkbox" name="goal" value="rente"><span>Für meine Rente</span></label>
+          <label class="choice"><input type="checkbox" name="goal" value="kinder"><span>Für meine Kinder</span></label>
+          <label class="choice"><input type="checkbox" name="goal" value="vermoegen"><span>Einfach Vermögen aufbauen</span></label>
         </fieldset>
         <fieldset data-step="worry">
           <legend tabindex="-1">Was hält dich bisher ab? <small class="opt-hint" hidden>(optional, für persönliche Tipps)</small></legend>
@@ -140,21 +140,21 @@
     <section class="chapter" id="kapitel-2" data-title="Was ist ein ETF?">
       <h2 tabindex="-1">Was ist ein ETF?</h2>
       <p class="lead">Stell dir einen Obstkorb vor, statt eines einzelnen Apfels.</p>
-      <p>Ein <strong>ETF</strong> (Exchange Traded Fund) ist ein Fonds, den du an der Börse kaufen kannst. Er kauft automatisch alle Firmen eines Index nach – zum Beispiel des <strong>MSCI World</strong> mit rund 1.250 großen Unternehmen aus 23 Industrieländern. Mit einem einzigen Kauf besitzt du also ein winziges Stück von Apple, Nestlé, Toyota, SAP und über tausend weiteren.</p>
+      <p>Ein <strong>ETF</strong> (Exchange Traded Fund) ist ein Fonds, den du an der Börse kaufen kannst. Er kauft automatisch alle Firmen eines Index nach – zum Beispiel des <strong>MSCI World</strong> mit rund 1.250 großen Unternehmen aus 23 Industrieländern. Mit einem einzigen Kauf besitzt du also ein winziges Stück von Apple, Nestlé, Toyota, SAP und über tausend weiteren. Jede Firma ist ein Stück Obst – der ETF ist der ganze Korb.</p>
       <p>Niemand entscheidet da nach Bauchgefühl, was gekauft wird. Der ETF bildet den Index einfach nach. Deshalb ist er so <strong>günstig</strong> und so <strong>berechenbar</strong>.</p>
       <p>Und weil er an der Börse gehandelt wird, ist dein Geld nicht eingesperrt: Anders als beim Festgeld kannst du jederzeit verkaufen, und das Geld ist in der Regel nach zwei Bankarbeitstagen auf deinem Konto. Das ist ein gutes Gefühl, aber kein Grund, es auch zu tun. Dazu mehr in Kapitel 3.</p>
 
       <div class="widget" data-widget="basket">
-        <h3 class="widget-title">Was passiert, wenn eine Firma pleitegeht?</h3>
+        <h3 class="widget-title">Was passiert, wenn eine Firma pleitegeht – also ein Apfel faulig wird?</h3>
         <div class="basket-grid">
           <div class="basket-col">
-            <p class="basket-label">Du hast nur <strong>eine Aktie</strong></p>
-            <div class="single" data-single aria-hidden="true"><i></i></div>
+            <p class="basket-label">Du hast nur <strong>einen Apfel</strong> <span class="basket-eq">(=&nbsp;eine einzelne Aktie)</span></p>
+            <svg class="single" data-single viewBox="0 0 120 120" aria-hidden="true"></svg>
             <p class="basket-value" data-single-value>10.000 €</p>
           </div>
           <div class="basket-col">
-            <p class="basket-label">Du hast einen <strong>Welt-ETF</strong></p>
-            <div class="dots" data-dots aria-hidden="true"></div>
+            <p class="basket-label">Du hast einen <strong>Obstkorb</strong> <span class="basket-eq">(=&nbsp;einen Welt-ETF)</span></p>
+            <svg class="fruit-basket" data-basket viewBox="0 0 260 200" aria-hidden="true"></svg>
             <p class="basket-value" data-basket-value>10.000 €</p>
           </div>
         </div>
@@ -162,7 +162,7 @@
         <p class="widget-result" data-result aria-live="polite"></p>
       </div>
 
-      <p>Klar: Eine einzelne Aktie <em>kann</em> auch mal viel besser laufen als der Markt. Aber genauso kann sie abstürzen – durch einen Skandal (VW-Diesel), Betrug (Wirecard) oder einfach ein überholtes Geschäftsmodell. Dieses Risiko musst du nicht eingehen. Im Korb gleichen die vielen Gewinner die wenigen Verlierer aus.</p>
+      <p>Klar: Eine einzelne Aktie <em>kann</em> auch mal viel besser laufen als der Markt. Aber genauso kann sie faulig werden – durch einen Skandal (VW-Diesel), Betrug (Wirecard) oder einfach ein überholtes Geschäftsmodell. Hast du nur diesen einen Apfel und er wird faulig, ist dein Geld weg. Im Korb fällt ein fauliger Apfel dagegen kaum auf, und die vielen anderen reifen weiter. Anders als in der Obstschale steckt er die anderen übrigens nicht an: Fliegt eine Firma raus, nimmt der Index einfach eine andere auf.</p>
       <p class="aha"><strong>Aha:</strong> Du musst nicht wissen, welche Firma gewinnt. Du kaufst einfach alle.</p>
     </section>
 

@@ -34,16 +34,20 @@ const PERSONAL = {
   },
 };
 
+// Ziele sind Mehrfachauswahl; ältere Speicherstände haben noch einen einzelnen Wert
+const goalsOf = (a) => [].concat(a.goal ?? []);
+
 function applyPersonalization(a) {
   if (!a) return;
+  const goals = goalsOf(a);
   chapters.forEach((c) => delete c.dataset.optional);
   if (a.tour !== 'voll' && a.level === 'depot') [1, 2].forEach((i) => (chapters[i].dataset.optional = 'true'));
-  if (a.tour !== 'voll' && a.goal !== 'kinder') $('#kapitel-9').dataset.optional = 'true';
+  if (a.tour !== 'voll' && !goals.includes('kinder')) $('#kapitel-9').dataset.optional = 'true';
   if (a.worry === 'geld') setCalcMonthly(25);
 
   const box = $('[data-personal]');
   const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 11 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
-  box.replaceChildren(...[levelNote, PERSONAL.goal[a.goal], PERSONAL.worry[a.worry]]
+  box.replaceChildren(...[levelNote, ...goals.map((g) => PERSONAL.goal[g]), PERSONAL.worry[a.worry]]
     .filter(Boolean).map((t) => Object.assign(document.createElement('p'), { textContent: t })));
   box.hidden = false;
   // Persönlicher Hinweis steht oben im ersten Kapitel, das für diese Person nicht optional ist.
@@ -145,9 +149,14 @@ function initCheckin() {
   const path = () => steps.filter((s) => !(s.dataset.step === 'level' && full()));
   let idx = 0;
 
+  // Checkboxen kennen kein „mindestens eine“ – darum eigene Gültigkeit am ersten Feld
+  const goals = $$('[name=goal]', form);
+  const goalRequired = () => !full();
+  const syncGoal = () => goals[0].setCustomValidity(goalRequired() && !goals.some((g) => g.checked) ? 'Bitte wähle mindestens eine Antwort' : '');
   const syncTour = () => {
-    $$('[name=level], [name=goal], [name=worry]', form).forEach((r) => (r.required = !full()));
+    $$('[name=level], [name=worry]', form).forEach((r) => (r.required = !full()));
     $$('.opt-hint', form).forEach((h) => (h.hidden = !full()));
+    syncGoal();
   };
 
   const render = () => {
@@ -159,7 +168,8 @@ function initCheckin() {
     info.hidden = false;
     info.textContent = cur.dataset.step === 'final' ? 'Letzter Schritt – gleich geht’s los' : `Frage ${idx + 1} von ${list.length - 1}`;
     const answered = !!$('input:checked', cur);
-    const optional = cur.tagName === 'FIELDSET' && !$('input:required', cur);
+    const required = cur.dataset.step === 'goal' ? goalRequired() : !!$('input:required', cur);
+    const optional = cur.tagName === 'FIELDSET' && !required;
     nav.hidden = false;
     $('[data-step-back]', nav).hidden = idx === 0;
     $('[data-step-skip]', nav).hidden = !(optional && !answered);
@@ -185,7 +195,7 @@ function initCheckin() {
   };
 
   if (state.answers) {
-    Object.entries(state.answers).forEach(([k, v]) => { const el = v && form.querySelector(`[name=${k}][value=${v}]`); if (el) el.checked = true; });
+    Object.entries(state.answers).forEach(([k, v]) => [].concat(v ?? []).forEach((val) => { const el = form.querySelector(`[name=${k}][value=${val}]`); if (el) el.checked = true; }));
     form.disclaimer.checked = true;
   }
   syncTour();
@@ -194,6 +204,7 @@ function initCheckin() {
 
   form.addEventListener('change', (e) => {
     if (e.target.name === 'tour') syncTour();
+    if (e.target.name === 'goal') syncGoal();
     if (form.classList.contains('tried')) showErrors();
     if (e.target.type === 'radio' && viaPointer) setTimeout(() => step(1), 220); // Antwort angetippt → nächste Frage
     else render();
@@ -215,7 +226,7 @@ function initCheckin() {
     }
     const d = new FormData(form);
     const tour = d.get('tour');
-    state.answers = { tour, level: tour === 'voll' ? null : d.get('level'), goal: d.get('goal'), worry: d.get('worry') };
+    state.answers = { tour, level: tour === 'voll' ? null : d.get('level'), goal: d.getAll('goal'), worry: d.get('worry') };
     state.consent = true;
     applyPersonalization(state.answers);
     go(nextIndex(0, 1));
