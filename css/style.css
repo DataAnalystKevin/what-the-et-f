@@ -123,6 +123,8 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 .lead { hyphens: manual; font-size: clamp(1.125rem, 4.6vw, var(--fs-h3)); line-height: 1.45; color: var(--muted); margin-top: 0; }
 .badge { text-transform: none; letter-spacing: 0; font-weight: 600; font-size: var(--fs-meta); padding: 4px 10px; border-radius: var(--radius); background: var(--accent-soft); color: var(--accent); }
 .aha { padding: 14px 18px; background: var(--accent-soft); border-radius: var(--radius); margin: 28px 0 0; }
+.shortcut { margin: 0 0 24px; padding: 2px 0 2px 14px; border-left: 3px solid var(--accent); font-size: var(--fs-small); }
+.shortcut a { font-weight: 600; white-space: nowrap; }
 .personal { background: var(--accent-soft); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 24px; }
 .personal p { margin: 0 0 6px; } .personal p:last-child { margin: 0; }
 .optional-note { font-size: var(--fs-small); color: var(--muted); }
