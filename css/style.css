@@ -201,8 +201,8 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .bar-fill.good { background: var(--accent); }
 .bar-fill.bad { background: var(--danger); }
 
-.basket-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; align-items: stretch; margin-bottom: 12px; }
-.basket-col { display: flex; flex-direction: column; }
+.basket-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; align-items: stretch; margin-bottom: 12px; }
+.basket-col { display: flex; flex-direction: column; padding: 12px; border: 1.5px dashed color-mix(in srgb, var(--line) 50%, var(--muted)); border-radius: var(--radius); }
 .basket-col > svg { flex: 1; }
 .basket-label { font-size: var(--fs-small); margin: 0 0 8px; }
 .basket-value { font-weight: 600; font-variant-numeric: tabular-nums lining-nums; margin: 8px 0 0; }
@@ -226,8 +226,20 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .wicker { fill: var(--wicker); }
 .wicker-weave { fill: none; stroke: var(--wicker-dark); stroke-width: 1.4; opacity: .65; }
 .fruit-basket .apple-body { stroke: color-mix(in srgb, var(--ink) 30%, transparent); stroke-width: .5; }
-.basket-eq { color: var(--muted); }
-@media (max-width: 559px) { .basket-eq { display: block; } }
+.basket-eq { display: block; color: var(--muted); }
+@media (max-width: 559px) {
+  .basket-grid { grid-template-columns: 1fr; }
+  .fruit-basket { max-width: 300px; margin: 0 auto; }
+}
+.basket-depth { fill: #1A120A; opacity: .5; }
+.basket-result { margin: 8px 0 0; padding: 8px 10px; border-radius: var(--radius); font-size: var(--fs-small); line-height: 1.4; hyphens: auto; }
+.basket-result:empty { display: none; }
+.basket-result strong { display: block; font-size: var(--fs-body); font-variant-numeric: tabular-nums lining-nums; }
+.basket-result.bad { background: var(--danger-soft); }
+.basket-result.bad strong { color: var(--danger); }
+.basket-result.good { background: var(--accent-soft); }
+.basket-result.good strong { color: var(--accent); }
+.basket-result { animation: rise .5s cubic-bezier(.16, 1, .3, 1); }
 
 .crash-step p { margin-top: 0; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: var(--fs-meta); color: var(--muted); align-items: center; }

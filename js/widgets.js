@@ -67,6 +67,16 @@ const BASKET_APPLES = [
   [112, 107, 52, 'rot'], // der spätere faulige Apfel: vorn und mittig, damit man ihn sofort findet
 ].sort((p, q) => p[1] - q[1]);
 
+// Füllung unter den sichtbaren Äpfeln: viele kleinere Äpfel im Schatten, damit der Korb voll wirkt.
+const FILL = { cx: 130, cy: 106, rx: 106, ry: 24 };
+function shadedApples() {
+  const out = [];
+  for (let r = 0; r < 6; r++) {
+    for (let x = 18 + (r % 2) * 14; x < 250; x += 28) out.push(apple(x, 84 + r * 9, 32, `a${(out.length * 5) % 3}`));
+  }
+  return out.join('');
+}
+
 function basket(w) {
   const single = $('[data-single]', w);
   const fruit = $('[data-basket]', w);
@@ -76,6 +86,8 @@ function basket(w) {
     <ellipse class="basket-shadow" cx="130" cy="186" rx="104" ry="12"/>
     <ellipse class="basket-inside" cx="${RIM.cx}" cy="${RIM.cy}" rx="${RIM.rx}" ry="${RIM.ry}"/>
     <path class="wicker-rim" d="M${130 - RIM.rx} ${RIM.cy}A${RIM.rx} ${RIM.ry} 0 0 1 ${130 + RIM.rx} ${RIM.cy}"/>
+    <clipPath id="basket-fill"><ellipse cx="${FILL.cx}" cy="${FILL.cy}" rx="${FILL.rx}" ry="${FILL.ry}"/></clipPath>
+    <g clip-path="url(#basket-fill)">${shadedApples()}<ellipse class="basket-depth" cx="${FILL.cx}" cy="${FILL.cy}" rx="${FILL.rx}" ry="${FILL.ry}"/></g>
     ${BASKET_APPLES.map(([x, y, s, k]) => apple(x, y, s, k === 'rot' ? 'a1 will-rot' : k)).join('')}
     <path class="wicker" d="${front}"/>
     <path class="wicker-weave" d="${weave}"/>
@@ -89,10 +101,10 @@ function basket(w) {
     rotten.classList.toggle('rotten', crashed);
     $('[data-single-value]', w).textContent = crashed ? '0 €' : '10.000 €';
     $('[data-basket-value]', w).textContent = crashed ? '9.992 €' : '10.000 €';
-    $('[data-result]', w).textContent = crashed
-      ? 'Dein einzelner Apfel ist faulig: −100 %. Im Korb fällt der eine faulige Apfel kaum auf: nur −0,08 %, denn die Firma war eine von rund 1.250. (Wie viel genau, hängt von ihrer Größe im Index ab – spürbar ist es kaum.)'
-      : '';
-    btn.textContent = crashed ? 'Nochmal von vorn' : 'Probier’s aus: Lass eine Firma pleitegehen (à la Wirecard)\u00a0→';
+    // Ergebnis je Szenario direkt unter dem Betrag – über dem Button, damit man es nicht sucht
+    $('[data-single-result]', w).innerHTML = crashed ? '<strong>−100&nbsp;%</strong> Dein einziger Apfel ist faulig. Das Geld ist weg.' : '';
+    $('[data-basket-result]', w).innerHTML = crashed ? '<strong>nur −0,08&nbsp;%</strong> Die Firma war eine von rund 1.250. Ein fauliger Apfel fällt im Korb kaum auf.' : '';
+    btn.textContent = crashed ? 'Nochmal von vorn' : 'Probier’s aus: Lass eine Firma pleitegehen\u00a0→';
     btn.classList.toggle('btn-primary', !crashed); // nach dem Klick zurückhaltend – die Aktion ist erledigt
   });
 }
