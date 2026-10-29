@@ -233,6 +233,21 @@ function initCheckin() {
   });
 }
 
+function initShare() {
+  const url = 'https://whattheetf.de/';
+  const share = $('[data-share]');
+  // Natives Teilen-Menü (vor allem am Handy) – nur anbieten, wo der Browser es kann
+  if (navigator.share) {
+    share.hidden = false;
+    share.addEventListener('click', () => navigator.share({ title: 'What the (ET)F?', text: 'ETFs in 11 kurzen Kapiteln ehrlich erklärt', url }).catch(() => { /* abgebrochen */ }));
+  }
+  const note = $('[data-copy-note]');
+  $('[data-copy-link]').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(url); note.textContent = 'Link kopiert – du kannst ihn jetzt überall einfügen.'; }
+    catch { note.textContent = `Kopieren hat nicht geklappt. Der Link lautet: ${url}`; }
+  });
+}
+
 function initChecklist() {
   const boxes = $$('[data-checklist] input');
   const sync = (celebrate) => {
@@ -319,6 +334,7 @@ initWidgets();
 initLinks();
 initCheckin();
 initChecklist();
+initShare();
 initChrome();
 initTheme();
 applyPersonalization(state.answers);
