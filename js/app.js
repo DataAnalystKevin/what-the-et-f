@@ -30,7 +30,7 @@ const PERSONAL = {
   level: { depot: 'Du hast schon ein Depot – die Grundlagen in Kapitel 1 und 2 sind für dich optional.' },
   goal: {
     kinder: 'Weil du für deine Kinder sparen willst, gibt’s Kapitel 9 extra für dich.',
-    rente: 'Für die Rente lohnen sich besonders Kapitel 10 und 11 – das neue Altersvorsorgedepot und wo du es am besten abschließt.',
+    rente: 'Für die Rente lohnen sich besonders Kapitel 10 bis 12 – das neue Altersvorsorgedepot, der Vergleich mit dem freien Depot und wo du es am besten abschließt.',
   },
 };
 
@@ -46,7 +46,7 @@ function applyPersonalization(a) {
   if (a.worry === 'geld') setCalcMonthly(25);
 
   const box = $('[data-personal]');
-  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 11 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
+  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 12 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
   box.replaceChildren(...[levelNote, ...goals.map((g) => PERSONAL.goal[g]), PERSONAL.worry[a.worry]]
     .filter(Boolean).map((t) => Object.assign(document.createElement('p'), { textContent: t })));
   box.hidden = false;
@@ -253,7 +253,7 @@ function initShare() {
   // Natives Teilen-Menü (vor allem am Handy) – nur anbieten, wo der Browser es kann
   if (navigator.share) {
     share.hidden = false;
-    share.addEventListener('click', () => navigator.share({ title: 'What the (ET)F?', text: 'ETFs in 11 kurzen Kapiteln ehrlich erklärt', url }).catch(() => { /* abgebrochen */ }));
+    share.addEventListener('click', () => navigator.share({ title: 'What the (ET)F?', text: 'ETFs in 12 kurzen Kapiteln ehrlich erklärt', url }).catch(() => { /* abgebrochen */ }));
   }
   const note = $('[data-copy-note]');
   $('[data-copy-link]').addEventListener('click', async () => {

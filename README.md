@@ -1,6 +1,6 @@
 # What the (ET)F?
 
-ETFs in 11 kurzen Kapiteln – spielerisch erklärt für Neulinge. Statische Website, kein Tracking, keine Abhängigkeiten.
+ETFs in 12 kurzen Kapiteln – spielerisch erklärt für Neulinge. Statische Website, kein Tracking, keine Abhängigkeiten.
 
 **Live:** https://whattheetf.de/
 

@@ -268,9 +268,7 @@ function worries(w) {
   const cards = $$('.worry', w);
   const seen = new Set(); // einmal aufgedeckt zählt als entkräftet, auch wenn wieder zugeklappt
   const sync = () => {
-    const count = $('[data-worries-count]', w); // Kapitel 7 nutzt dieselben Zeilen ohne Zähler
-    if (!count) return;
-    count.textContent = `${seen.size} von ${cards.length} Sorgen angesehen`;
+    $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen angesehen`;
     $$('.worry-bar i', w).forEach((seg, i) => seg.classList.toggle('on', i < seen.size));
     const done = $('[data-worries-done]', w);
     if (seen.size === cards.length && done.hidden) { done.hidden = false; done.classList.add('rise'); }
@@ -288,6 +286,19 @@ function worries(w) {
     });
   });
   sync();
+}
+
+// --- Kapitel 7: Flip-Karten----------------------------------------------
+function flips() {
+  $$('.flip').forEach((b) => {
+    const sync = () => {
+      const on = b.getAttribute('aria-pressed') === 'true';
+      $('.flip-front', b).setAttribute('aria-hidden', on);
+      $('.flip-back', b).setAttribute('aria-hidden', !on);
+    };
+    b.addEventListener('click', () => { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true'); sync(); });
+    sync();
+  });
 }
 
 // --- Kapitel 9: Tabs -----------------------------------------------------
@@ -345,4 +356,5 @@ const chartScale = new ResizeObserver((entries) => entries.forEach((e) => {
 export function initWidgets() {
   $$('svg.chart').forEach((svg) => chartScale.observe(svg));
   $$('[data-widget]').forEach((w) => WIDGETS[w.dataset.widget]?.(w));
+  flips();
 }
