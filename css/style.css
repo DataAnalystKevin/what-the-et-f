@@ -370,10 +370,10 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .steps-count { font-size: var(--fs-small); font-weight: 600; color: var(--accent); margin: 0 0 10px; font-variant-numeric: tabular-nums lining-nums; }
 .steps-when { font-size: var(--fs-meta); font-weight: 600; color: var(--muted); margin: 14px 0 0; }
 .steps-when:first-of-type { margin-top: 0; }
-.steps-after { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--line); }
-.steps-after p { margin: 6px 0 0; font-size: var(--fs-small); }
-.steps-after .after-link { margin-top: 0; }
-.steps-after .after-link a { display: inline-flex; align-items: center; min-height: 44px; }
+.steps-after { margin: 6px 0 0; padding: 6px 0 0 1.2em; border-top: 1px solid var(--line); font-size: var(--fs-small); }
+.steps-after li { margin: 6px 0 0; padding-left: .2em; }
+.steps-after li::marker { color: var(--accent); }
+.steps-after .after-link { display: flex; align-items: center; min-height: 44px; width: fit-content; }
 .steps-done { margin: 14px 0 0; font-weight: 600; }
 .steps-done.rise { animation: rise .6s cubic-bezier(.16, 1, .3, 1); }
 .steps-card.complete { background: var(--accent-soft); }
