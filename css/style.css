@@ -409,7 +409,7 @@ main.needs-consent .chapter.active { display: none; }
 .pager [data-next] { flex-direction: column; gap: 2px; }
 .pager [data-next] small { font-weight: 400; font-size: var(--fs-meta); opacity: .9; }
 .pager .skip-link { flex-basis: 100%; }
-.footer { max-width: 696px; margin: 0 auto; padding: 16px 16px 40px; font-size: var(--fs-meta); color: var(--muted); border-top: 1px solid var(--line); }
+.footer { max-width: 696px; margin: 0 auto; padding: 16px 16px 40px; font-size: var(--fs-meta); color: var(--muted); border-top: 1px solid var(--line); text-align: center; }
 .footer p { margin: 4px 0; }
 
 /* Rechtstexte */
