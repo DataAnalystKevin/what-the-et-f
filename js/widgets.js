@@ -84,7 +84,7 @@ function crash(w) {
       svg.append(svgEl('text', { x: W - P.r, y: y(end) - 6, 'text-anchor': 'end' }, `${eur(end * 100)}`));
     }
     svg.append(svgEl('circle', { cx: x(2.75), cy: y(72), r: 4, fill: 'var(--danger)' }),
-      svgEl('text', { x: x(2.75) + 7, y: y(72) + 4, class: 'chart-halo' }, 'März 2020: −34 %'));
+      svgEl('text', { x: x(2.75) - 8, y: y(72) + 18, class: 'chart-halo' }, 'März 2020: −34 %'));
   };
 
   const result = $('[data-result]', w);
@@ -167,7 +167,8 @@ function calc(w) {
     const main = savingsPlan(v);
     const lo = savingsPlan({ ...v, ratePa: 0.04 });
     const hi = savingsPlan({ ...v, ratePa: 0.09 });
-    const max = Math.max(hi.total, main.total, 1);
+    const band = $('[data-band]', w).checked;
+    const max = Math.max(band ? hi.total : 0, main.total, 1);
     const x = (yr) => P.l + (yr / v.years) * (W - P.l - P.r);
     const y = (val) => P.t + (1 - val / max) * (H - P.t - P.b);
     const area = (key) => `${x(0)},${y(0)} ${main.series.map((s) => `${x(s.year)},${y(s[key])}`).join(' ')} ${x(v.years)},${y(0)}`;
@@ -176,10 +177,12 @@ function calc(w) {
     svg.replaceChildren(
       svgEl('polygon', { points: area('total'), fill: 'var(--accent)' }),
       svgEl('polygon', { points: area('paidIn'), fill: 'var(--paid)' }),
-      svgEl('polyline', { points: line(lo), fill: 'none', stroke: 'var(--band)', 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }),
-      svgEl('polyline', { points: line(hi), fill: 'none', stroke: 'var(--band)', 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }),
-      // 9-%-Beschriftung weicht nach unten aus, wenn sie den Endbetrag überdecken würde
-      svgEl('text', { x: W - P.r, y: Math.abs(y(hi.total) - y(main.total)) < 16 ? y(hi.total) + 14 : y(hi.total) - 5, 'text-anchor': 'end' }, `9 %: ${eur(hi.total)}`),
+      ...(band ? [
+        svgEl('polyline', { points: line(lo), fill: 'none', stroke: 'var(--band)', 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }),
+        svgEl('polyline', { points: line(hi), fill: 'none', stroke: 'var(--band)', 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }),
+        // 9-%-Beschriftung weicht nach unten aus, wenn sie den Endbetrag überdecken würde
+        svgEl('text', { x: W - P.r, y: Math.abs(y(hi.total) - y(main.total)) < 16 ? y(hi.total) + 14 : y(hi.total) - 5, 'text-anchor': 'end' }, `9 %: ${eur(hi.total)}`),
+      ] : []),
       svgEl('circle', { cx: x(v.years), cy: y(main.total), r: 3.5, fill: 'var(--accent)', stroke: 'var(--surface)', 'stroke-width': 1.5 }),
       svgEl('text', { x: x(v.years) - 6, y: y(main.total) + 4, 'text-anchor': 'end', class: 'chart-strong' }, eur(main.total)),
       svgEl('text', { x: x(v.years) - 6, y: y(main.paidIn) + 12, 'text-anchor': 'end', class: 'chart-on-fill' }, eur(main.paidIn)),
@@ -188,6 +191,7 @@ function calc(w) {
     );
 
     svg.setAttribute('aria-label', `Nach ${v.years} Jahren: ${eur(main.total)}, davon ${eur(main.paidIn)} selbst eingezahlt. Spanne bei 4 bis 9 Prozent: ${eur(lo.total)} bis ${eur(hi.total)}.`);
+    $('[data-headline]', w).textContent = `Aus ${eur(main.paidIn)} Einzahlung werden ca. ${eur(main.total)}.`;
     $('[data-stat=total]', w).textContent = eur(main.total);
     $('[data-stat=paid]', w).textContent = eur(main.paidIn);
     $('[data-stat=gains]', w).textContent = eur(main.gains);
@@ -200,7 +204,7 @@ function calc(w) {
     if (v.ratePa > 0.09) msg += ' Achtung: Mehr als 9 % pro Jahr sind historisch die Ausnahme, nicht die Regel.';
     $('[data-result]', w).textContent = msg;
   };
-  Object.values(calcInputs).forEach((i) => i.addEventListener('input', calcRender));
+  [...Object.values(calcInputs), $('[data-band]', w)].forEach((i) => i.addEventListener('input', calcRender));
   calcRender();
 }
 
@@ -209,7 +213,9 @@ function worries(w) {
   const cards = $$('.worry', w);
   const seen = new Set(); // einmal aufgedeckt zählt als entkräftet, auch wenn wieder zugeklappt
   const sync = () => {
-    $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen geprüft`;
+    const count = $('[data-worries-count]', w); // Kapitel 7 nutzt dieselben Zeilen ohne Zähler
+    if (!count) return;
+    count.textContent = `${seen.size} von ${cards.length} Sorgen angesehen`;
     $$('.worry-bar i', w).forEach((seg, i) => seg.classList.toggle('on', i < seen.size));
     const done = $('[data-worries-done]', w);
     if (seen.size === cards.length && done.hidden) { done.hidden = false; done.classList.add('rise'); }
@@ -217,32 +223,16 @@ function worries(w) {
   cards.forEach((card, i) => {
     const btn = $('.worry-btn', card);
     const answer = $('.worry-a', card);
-    const q = $('.worry-q', card).textContent;
     btn.addEventListener('click', () => {
       const open = btn.getAttribute('aria-expanded') !== 'true';
       btn.setAttribute('aria-expanded', open);
       answer.hidden = !open;
       card.classList.toggle('open', open);
-      btn.textContent = open ? 'Zuklappen' : 'Nochmal lesen';
-      btn.setAttribute('aria-label', `${btn.textContent}: ${q}`); // Screenreader: wovon
       if (open) { seen.add(i); card.classList.add('resolved'); answer.classList.remove('rise'); void answer.offsetWidth; answer.classList.add('rise'); }
       sync();
     });
   });
   sync();
-}
-
-// --- Kapitel 7: Flip-Karten----------------------------------------------
-function flips() {
-  $$('.flip').forEach((b) => {
-    const sync = () => {
-      const on = b.getAttribute('aria-pressed') === 'true';
-      $('.flip-front', b).setAttribute('aria-hidden', on);
-      $('.flip-back', b).setAttribute('aria-hidden', !on);
-    };
-    b.addEventListener('click', () => { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true'); sync(); });
-    sync();
-  });
 }
 
 // --- Kapitel 9: Tabs -----------------------------------------------------
@@ -300,5 +290,4 @@ const chartScale = new ResizeObserver((entries) => entries.forEach((e) => {
 export function initWidgets() {
   $$('svg.chart').forEach((svg) => chartScale.observe(svg));
   $$('[data-widget]').forEach((w) => WIDGETS[w.dataset.widget]?.(w));
-  flips();
 }

@@ -154,7 +154,7 @@ function initCheckin() {
     steps.forEach((s) => (s.hidden = s !== cur));
     const info = $('[data-stepinfo]', form);
     info.hidden = false;
-    info.textContent = cur.dataset.step === 'final' ? 'Letzter Schritt – gleich geht’s los' : `Frage ${idx + 1} von ${list.length - 1}`;
+    info.textContent = cur.dataset.step === 'final' ? 'Fast geschafft – noch ein Hinweis' : `Frage ${idx + 1} von ${list.length - 1}`;
     const answered = !!$('input:checked', cur);
     const optional = cur.tagName === 'FIELDSET' && !$('input:required', cur);
     nav.hidden = false;
@@ -166,6 +166,7 @@ function initCheckin() {
   const step = (d) => {
     form.classList.remove('tried'); // Rot nur direkt nach einem gescheiterten Start
     $('[data-error]', form).hidden = true;
+    $('[data-error]', form).textContent = '';
     idx += d; render(); form.scrollIntoView({ block: 'nearest' }); focusStep();
   };
   // Automatisch weiter nur nach Tippen/Klicken – Pfeiltasten wählen in Ruhe aus
@@ -174,10 +175,21 @@ function initCheckin() {
   form.addEventListener('keydown', () => (viaPointer = false));
 
   // Rot erst nach einem Startversuch mit fehlenden Pflichtangaben
+  const err = $('[data-error]', form);
+  const start = $('[type=submit]', form);
+  // Start-Knopf zeigt ehrlich, ob der Haken fehlt (aria-disabled statt disabled, damit ein Tipp trotzdem erklärt)
+  const syncStart = () => {
+    const ok = form.disclaimer.checked;
+    start.setAttribute('aria-disabled', String(!ok));
+    $('.start-hint', form).hidden = ok;
+  };
   const showErrors = () => {
     form.classList.add('tried');
     const valid = form.checkValidity();
-    $('[data-error]', form).hidden = valid;
+    $$('input', form).forEach((i) => { if (i.validity.valid) { i.removeAttribute('aria-invalid'); i.removeAttribute('aria-describedby'); } else { i.setAttribute('aria-invalid', 'true'); i.setAttribute('aria-describedby', err.id); } });
+    const open = $(':invalid', form);
+    err.textContent = open?.name === 'disclaimer' ? 'Bitte setz noch den Haken bei „Verstanden“.' : 'Bitte wähle noch eine Antwort aus.';
+    err.hidden = valid;
     return valid;
   };
 
@@ -186,11 +198,13 @@ function initCheckin() {
     form.disclaimer.checked = true;
   }
   syncTour();
+  syncStart();
   idx = state.answers ? path().length - 1 : 0;
   render();
 
   form.addEventListener('change', (e) => {
     if (e.target.name === 'tour') syncTour();
+    syncStart();
     if (form.classList.contains('tried')) showErrors();
     if (e.target.type === 'radio' && viaPointer) setTimeout(() => step(1), 220); // Antwort angetippt → nächste Frage
     else render();
@@ -207,7 +221,7 @@ function initCheckin() {
       render();
       const cur = list[idx];
       cur.classList.remove('shake'); void cur.offsetWidth; cur.classList.add('shake');
-      focusStep();
+      ($('input:invalid', cur) || $('legend, h2', cur))?.focus({ preventScroll: true }); // Fokus direkt auf die fehlende Angabe
       return;
     }
     const d = new FormData(form);

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T00:00:00Z",
+  "title": "Design System: What the (ET)F?",
+  "extensions": {
+    "colorMeta": {
+      "moss": { "role": "primary", "displayName": "Moosgrün", "canonical": "#1E6B4F", "tonalRamp": ["#0B2A1F", "#124231", "#1E6B4F", "#3E8A6D", "#5FBF94", "#9AD5B9", "#DCEBE3", "#F0F7F3"] },
+      "moss-soft": { "role": "primary", "displayName": "Salbeigrün", "canonical": "#DCEBE3", "tonalRamp": ["#0B2A1F", "#1F3A2F", "#1E6B4F", "#5FBF94", "#9AD5B9", "#C4E0D2", "#DCEBE3", "#F0F7F3"] },
+      "brick": { "role": "secondary", "displayName": "Ziegelrot", "canonical": "#B4413C", "tonalRamp": ["#3A2423", "#6E2724", "#B4413C", "#C96B66", "#E3807A", "#EDA9A5", "#F7E5E3", "#FCF3F2"] },
+      "slate-blue": { "role": "secondary", "displayName": "Schieferblau", "canonical": "#3B5B92", "tonalRamp": ["#121C30", "#223558", "#3B5B92", "#5879B4", "#7F9FD9", "#A9BFE5", "#D3DFF2", "#EEF2FA"] },
+      "paper": { "role": "neutral", "displayName": "Papier", "canonical": "#FBF8F3", "tonalRamp": ["#151916", "#2E3631", "#5B635E", "#A3ABA6", "#E4DED3", "#F1EDE5", "#FBF8F3", "#FFFFFF"] },
+      "ink": { "role": "neutral", "displayName": "Tinte", "canonical": "#1F2421", "tonalRamp": ["#0E1311", "#1F2421", "#2E3631", "#5B635E", "#A3ABA6", "#E4DED3", "#ECEAE4", "#FBF8F3"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Kapitel-Titel mit kursivem Moos-Akzent." },
+      "headline": { "displayName": "Headline", "purpose": "Kapitelüberschriften." },
+      "title": { "displayName": "Title", "purpose": "Fragen, Widget-Titel, Karten-Fronten, Anbieter." },
+      "body": { "displayName": "Body", "purpose": "Fließtext, 680px Spalte." },
+      "small": { "displayName": "Small", "purpose": "Bedienelemente und Sekundärtext." },
+      "label": { "displayName": "Label", "purpose": "Badges, Meta, Legenden, Kleingedrucktes." }
+    },
+    "shadows": [
+      { "name": "menu-float", "value": "0 12px 32px rgb(0 0 0 / .12)", "purpose": "Nur das Überlagerungs-Menü." },
+      { "name": "error-ring", "value": "0 0 0 2px var(--danger)", "purpose": "Unbeantwortete Pflichtfrage nach Startversuch." }
+    ],
+    "motion": [
+      { "name": "press", "value": "transform .15s ease", "purpose": "Button :active scale(.98)." },
+      { "name": "flip", "value": "transform .5s ease", "purpose": "Umdrehkarte (rotateY)." },
+      { "name": "rise", "value": ".5s cubic-bezier(.16, 1, .3, 1)", "purpose": "Antwort/Erfolgszeile erscheint." },
+      { "name": "reduced-motion", "value": "transition/animation: none", "purpose": "Unter prefers-reduced-motion überall aus." }
+    ],
+    "breakpoints": [
+      { "name": "compare-stack", "value": "560px" },
+      { "name": "wide", "value": "720px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Der eine gefüllte Weiter-Schritt pro Ansicht.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Verstanden, zum Kapitel</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 20px;border-radius:6px;border:1.5px solid #1F2421;background:transparent;color:#1F2421;font:600 1rem/1.35 Literata,Georgia,serif;cursor:pointer;transition:transform .15s ease}.ds-btn:active{transform:scale(.98)}.ds-btn:focus-visible{outline:3px solid #1E6B4F;outline-offset:2px}.ds-btn-primary{background:#1E6B4F;border-color:#1E6B4F;color:#fff}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Nebenaktion, ungefüllt mit Tintenrand.",
+      "html": "<button class=\"ds-btn\">Lieber mit dem Check-in starten</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 20px;border-radius:6px;border:1.5px solid #1F2421;background:transparent;color:#1F2421;font:600 1rem/1.35 Literata,Georgia,serif;cursor:pointer;transition:transform .15s ease}.ds-btn:active{transform:scale(.98)}.ds-btn:focus-visible{outline:3px solid #1E6B4F;outline-offset:2px}"
+    },
+    {
+      "name": "Antwort-Auswahl",
+      "kind": "input",
+      "refersTo": "choice",
+      "description": "Ganze Zeile als Radio; gewählt = Moosrand + Salbei.",
+      "html": "<div><span class=\"ds-choice\">Nein, noch nie</span><span class=\"ds-choice ds-on\">Ein bisschen</span></div>",
+      "css": ".ds-choice{display:block;padding:14px 16px;min-height:48px;margin-bottom:8px;border:1.5px solid #E4DED3;border-radius:6px;background:#fff;color:#1F2421;font:400 1.0625rem/1.4 Literata,Georgia,serif}.ds-on{border-color:#1E6B4F;background:#DCEBE3;font-weight:600}"
+    },
+    {
+      "name": "Karte / Widget",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flache weiße Karte mit Haarlinie, Titel und Zahlenkacheln.",
+      "html": "<div class=\"ds-card\"><h3>Was sind 10.000&nbsp;€ in 20 Jahren wert?</h3><p class=\"ds-res\">Etwa 6.730&nbsp;€</p></div>",
+      "css": ".ds-card{background:#fff;border:1px solid #E4DED3;border-radius:6px;padding:18px 16px;color:#1F2421;font:400 1.0625rem/1.65 Literata,Georgia,serif}.ds-card h3{margin:0 0 8px;font-size:1.375rem;line-height:1.3;letter-spacing:-.01em}.ds-res{margin:0;font-weight:600;font-variant-numeric:tabular-nums lining-nums}"
+    },
+    {
+      "name": "Pille",
+      "kind": "chip",
+      "refersTo": "pill",
+      "description": "Orientierungs-Etikett, keine Aktion.",
+      "html": "<span class=\"ds-pill\">für dich</span>",
+      "css": ".ds-pill{display:inline-block;font:600 .8125rem Literata,Georgia,serif;padding:4px 10px;border-radius:6px;background:#DCEBE3;color:#1E6B4F}"
+    },
+    {
+      "name": "Aha-Kasten",
+      "kind": "custom",
+      "refersTo": "callout",
+      "description": "Salbei-Hinweis für die Kernaussage eines Kapitels.",
+      "html": "<div class=\"ds-aha\"><strong>Aha:</strong> Zeit schlägt Timing.</div>",
+      "css": ".ds-aha{padding:14px 18px;background:#DCEBE3;border-radius:6px;color:#1F2421;font:400 1.0625rem/1.65 Literata,Georgia,serif}"
+    },
+    {
+      "name": "Umdrehkarte",
+      "kind": "custom",
+      "refersTo": "flip-back",
+      "description": "Frage vorn auf Karte; Rückseite moosgrün mit Antwort.",
+      "html": "<div class=\"ds-flip\">Ist das nicht Glücksspiel?<small>Tippen zum Umdrehen</small></div>",
+      "css": ".ds-flip{padding:18px;min-height:120px;display:flex;flex-direction:column;justify-content:center;background:#fff;border:1.5px solid #B4B1A8;border-radius:6px;color:#1F2421;font:700 1.375rem/1.3 Literata,Georgia,serif;letter-spacing:-.01em;cursor:pointer}.ds-flip small{margin-top:10px;font-weight:400;font-size:.8125rem;color:#5B635E;letter-spacing:0}.ds-flip:hover{border-color:#1E6B4F}"
+    },
+    {
+      "name": "Anbieterkarte",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Neutraler Anbieter, Rand wird bei Hover/Fokus moosgrün.",
+      "html": "<a class=\"ds-broker\" href=\"#\"><strong>Anbieter</strong><span class=\"ds-kind\">Neobroker</span><span class=\"ds-go\">Zur Seite →</span></a>",
+      "css": ".ds-broker{display:flex;flex-direction:column;gap:4px;padding:16px;border:1.5px solid #E4DED3;border-radius:6px;background:#fff;color:#1F2421;text-decoration:none;font:400 .9375rem Literata,Georgia,serif;transition:border-color .2s ease}.ds-broker:hover,.ds-broker:focus-visible{border-color:#1E6B4F}.ds-broker strong{font-size:1.375rem;line-height:1.2}.ds-kind{font-size:.8125rem;color:#5B635E}.ds-go{margin-top:8px;color:#1E6B4F;font-weight:600}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Der Brief vom Freund",
+    "overview": "Die Seite liest sich wie ein gut gesetzter, persönlicher Brief auf warmem Papier: eine einzelne Spalte, eine Serifenschrift, eine Farbe, die etwas bedeutet. Sie erklärt Geldanlage für Menschen, die Angst davor haben, und darf deshalb nirgends nach Bank, Broker oder Verkaufsgespräch aussehen. Ruhe ist das Gestaltungsmittel.",
+    "keyCharacteristics": [
+      "Eine Familie (Literata, variabel mit optischer Größe) für alles.",
+      "Ein Akzent: Moosgrün.",
+      "Flache Karten mit feiner Linie auf Papier; Schatten nur beim Menü.",
+      "Eine einzige Eckenform (6px).",
+      "Hell und Dunkel gleichberechtigt.",
+      "Gefüllte Flächen sind knapp: gefüllt bleibt nur der eine Weiter-Schritt."
+    ],
+    "rules": [
+      { "name": "The One Moss Rule", "body": "Moosgrün ist die einzige Akzentfarbe. Es trägt Bedeutung, nie Dekoration.", "section": "colors" },
+      { "name": "The Twin Rule", "body": "Jedes Token existiert in Hell und Dunkel mit dokumentiertem Kontrast.", "section": "colors" },
+      { "name": "The Never-Color-Alone Rule", "body": "Vorteil, Fehler und Fortschritt tragen zusätzlich ein Zeichen oder Text.", "section": "colors" },
+      { "name": "The One Family Rule", "body": "Keine zweite Schrift; 400, 600, 700, kursiv für Betonung.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Karten haben keinen Schatten; Zustand zeigt sich über Randfarbe und Hintergrund.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do Moosgrün (#1E6B4F) sparsam einsetzen: Links, Häkchen, gewählter Zustand, ein Hauptbutton.",
+      "Do jede neue Fläche als Karte mit 1px Haarlinie (#E4DED3) auf Papier bauen, 6px Radius, ohne Schatten.",
+      "Do jede Farbe als Hell/Dunkel-Paar anlegen und Kontrast ≥ 4,5:1 prüfen.",
+      "Do Ziele auf mindestens 44px Höhe bringen, Buttons auf 48px."
+    ],
+    "donts": [
+      "Don't Fraunces, Inter oder verspielte Schriftschnitte einführen.",
+      "Don't mehr als einen gefüllten Button pro Ansicht setzen.",
+      "Don't Schatten, Verläufe oder bunte Akzentflächen zu Karten hinzufügen.",
+      "Don't Anbieter mit Werbesprache oder Affiliate-Hinweisen aufmachen.",
+      "Don't die Spalte verbreitern oder ein Mehrspalten-Hero einbauen."
+    ]
+  }
+}
