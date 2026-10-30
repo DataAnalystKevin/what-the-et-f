@@ -4,34 +4,166 @@
   "title": "Design System: What the (ET)F?",
   "extensions": {
     "colorMeta": {
-      "moss": { "role": "primary", "displayName": "Moosgrün", "canonical": "#1E6B4F", "tonalRamp": ["#0B2A1F", "#124231", "#1E6B4F", "#3E8A6D", "#5FBF94", "#9AD5B9", "#DCEBE3", "#F0F7F3"] },
-      "moss-soft": { "role": "primary", "displayName": "Salbeigrün", "canonical": "#DCEBE3", "tonalRamp": ["#0B2A1F", "#1F3A2F", "#1E6B4F", "#5FBF94", "#9AD5B9", "#C4E0D2", "#DCEBE3", "#F0F7F3"] },
-      "brick": { "role": "secondary", "displayName": "Ziegelrot", "canonical": "#B4413C", "tonalRamp": ["#3A2423", "#6E2724", "#B4413C", "#C96B66", "#E3807A", "#EDA9A5", "#F7E5E3", "#FCF3F2"] },
-      "slate-blue": { "role": "secondary", "displayName": "Schieferblau", "canonical": "#3B5B92", "tonalRamp": ["#121C30", "#223558", "#3B5B92", "#5879B4", "#7F9FD9", "#A9BFE5", "#D3DFF2", "#EEF2FA"] },
-      "paper": { "role": "neutral", "displayName": "Papier", "canonical": "#FBF8F3", "tonalRamp": ["#151916", "#2E3631", "#5B635E", "#A3ABA6", "#E4DED3", "#F1EDE5", "#FBF8F3", "#FFFFFF"] },
-      "ink": { "role": "neutral", "displayName": "Tinte", "canonical": "#1F2421", "tonalRamp": ["#0E1311", "#1F2421", "#2E3631", "#5B635E", "#A3ABA6", "#E4DED3", "#ECEAE4", "#FBF8F3"] }
+      "moss": {
+        "role": "primary",
+        "displayName": "Moosgrün",
+        "canonical": "#1E6B4F",
+        "tonalRamp": [
+          "#0B2A1F",
+          "#124231",
+          "#1E6B4F",
+          "#3E8A6D",
+          "#5FBF94",
+          "#9AD5B9",
+          "#DCEBE3",
+          "#F0F7F3"
+        ]
+      },
+      "moss-soft": {
+        "role": "primary",
+        "displayName": "Salbeigrün",
+        "canonical": "#DCEBE3",
+        "tonalRamp": [
+          "#0B2A1F",
+          "#1F3A2F",
+          "#1E6B4F",
+          "#5FBF94",
+          "#9AD5B9",
+          "#C4E0D2",
+          "#DCEBE3",
+          "#F0F7F3"
+        ]
+      },
+      "brick": {
+        "role": "secondary",
+        "displayName": "Ziegelrot",
+        "canonical": "#B4413C",
+        "tonalRamp": [
+          "#3A2423",
+          "#6E2724",
+          "#B4413C",
+          "#C96B66",
+          "#E3807A",
+          "#EDA9A5",
+          "#F7E5E3",
+          "#FCF3F2"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papier",
+        "canonical": "#FBF8F3",
+        "tonalRamp": [
+          "#151916",
+          "#2E3631",
+          "#5B635E",
+          "#A3ABA6",
+          "#E4DED3",
+          "#F1EDE5",
+          "#FBF8F3",
+          "#FFFFFF"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinte",
+        "canonical": "#1F2421",
+        "tonalRamp": [
+          "#0E1311",
+          "#1F2421",
+          "#2E3631",
+          "#5B635E",
+          "#A3ABA6",
+          "#E4DED3",
+          "#ECEAE4",
+          "#FBF8F3"
+        ]
+      },
+      "sage-paid": {
+        "role": "secondary",
+        "displayName": "Helles Salbei",
+        "canonical": "#A8C7B6",
+        "tonalRamp": [
+          "#1F3A2F",
+          "#3D5E4F",
+          "#5C8570",
+          "#7FA692",
+          "#A8C7B6",
+          "#C4DACD",
+          "#DCEBE3",
+          "#F0F7F3"
+        ]
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Kapitel-Titel mit kursivem Moos-Akzent." },
-      "headline": { "displayName": "Headline", "purpose": "Kapitelüberschriften." },
-      "title": { "displayName": "Title", "purpose": "Fragen, Widget-Titel, Karten-Fronten, Anbieter." },
-      "body": { "displayName": "Body", "purpose": "Fließtext, 680px Spalte." },
-      "small": { "displayName": "Small", "purpose": "Bedienelemente und Sekundärtext." },
-      "label": { "displayName": "Label", "purpose": "Badges, Meta, Legenden, Kleingedrucktes." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Kapitel-Titel mit kursivem Moos-Akzent."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Kapitelüberschriften."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Fragen, Widget-Titel, Karten-Fronten, Anbieter."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Fließtext, 680px Spalte."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Bedienelemente und Sekundärtext."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Badges, Meta, Legenden, Kleingedrucktes."
+      }
     },
     "shadows": [
-      { "name": "menu-float", "value": "0 12px 32px rgb(0 0 0 / .12)", "purpose": "Nur das Überlagerungs-Menü." },
-      { "name": "error-ring", "value": "0 0 0 2px var(--danger)", "purpose": "Unbeantwortete Pflichtfrage nach Startversuch." }
+      {
+        "name": "menu-float",
+        "value": "0 12px 32px rgb(0 0 0 / .12)",
+        "purpose": "Nur das Überlagerungs-Menü."
+      },
+      {
+        "name": "error-ring",
+        "value": "0 0 0 2px var(--danger)",
+        "purpose": "Unbeantwortete Pflichtfrage nach Startversuch."
+      }
     ],
     "motion": [
-      { "name": "press", "value": "transform .15s ease", "purpose": "Button :active scale(.98)." },
-      { "name": "flip", "value": "transform .5s ease", "purpose": "Umdrehkarte (rotateY)." },
-      { "name": "rise", "value": ".5s cubic-bezier(.16, 1, .3, 1)", "purpose": "Antwort/Erfolgszeile erscheint." },
-      { "name": "reduced-motion", "value": "transition/animation: none", "purpose": "Unter prefers-reduced-motion überall aus." }
+      {
+        "name": "press",
+        "value": "transform .15s ease",
+        "purpose": "Button :active scale(.98)."
+      },
+      {
+        "name": "flip",
+        "value": "transform .5s ease",
+        "purpose": "Umdrehkarte (rotateY)."
+      },
+      {
+        "name": "rise",
+        "value": ".5s cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Antwort/Erfolgszeile erscheint."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition/animation: none",
+        "purpose": "Unter prefers-reduced-motion überall aus."
+      }
     ],
     "breakpoints": [
-      { "name": "compare-stack", "value": "560px" },
-      { "name": "wide", "value": "720px" }
+      {
+        "name": "compare-stack",
+        "value": "560px"
+      },
+      {
+        "name": "wide",
+        "value": "720px"
+      }
     ]
   },
   "components": [
@@ -112,11 +244,31 @@
       "Gefüllte Flächen sind knapp: gefüllt bleibt nur der eine Weiter-Schritt."
     ],
     "rules": [
-      { "name": "The One Moss Rule", "body": "Moosgrün ist die einzige Akzentfarbe. Es trägt Bedeutung, nie Dekoration.", "section": "colors" },
-      { "name": "The Twin Rule", "body": "Jedes Token existiert in Hell und Dunkel mit dokumentiertem Kontrast.", "section": "colors" },
-      { "name": "The Never-Color-Alone Rule", "body": "Vorteil, Fehler und Fortschritt tragen zusätzlich ein Zeichen oder Text.", "section": "colors" },
-      { "name": "The One Family Rule", "body": "Keine zweite Schrift; 400, 600, 700, kursiv für Betonung.", "section": "typography" },
-      { "name": "The Flat-By-Default Rule", "body": "Karten haben keinen Schatten; Zustand zeigt sich über Randfarbe und Hintergrund.", "section": "elevation" }
+      {
+        "name": "The One Moss Rule",
+        "body": "Moosgrün ist die einzige Akzentfarbe. Es trägt Bedeutung, nie Dekoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Twin Rule",
+        "body": "Jedes Token existiert in Hell und Dunkel mit dokumentiertem Kontrast.",
+        "section": "colors"
+      },
+      {
+        "name": "The Never-Color-Alone Rule",
+        "body": "Vorteil, Fehler und Fortschritt tragen zusätzlich ein Zeichen oder Text.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Keine zweite Schrift; 400, 600, 700, kursiv für Betonung.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Karten haben keinen Schatten; Zustand zeigt sich über Randfarbe und Hintergrund.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do Moosgrün (#1E6B4F) sparsam einsetzen: Links, Häkchen, gewählter Zustand, ein Hauptbutton.",

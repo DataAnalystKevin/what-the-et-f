@@ -13,7 +13,7 @@ colors:
   on-moss: "#FFFFFF"
   brick: "#B4413C"
   brick-soft: "#F7E5E3"
-  slate-blue: "#3B5B92"
+  sage-paid: "#A8C7B6"
   night-paper: "#151916"
   night-surface: "#1D2320"
   night-tile: "#262D29"
@@ -26,7 +26,7 @@ colors:
   night-on-moss: "#0E1311"
   night-brick: "#E3807A"
   night-brick-soft: "#3A2423"
-  night-slate-blue: "#7F9FD9"
+  night-sage-paid: "#3D5E4F"
 typography:
   display:
     fontFamily: "Literata, Charter, 'Iowan Old Style', Georgia, serif"
@@ -145,7 +145,7 @@ Warmes Papier, tintiges Schwarzgrün, ein beruhigendes Moosgrün. Rot und Blau e
 
 ### Secondary
 - **Ziegelrot** (#B4413C, dunkel #E3807A): Fehlermeldungen, „verloren/weg“-Zustände im Aktienkorb, Gefahren-Button. Nie dekorativ. Weicher Grund: #F7E5E3.
-- **Schieferblau** (#3B5B92, dunkel #7F9FD9): ausschließlich „eingezahlt“ in Diagrammen, damit es sich vom grünen Gewinn unterscheidet.
+- **Helles Salbei** (#A8C7B6, dunkel #3D5E4F): ausschließlich „selbst eingezahlt“ in Diagrammen, in Helligkeit vom dunkleren grünen Gewinn getrennt. Beschriftung darauf in Tinte (#1F2421, dunkel #ECEAE4).
 
 ### Neutral
 - **Papier** (#FBF8F3, dunkel #151916): Seitenhintergrund und Zahlenkacheln (im Dunkeln hebt sich die Kachel auf #262D29).
@@ -208,7 +208,7 @@ Flach und tonal. Tiefe entsteht durch Papier (#FBF8F3) gegen weiße Karte mit 1p
 
 ## Shapes
 
-Eine Eckenform: 6px für Karten, Buttons, Pillen, Antworten, Balken und Eingaben. Nur Tabs im Segment-Schalter haben 4px, weil sie in einem 6px-Behälter liegen. Datenpunkte sind Kreise (50%). Ränder sind 1px (Karten) oder 1,5px (Buttons, Antworten, Anbieterkarten). Gestrichelte Ränder markieren Notizen. Keine Pfeil-Ecken, keine Kapseln, keine Verläufe.
+Eine Eckenform: 6px für Karten, Buttons, Pillen, Antworten und Eingaben. Tabs im Segment-Schalter haben 4px, weil sie in einem 6px-Behälter liegen, und schmale Balken und Legendenfarben (Sorgen-Balken, Diagramm-Schlüssel) 3px, damit sie nicht zur Kapsel werden. Datenpunkte sind Kreise (50%). Ränder sind 1px (Karten) oder 1,5px (Buttons, Antworten, Anbieterkarten). Gestrichelte Ränder markieren Notizen. Keine Pfeil-Ecken, keine Kapseln, keine Verläufe.
 
 ### Named Rules
 **The One Radius Rule.** Eine neue Komponente erbt `--radius: 6px`; sie erfindet keinen eigenen Radius.
@@ -245,7 +245,7 @@ Eine Eckenform: 6px für Karten, Buttons, Pillen, Antworten, Balken und Eingaben
 - **Pager:** Linie oben, zurück/weiter nebeneinander; „Weiter“ gefüllt, Titel des nächsten Kapitels klein darunter.
 
 ### Umdrehkarte (Signature)
-Eine Frage vorne in Titelgröße auf Karte mit kräftiger Haarlinie, 120px hoch; Tippen dreht sie 0,5s um die Y-Achse, die Rückseite ist moosgrün mit Antwort in 15px. Kleine Hinweiszeile „Tippen zum Umdrehen“ vorne.
+Eine Frage vorne in Titelgröße auf Karte mit kräftiger Haarlinie, mind. 120px hoch; Tippen dreht sie 0,5s um die Y-Achse. Die Rückseite ist eine Karte mit Moosrand, zeigt die Frage klein oben und darunter die Antwort in 15px. Hinweise „Aufdecken ↻“ und „Zurückdrehen ↻“. Für Screenreader bleibt der Name die Frage (`aria-expanded`), die Antwort kommt als Beschreibung.
 
 ### Sorgen-Karte (Signature)
 Eine Frage als Title, offen mit Salbei hinterlegt; Antwort erscheint mit „rise“-Animation; gelöst = Moosrand und gedämpfter Button. Die ehrliche Sorge („Realistisch“) bleibt neutral, nur ≈ statt ✓, kein grüner Triumph. Oben klebt ein 5-Segment-Balken als Zähler.

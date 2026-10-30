@@ -270,7 +270,8 @@ function worries(w) {
   const aha = w.parentElement.querySelector('.aha'); // erscheint erst, wenn alle Sorgen angesehen sind
   if (aha) aha.hidden = true;
   const sync = () => {
-    $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen angesehen`;
+    // Die Live-Region sagt auch an, dass das Fazit erschienen ist
+    $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen angesehen${seen.size === cards.length ? ' – darunter steht das Fazit' : ''}`;
     $$('.worry-bar i', w).forEach((seg, i) => seg.classList.toggle('on', i < seen.size));
     const done = $('[data-worries-done]', w);
     if (seen.size === cards.length && done.hidden) { done.hidden = false; done.classList.add('rise'); }
@@ -292,15 +293,19 @@ function worries(w) {
 }
 
 // --- Kapitel 7: Flip-Karten----------------------------------------------
+// Der Name der Karte bleibt die Frage; die Antwort wird erst nach dem Aufdecken als Beschreibung vorgelesen.
 function flips() {
-  $$('.flip').forEach((b) => {
-    const sync = () => {
-      const on = b.getAttribute('aria-pressed') === 'true';
-      $('.flip-front', b).setAttribute('aria-hidden', on);
-      $('.flip-back', b).setAttribute('aria-hidden', !on);
-    };
-    b.addEventListener('click', () => { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true'); sync(); });
-    sync();
+  $$('.flip').forEach((b, i) => {
+    const back = $('.flip-back', b);
+    back.id = `flip-back-${i + 1}`;
+    b.setAttribute('aria-label', $('.flip-back-q', b).textContent);
+    $('.flip-front', b).setAttribute('aria-hidden', 'true');
+    back.setAttribute('aria-hidden', 'true');
+    b.addEventListener('click', () => {
+      const on = b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', on);
+      if (on) b.setAttribute('aria-describedby', back.id); else b.removeAttribute('aria-describedby');
+    });
   });
 }
 
