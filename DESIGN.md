@@ -241,7 +241,7 @@ Eine Eckenform: 6px für Karten, Buttons, Pillen, Antworten und Eingaben. Tabs i
 
 ### Navigation
 - **Kopfzeile:** klebend, Papier zu 88% mit 8px Weichzeichner, Haarlinie unten. Logo „What the (ET)F?“ mit „ET“ in Moos; mittig dünne Fortschrittslinie (Moos, 2,2px) mit Zähler „3/10“; rechts Menü-Button (44px, Outline).
-- **Menü:** Karte mit Schwebe-Schatten, oben die einzige gefüllte Verknüpfung „Direkt zu den 5 Schritten“, darunter Kapitelliste mit Häkchen, Darstellungs-Auswahl (Automatisch/Hell/Dunkel als Segment).
+- **Menü:** Karte mit Schwebe-Schatten, oben die einzige gefüllte Verknüpfung „Direkt zu den 3 Schritten“, darunter Kapitelliste mit Häkchen, Darstellungs-Auswahl (Automatisch/Hell/Dunkel als Segment).
 - **Pager:** Linie oben, zurück/weiter nebeneinander; „Weiter“ gefüllt, Titel des nächsten Kapitels klein darunter.
 
 ### Umdrehkarte (Signature)
@@ -254,7 +254,7 @@ Eine Frage als Title, offen mit Salbei hinterlegt; Antwort erscheint mit „rise
 Neutrale Karte mit Name in Title-Größe, Art in Label, Beschreibung nur wo nötig, „Zur Seite →“ in Moos. Kein Werbe- oder Affiliate-Ton. Hover und Fokus färben nur den Rand moosgrün.
 
 ### Schritte-Liste
-Fünf abhakbare Zeilen in einer Karte, getrennt durch Haarlinien, gruppiert nach „Heute / Diese Woche / Danach“; erledigt = gedämpfter Text; vollständig = Karte wird Salbei, kurze „rise“-Zeile.
+Drei abhakbare Zeilen in einer Karte, getrennt durch Haarlinien, gruppiert nach „Heute“ und „Danach, in Ruhe“; darunter „Und dann“ mit zwei Hinweisen ohne Checkbox (Laufen lassen, Weiterlernen), die nicht mitzählen; erledigt = gedämpfter Text; vollständig = Karte wird Salbei, kurze „rise“-Zeile.
 
 ## Do's and Don'ts
 

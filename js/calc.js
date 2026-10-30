@@ -51,8 +51,10 @@ MEINE NÄCHSTEN SCHRITTE
 [ ] Depot bei einem günstigen Online-Broker eröffnen (meine Wahl: Trade Republic)
 [ ] Freistellungsauftrag einrichten
 [ ] Sparplan auf einen breiten Welt-ETF anlegen
-[ ] Laufen lassen und nicht ständig reinschauen
-[ ] Weiterlernen – ohne dafür Geld auszugeben: Finanzfluss auf YouTube
+
+DANACH
+Laufen lassen: Einmal im Jahr reinschauen reicht völlig.
+Weiterlernen – ohne dafür Geld auszugeben: Finanzfluss auf YouTube
 
 Wichtig: Das sind persönliche Erfahrungen, keine Anlageberatung.`;
 }
