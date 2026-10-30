@@ -132,6 +132,7 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 .personal p { margin: 0 0 6px; } .personal p:last-child { margin: 0; }
 .optional-note { font-size: var(--fs-small); color: var(--muted); }
 .fineprint { font-size: var(--fs-meta); color: var(--muted); line-height: 1.5; max-width: 65ch; }
+.widget .fineprint, .card .fineprint { max-width: none; } /* in Widgets und Karten die volle Breite nutzen */
 
 /* Buttons */
 .btn {
@@ -263,7 +264,7 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .more[open] summary { margin-bottom: 4px; }
 .more p { margin: 0 0 12px; }
 .worries { margin: 20px 0 8px; }
-.worries-head { position: sticky; top: 65px; z-index: 2; background: var(--bg); padding: 8px 0 12px; }
+.worries-head { position: sticky; top: 65px; z-index: 2; background: var(--bg); padding: 8px 0 12px; margin-bottom: 6px; }
 .worries-count { margin: 0 0 8px; font-size: var(--fs-small); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; }
 .worry-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
 .worry-bar i { height: 6px; border-radius: 3px; background: var(--line); transition: background .4s ease; }
@@ -275,8 +276,8 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .worry-a p { margin: 0 0 10px; }
 .worry-tag { display: inline-block; font-size: var(--fs-meta); font-weight: 600; color: var(--accent); }
 .worry-tag::before { content: '✓ '; }
-.worry-tag.partial { color: var(--ink); font-size: var(--fs-small); }
-.worry-tag.partial::before { content: '≈ '; }
+.worry-tag.partial { color: var(--ink); }
+.worry-tag.partial::before { content: '−'; display: inline-grid; place-items: center; width: 1.25em; height: 1.25em; margin-right: .35em; border: 1.5px solid currentColor; border-radius: 50%; line-height: 1; vertical-align: -.2em; }
 .worry-a .more summary { font-size: var(--fs-small); min-height: 40px; }
 .worry-btn { margin: 4px 0 0; }
 /* Zurückhaltend: Rahmen-Button in Akzentfarbe, gefüllt bleibt nur 'Weiter' */
@@ -381,7 +382,7 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .share-btn:hover, .share-btn:focus-visible { border-color: var(--accent); }
 .share-note:empty { display: none; }
 .share-note { margin-top: 10px !important; }
-.reset-note { font-size: var(--fs-small); color: var(--muted); text-align: center; max-width: 52ch; margin: 24px auto 0; }
+.reset-note { font-size: var(--fs-small); color: var(--muted); text-align: center; margin: 24px 0 0; }
 .reset-note .link-btn { min-height: 0; padding: 0; }
 .kofi { border: 1.5px solid var(--accent); text-align: center; margin-top: 8px; }
 .kofi h3 { margin-top: 0; }
@@ -391,7 +392,7 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .chart .chart-on-fill { fill: var(--surface); }
 /* Beschriftung mit Hintergrund in Kartenfarbe – Linien laufen sichtbar dahinter durch */
 .chart .chart-halo { paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; fill: var(--ink); }
-.finale { hyphens: manual; text-wrap: balance; font-weight: 700; letter-spacing: -0.01em; font-size: clamp(1.5rem, 5.5vw, 2rem); line-height: 1.2; text-align: center; margin: 48px 0 32px; }
+.finale { hyphens: manual; text-wrap: balance; font-weight: 700; letter-spacing: -0.01em; font-size: clamp(1.5rem, 5.5vw, 2rem); line-height: 1.2; text-align: center; margin: 40px 0; }
 .finale span { display: block; text-wrap: balance; }
 .finale em { color: var(--accent); }
 
