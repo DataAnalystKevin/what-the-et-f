@@ -46,13 +46,15 @@ function applyPersonalization(a) {
   if (a.worry === 'geld') setCalcMonthly(25);
 
   const box = $('[data-personal]');
-  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 12 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
+  const levelNote = a.tour === 'voll' ? 'Volle Tour: alle 12 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
   box.replaceChildren(...[levelNote, ...goals.map((g) => PERSONAL.goal[g]), PERSONAL.worry[a.worry]]
     .filter(Boolean).map((t) => Object.assign(document.createElement('p'), { textContent: t })));
   box.hidden = false;
   // Persönlicher Hinweis steht oben im ersten Kapitel, das für diese Person nicht optional ist.
   const first = chapters.findIndex((c, i) => i > 0 && !isOptional(i));
-  chapters[first].prepend(box);
+  // Unter dem Einleitungssatz statt davor, damit die Kapitelüberschrift oben bleibt
+  const lead = $('.lead', chapters[first]);
+  if (lead) lead.after(box); else chapters[first].prepend(box);
   renderToc();
 }
 
@@ -165,8 +167,8 @@ function initCheckin() {
     const cur = list[idx];
     steps.forEach((s) => (s.hidden = s !== cur));
     const info = $('[data-stepinfo]', form);
-    info.hidden = false;
-    info.textContent = cur.dataset.step === 'final' ? 'Fast geschafft – noch ein Hinweis' : `Frage ${idx + 1} von ${list.length - 1}`;
+    info.hidden = cur.dataset.step === 'final';
+    info.textContent = idx === 0 ? 'Frage 1' : `Frage ${idx + 1} von ${list.length - 1}`;
     const answered = !!$('input:checked', cur);
     const required = cur.dataset.step === 'goal' ? goalRequired() : !!$('input:required', cur);
     const optional = cur.tagName === 'FIELDSET' && !required;

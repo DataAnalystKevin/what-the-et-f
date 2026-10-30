@@ -266,12 +266,15 @@ function calc(w) {
 // --- Kapitel 6: Sorgen-Check ---------------------------------------------
 function worries(w) {
   const cards = $$('.worry', w);
-  const seen = new Set(); // einmal aufgedeckt zählt als entkräftet, auch wenn wieder zugeklappt
+  const seen = new Set(); // einmal aufgedeckt zählt als angesehen, auch wenn wieder zugeklappt
+  const aha = w.parentElement.querySelector('.aha'); // erscheint erst, wenn alle Sorgen angesehen sind
+  if (aha) aha.hidden = true;
   const sync = () => {
     $('[data-worries-count]', w).textContent = `${seen.size} von ${cards.length} Sorgen angesehen`;
     $$('.worry-bar i', w).forEach((seg, i) => seg.classList.toggle('on', i < seen.size));
     const done = $('[data-worries-done]', w);
     if (seen.size === cards.length && done.hidden) { done.hidden = false; done.classList.add('rise'); }
+    if (aha) aha.hidden = seen.size < cards.length;
   };
   cards.forEach((card, i) => {
     const btn = $('.worry-btn', card);

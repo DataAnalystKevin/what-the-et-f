@@ -109,7 +109,7 @@
 
         <p class="checkin-error" id="checkin-error" data-error role="alert" hidden></p>
         <button class="btn btn-primary" type="submit" aria-disabled="true" aria-describedby="start-hint"><span>Los geht’s&nbsp;→</span></button>
-        <p class="fineprint start-hint" id="start-hint">Setz zuerst den Haken bei „Verstanden“.</p>
+        <p class="start-hint" id="start-hint" aria-live="polite">Setz zuerst den Haken bei „Verstanden“.</p>
         </div>
         <div class="checkin-nav" hidden>
           <button class="link-btn" type="button" data-step-next>Weiter&nbsp;→</button>
@@ -349,24 +349,24 @@
 
       <div class="flips">
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front">„Ich warte auf den perfekten Einstieg.“<span class="flip-hint" aria-hidden="true">Tippen zum Umdrehen ↻</span></span>
-          <span class="flip-back">Den kennt niemand – auch Profis nicht. Wer wartet, verpasst oft die besten Tage. Mit einem monatlichen Sparplan kaufst du automatisch mal teuer, mal günstig.</span>
+          <span class="flip-front">„Ich warte auf den perfekten Einstieg.“<span class="flip-hint">Aufdecken ↻</span></span>
+          <span class="flip-back"><span class="flip-back-q">„Ich warte auf den perfekten Einstieg.“</span>Den kennt niemand – auch Profis nicht. Wer wartet, verpasst oft die besten Tage. Mit einem monatlichen Sparplan kaufst du automatisch mal teuer, mal günstig.<span class="flip-hint">Zurückdrehen ↻</span></span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front">„Ich frag mal meinen Bankberater.“<span class="flip-hint" aria-hidden="true">Tippen zum Umdrehen ↻</span></span>
-          <span class="flip-back">Der ist meistens Verkäufer und lebt von Provisionen. Oft gibt es teure aktive Fonds mit Ausgabeaufschlag. Frag lieber direkt nach den Gesamtkosten – oder eröffne dein Depot selbst online.</span>
+          <span class="flip-front">„Ich frag mal meinen Bankberater.“<span class="flip-hint">Aufdecken ↻</span></span>
+          <span class="flip-back"><span class="flip-back-q">„Ich frag mal meinen Bankberater.“</span>Der ist meistens Verkäufer und lebt von Provisionen. Oft gibt es teure aktive Fonds mit Ausgabeaufschlag. Frag lieber direkt nach den Gesamtkosten – oder eröffne dein Depot selbst online.<span class="flip-hint">Zurückdrehen ↻</span></span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front">„Ich kauf lieber die eine Aktie, die alle kennen.“<span class="flip-hint" aria-hidden="true">Tippen zum Umdrehen ↻</span></span>
-          <span class="flip-back">Einzelaktien sind Wetten. Der ETF hält die Gewinner sowieso – ohne dass du raten musst, wer sie sind.</span>
+          <span class="flip-front">„Ich kauf lieber die eine Aktie, die alle kennen.“<span class="flip-hint">Aufdecken ↻</span></span>
+          <span class="flip-back"><span class="flip-back-q">„Ich kauf lieber die eine Aktie, die alle kennen.“</span>Einzelaktien sind Wetten. Der ETF hält die Gewinner sowieso – ohne dass du raten musst, wer sie sind.<span class="flip-hint">Zurückdrehen ↻</span></span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front">„KI / Wasserstoff / Cannabis – das ist die Zukunft!“<span class="flip-hint" aria-hidden="true">Tippen zum Umdrehen ↻</span></span>
-          <span class="flip-back">Themen-ETFs kauft man meist, wenn der Hype schon eingepreist ist. Sie sind teurer und schwanken stärker. Wenn ein Thema groß wird, steckt es ohnehin im Welt-ETF.</span>
+          <span class="flip-front">„KI / Wasserstoff / Cannabis – das ist die Zukunft!“<span class="flip-hint">Aufdecken ↻</span></span>
+          <span class="flip-back"><span class="flip-back-q">„KI / Wasserstoff / Cannabis – das ist die Zukunft!“</span>Themen-ETFs kauft man meist, wenn der Hype schon eingepreist ist. Sie sind teurer und schwanken stärker. Wenn ein Thema groß wird, steckt es ohnehin im Welt-ETF.<span class="flip-hint">Zurückdrehen ↻</span></span>
         </button>
         <button class="flip" type="button" aria-pressed="false">
-          <span class="flip-front">„Ich buch erst mal ein Börsen-Seminar für 999&nbsp;€.“<span class="flip-hint" aria-hidden="true">Tippen zum Umdrehen ↻</span></span>
-          <span class="flip-back">Brauchst du nicht. Alles Nötige gibt’s kostenlos – zum Beispiel beim Kanal „Finanzfluss“ auf YouTube. Wer dir Reichtum für Geld verspricht, verdient vor allem an dir.</span>
+          <span class="flip-front">„Ich buch erst mal ein Börsen-Seminar für 999&nbsp;€.“<span class="flip-hint">Aufdecken ↻</span></span>
+          <span class="flip-back"><span class="flip-back-q">„Ich buch erst mal ein Börsen-Seminar für 999&nbsp;€.“</span>Brauchst du nicht. Alles Nötige gibt’s kostenlos – zum Beispiel beim Kanal „Finanzfluss“ auf YouTube. Wer dir Reichtum für Geld verspricht, verdient vor allem an dir.<span class="flip-hint">Zurückdrehen ↻</span></span>
         </button>
       </div>
       <p class="aha"><strong>Aha:</strong> Das Schwierigste am ETF-Sparen ist, nichts zu tun.</p>
@@ -409,7 +409,7 @@
             <li class="con">Bei sehr hohen Erträgen kann die kostenlose Familienversicherung des Kindes wegfallen. Bei normalen Sparplänen ist das kein Thema, aber gut zu wissen.</li>
             <li class="con">Das Depot zählt beim BAföG als Vermögen des Kindes. Was über 15.000 € liegt, wird angerechnet und kann den Anspruch kürzen oder ganz entfallen lassen.</li>
           </ul>
-          <p class="fineprint">Wir haben uns für diesen Weg entschieden – mit dem festen Plan, unseren Kindern bis dahin ordentlich Finanzwissen mitzugeben. Das ist aktuell unser Setup für beide Kinder. 😉</p>
+          <p class="mypick">Wir haben uns für diesen Weg entschieden – mit dem festen Plan, unseren Kindern bis dahin ordentlich Finanzwissen mitzugeben. Das ist aktuell unser Setup für beide Kinder.</p>
         </div>
         <div role="tabpanel" id="opt2" aria-labelledby="tab2" hidden>
           <p>Du sparst auf deinem eigenen (oder einem extra) Depot und überträgst die Anteile später, wenn du das Kind für bereit hältst – mit 18, 25 oder zur ersten Wohnung.</p>
@@ -443,8 +443,8 @@
           <input type="range" min="0" max="570" step="5" value="150" data-in="monthly">
         </label>
         <label class="slider">
-          <span>Kinder mit Kindergeld: <output data-out="kids">0</output></span>
-          <input type="range" min="0" max="4" value="0" data-in="kids">
+          <span>Kinder mit Kindergeld: <output data-out="kids">1</output></span>
+          <input type="range" min="0" max="4" value="1" data-in="kids">
         </label>
         <label class="check"><input type="checkbox" data-in="under25"><span>Ich bin unter 25</span></label>
         <dl class="stats">
@@ -456,7 +456,7 @@
         <p class="fineprint">Regeln laut Altersvorsorgereformgesetz: 50 % Zulage auf die ersten 360 € im Jahr, 25 % auf den Teil bis 1.800 € (max. 540 €). Zulagen erst ab 120 € Eigenbeitrag im Jahr. Kinderzulage 1 € je 1 € Beitrag, bis 300 € pro Kind. Einzahlen kannst du bis 6.840 € im Jahr, gefördert werden davon aber nur 1.800 €.</p>
       </div>
 
-      <p class="aha"><strong>Aha:</strong> 150 € im Monat und ein Kind? Dann legt der Staat 840 € im Jahr dazu, also 47 % obendrauf. Das ist Rendite, für die du nichts tun musst.</p>
+      <p class="aha"><strong>Aha:</strong> 150 € im Monat und ein Kind? Dann legt der Staat 840 € im Jahr dazu, also 47 % obendrauf. Dieses Geld kommt zu deiner eigenen Einzahlung dazu.</p>
     </section>
 
     <!-- 11 · Freies Depot oder Altersvorsorgedepot -->
@@ -472,7 +472,9 @@
         <div role="row"><span role="rowheader">Steuern bei Auszahlung</span><span role="cell" class="good">Abgeltungsteuer nur auf die Gewinne</span><span role="cell">gesamte Auszahlung zum persönlichen Steuersatz</span></div>
         <div role="row"><span role="rowheader">Auszahlung</span><span role="cell" class="good">wie du willst</span><span role="cell">lebenslange Rente oder Auszahlplan bis mindestens 85, max. 30 % auf einmal</span></div>
       </div>
-      <p><strong>Wo ist der Haken?</strong> Du bist weniger flexibel. Wer vorzeitig ans Geld will, muss die Zulagen grundsätzlich zurückzahlen. Ausnahme ist die selbst genutzte Immobilie: Für Kauf, Bau oder die Tilgung des Hauskredits und in Grenzen auch für einen barrierereduzierenden Umbau oder eine energetische Sanierung darfst du Geld entnehmen, ohne die Förderung zu verlieren. Nicht jeder Anbieter muss das anbieten. Und im Alter versteuerst du die <em>ganze</em> Auszahlung mit deinem persönlichen Steuersatz, nicht nur die Gewinne. Unterm Strich rechnet es sich dank Zulagen trotzdem meist etwas besser als ein ungeförderter Sparplan – wenn die Kosten niedrig sind. Dazu gleich mehr.</p>
+      <p><strong>Wo ist der Haken?</strong> Du bist weniger flexibel. Wer vorzeitig ans Geld will, muss die Zulagen grundsätzlich zurückzahlen.</p>
+      <p><strong>Die Ausnahme:</strong> die selbst genutzte Immobilie. Für Kauf, Bau oder die Tilgung des Hauskredits und in Grenzen auch für einen barrierereduzierenden Umbau oder eine energetische Sanierung darfst du Geld entnehmen, ohne die Förderung zu verlieren. Nicht jeder Anbieter muss das anbieten.</p>
+      <p><strong>Steuern im Alter:</strong> Du versteuerst die <em>ganze</em> Auszahlung mit deinem persönlichen Steuersatz, nicht nur die Gewinne. Unterm Strich rechnet es sich dank Zulagen trotzdem meist etwas besser als ein ungeförderter Sparplan – wenn die Kosten niedrig sind. Dazu gleich mehr.</p>
       <p><strong>Die große Unbekannte:</strong> Wie hoch dein persönlicher Steuersatz im Ruhestand sein wird, weiß heute niemand. Das hängt von deiner Rente, deinen anderen Einkünften und künftigen Reformen ab. Aber auch die Abgeltungsteuer im freien Depot ist nur heute fest: In 30 Jahren kann sie genauso anders aussehen. Jede Form der Altersvorsorge ist damit auch eine kleine Wette auf das Steuerrecht von morgen. Darum würde ich nicht alles auf eine Karte setzen, sondern möglichst beides nutzen: gefördert sparen und alles darüber hinaus Verfügbare in einem freien ETF-Depot.</p>
       <p class="aha"><strong>Aha:</strong> Das Altersvorsorgedepot lohnt sich für die Zulagen, das freie Depot bleibt für alles, an das du jederzeit herankommen willst.</p>
     </section>
@@ -486,7 +488,7 @@
 
       <div class="card mine">
         <h3>So würde ich es machen</h3>
-        <p><strong>Wo:</strong> Nicht bei der Hausbank oder der Versicherung deines Vertrauens, sondern bei einem günstigen Neobroker. Die beiden Vorreiter sind <strong>Trade Republic</strong> und <strong>Scalable Capital</strong>: keine Depot- und Sparplangebühren, und bei ausgewählten ETFs werden sogar die laufenden Fondskosten erstattet. Bei Trade Republic gilt das für rund 50 ETFs, darunter den in Kapitel 5 erwähnten <strong>iShares Core MSCI World</strong> (WKN A0RPWH). Günstiger als gratis gibt es nicht, weshalb die Kombination aus Trade Republic und diesem ETF unschlagbar ist.</p>
+        <p><strong>Wo:</strong> Nicht bei der Hausbank oder der Versicherung deines Vertrauens, sondern bei einem günstigen Neobroker. Die beiden Vorreiter sind <strong>Trade Republic</strong> und <strong>Scalable Capital</strong>: keine Depot- und Sparplangebühren, und bei ausgewählten ETFs werden sogar die laufenden Fondskosten erstattet. Bei Trade Republic gilt das für rund 50 ETFs, darunter den in Kapitel 5 erwähnten <strong>iShares Core MSCI World</strong> (WKN A0RPWH). Günstiger als gratis gibt es nicht, weshalb ich die Kombination aus Trade Republic und diesem ETF für die günstigste halte.</p>
         <p><strong>Was:</strong> Nimm nicht das vorgefertigte Standardprodukt, sondern wähl selbst einen breiten Welt-ETF, zum Beispiel einen der beiden aus Kapitel 5. Solange die Rente noch Jahrzehnte entfernt ist, würde ich komplett auf Aktien setzen. Über sicherere Bausteine wie Anleihen kannst du dir Gedanken machen, wenn die Rente näher rückt.</p>
         <p><strong>Wie viel:</strong> 150 € im Monat, denn damit holst du die volle Grundzulage. Mehr darfst du einzahlen, gefördert wird es aber nicht.</p>
         <p class="fineprint">Keine Provision, keine Werbung: Ich bekomme von keinem Anbieter Geld. Die Kostenerstattung ist eine freiwillige Zusage der Anbieter, keine vertragliche Garantie. Prüf die Konditionen vor dem Abschluss.</p>
@@ -555,6 +557,10 @@
       </div>
 
 
+      <blockquote class="finale">
+        <span>Der beste Zeitpunkt anzufangen war gestern.</span> <span>Der zweitbeste ist <em>heute</em>.</span>
+      </blockquote>
+
       <div class="card summary" id="zusammenfassung">
         <h3>Alles auf einer Seite</h3>
         <p class="no-print">Die wichtigsten Punkte, deine Rechnung aus Kapitel 4 und die 5 Schritte – zum Nachlesen, wann immer du willst.</p>
@@ -570,30 +576,26 @@
       </div>
 
 
-      <blockquote class="finale">
-        <span>Der beste Zeitpunkt anzufangen war gestern.</span> <span>Der zweitbeste ist <em>heute</em>.</span>
-      </blockquote>
-
-      <div class="card share">
-        <h3>Teile die Seite</h3>
+      <details class="card share">
+        <summary><h3>Weitergeben</h3></summary>
         <p>Kennst du jemanden, der sich bisher nicht an ETFs traut? Schick den Link einfach weiter.</p>
         <div class="share-row">
           <button class="share-btn" type="button" data-share hidden>Teilen …</button>
-          <a class="share-btn" href="https://wa.me/?text=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2011%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A%20https%3A%2F%2Fwhattheetf.de%2F" target="_blank" rel="noopener">WhatsApp<span class="sr-only"> (öffnet in neuem Tab)</span></a>
-          <a class="share-btn" href="https://t.me/share/url?url=https%3A%2F%2Fwhattheetf.de%2F&amp;text=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2011%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A" target="_blank" rel="noopener">Telegram<span class="sr-only"> (öffnet in neuem Tab)</span></a>
-          <a class="share-btn" href="https://x.com/intent/post?text=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2011%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A&amp;url=https%3A%2F%2Fwhattheetf.de%2F" target="_blank" rel="noopener">X<span class="sr-only"> (öffnet in neuem Tab)</span></a>
+          <a class="share-btn" href="https://wa.me/?text=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2012%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A%20https%3A%2F%2Fwhattheetf.de%2F" target="_blank" rel="noopener">WhatsApp<span class="sr-only"> (öffnet in neuem Tab)</span></a>
+          <a class="share-btn" href="https://t.me/share/url?url=https%3A%2F%2Fwhattheetf.de%2F&amp;text=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2012%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A" target="_blank" rel="noopener">Telegram<span class="sr-only"> (öffnet in neuem Tab)</span></a>
+          <a class="share-btn" href="https://x.com/intent/post?text=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2012%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A&amp;url=https%3A%2F%2Fwhattheetf.de%2F" target="_blank" rel="noopener">X<span class="sr-only"> (öffnet in neuem Tab)</span></a>
           <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwhattheetf.de%2F" target="_blank" rel="noopener">Facebook<span class="sr-only"> (öffnet in neuem Tab)</span></a>
           <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwhattheetf.de%2F" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (öffnet in neuem Tab)</span></a>
-          <a class="share-btn" href="mailto:?subject=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20einfach%20erkl%C3%A4rt&amp;body=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2011%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A%20https%3A%2F%2Fwhattheetf.de%2F">E-Mail</a>
+          <a class="share-btn" href="mailto:?subject=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20einfach%20erkl%C3%A4rt&amp;body=What%20the%20%28ET%29F%3F%20%E2%80%93%20ETFs%20in%2012%20kurzen%20Kapiteln%20ehrlich%20erkl%C3%A4rt%2C%20von%20einem%20Freund%20statt%20von%20einer%20Bank%3A%20https%3A%2F%2Fwhattheetf.de%2F">E-Mail</a>
           <button class="share-btn" type="button" data-copy-link>Link kopieren</button>
         </div>
         <p class="fineprint share-note" data-copy-note aria-live="polite"></p>
-      </div>
+      </details>
 
       <div class="card kofi" data-kofi hidden>
         <h3>Hat’s dir geholfen?</h3>
         <p>Diese Seite ist kostenlos, werbefrei und in meiner Freizeit entstanden. Wenn sie dir weitergeholfen hat, freue ich mich über einen Kaffee – ganz freiwillig.</p>
-        <a class="btn btn-primary btn-block" data-kofi-link href="#" rel="noopener" target="_blank">Einen Kaffee auf Ko&#8209;fi spendieren&nbsp;→</a>
+        <a class="btn btn-block" data-kofi-link href="#" rel="noopener" target="_blank">Einen Kaffee auf Ko&#8209;fi spendieren&nbsp;→</a>
       </div>
 
       <div class="card reset-note"><p>Du willst noch mal von vorn anfangen oder jemand anderes soll die Seite auf deinem Gerät nutzen? Deine Antworten und dein Fortschritt liegen nur hier im Browser. <button class="link-btn" type="button" data-reset>Antworten und Fortschritt zurücksetzen</button></p></div>
