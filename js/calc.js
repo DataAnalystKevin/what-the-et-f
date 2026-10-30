@@ -40,6 +40,7 @@ DAS WICHTIGSTE
 4. Zeit ist dein größter Hebel: Zinseszins wirkt erst spät, dann aber gewaltig.
 5. Worauf achten: breit gestreut, günstig (niedrige TER), thesaurierend, großes Fondsvolumen.
 6. Finger weg von: Market Timing, teuren Bankprodukten, Einzelaktien-Wetten, Themen-ETFs, teuren Finanz-Seminaren und Coachings.
+7. Ab 2027: Altersvorsorgedepot mit 150 € im Monat → volle Grundzulage. Momentan unschlagbar: Trade Republic + iShares Core MSCI World (WKN A0RPWH) – dort ganz ohne Kosten.
 
 MEINE RECHNUNG
 ${eur(monthly)} pro Monat, ${years} Jahre, ${pct} % pro Jahr
@@ -47,7 +48,7 @@ ${eur(monthly)} pro Monat, ${years} Jahre, ${pct} % pro Jahr
 Nur eine Modellrechnung – echte Renditen schwanken.
 
 MEINE NÄCHSTEN SCHRITTE
-[ ] Depot bei einem günstigen Online-Broker eröffnen
+[ ] Depot bei einem günstigen Online-Broker eröffnen (meine Wahl: Trade Republic)
 [ ] Freistellungsauftrag einrichten
 [ ] Sparplan auf einen breiten Welt-ETF anlegen
 [ ] Laufen lassen und nicht ständig reinschauen

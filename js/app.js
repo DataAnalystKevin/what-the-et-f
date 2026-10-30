@@ -25,24 +25,29 @@ const PERSONAL = {
     kompliziert: 'Klingt kompliziert? Versprochen: Am Ende ist es ein ETF und ein Sparplan. Kapitel 5 zeigt, wie einfach das ist.',
     zeit: 'Keine Zeit? Perfekt – ETF-Sparen ist einmal kurz eingerichtet und kostet dich danach praktisch keine Zeit mehr. Die 5 Schritte warten am Ende auf dich.',
     geld: 'Zu wenig Geld? Schon 25 € im Monat machen einen Unterschied. Der Rechner in Kapitel 4 startet deshalb mit 25 €.',
+    nichts: 'Du willst dein Wissen auffrischen? Sehr gut – blätter ruhig zügig durch. Auf der letzten Seite steht alles noch mal kompakt zusammengefasst.',
   },
   level: { depot: 'Du hast schon ein Depot – die Grundlagen in Kapitel 1 und 2 sind für dich optional.' },
   goal: {
     kinder: 'Weil du für deine Kinder sparen willst, gibt’s Kapitel 9 extra für dich.',
-    rente: 'Für die Rente lohnt sich besonders Kapitel 10 – das neue Altersvorsorgedepot.',
+    rente: 'Für die Rente lohnen sich besonders Kapitel 10 und 11 – das neue Altersvorsorgedepot und wo du es am besten abschließt.',
   },
 };
 
+// Ziele sind Mehrfachauswahl; ältere Speicherstände haben noch einen einzelnen Wert
+const goalsOf = (a) => [].concat(a.goal ?? []);
+
 function applyPersonalization(a) {
   if (!a) return;
+  const goals = goalsOf(a);
   chapters.forEach((c) => delete c.dataset.optional);
   if (a.tour !== 'voll' && a.level === 'depot') [1, 2].forEach((i) => (chapters[i].dataset.optional = 'true'));
-  if (a.tour !== 'voll' && a.goal !== 'kinder') $('#kapitel-9').dataset.optional = 'true';
+  if (a.tour !== 'voll' && !goals.includes('kinder')) $('#kapitel-9').dataset.optional = 'true';
   if (a.worry === 'geld') setCalcMonthly(25);
 
   const box = $('[data-personal]');
-  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 10 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
-  box.replaceChildren(...[levelNote, PERSONAL.goal[a.goal], PERSONAL.worry[a.worry]]
+  const levelNote = a.tour === 'voll' ? 'Volle Tour gebucht: Du bekommst alle 11 Kapitel, nichts wird übersprungen.' : PERSONAL.level[a.level];
+  box.replaceChildren(...[levelNote, ...goals.map((g) => PERSONAL.goal[g]), PERSONAL.worry[a.worry]]
     .filter(Boolean).map((t) => Object.assign(document.createElement('p'), { textContent: t })));
   box.hidden = false;
   // Persönlicher Hinweis steht oben im ersten Kapitel, das für diese Person nicht optional ist.
@@ -113,6 +118,8 @@ function go(i, { scroll = true, push = true, focus = true } = {}) {
   // Eintrag im Browserverlauf, damit die Zurück-Geste am Handy das vorige Kapitel zeigt statt die Seite zu verlassen.
   if (location.hash !== `#${chapters[current].id}`) history[push ? 'pushState' : 'replaceState'](null, '', `#${chapters[current].id}`);
   if (current === chapters.length - 1) renderSummary();
+  // Auf der Abschlussseite steht die Ko-fi-Karte schon im Inhalt – im Footer dort nicht doppeln
+  $('[data-kofi-foot]').hidden = !config.kofi || current === chapters.length - 1;
   renderPager(); renderToc(); renderProgress();
   if (gate) pager.hidden = true;
   if (scroll) window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
@@ -129,7 +136,7 @@ function renderSummary() {
 }
 
 function initLinks() {
-  if (config.kofi) { $('[data-kofi-link]').href = config.kofi; $('[data-kofi]').hidden = false; }
+  if (config.kofi) { $$('[data-kofi-link]').forEach((a) => (a.href = config.kofi)); $('[data-kofi]').hidden = false; }
   $$('[data-stand]').forEach((b) => (b.textContent = `Stand: ${config.stand}`));
 }
 
@@ -142,9 +149,14 @@ function initCheckin() {
   const path = () => steps.filter((s) => !(s.dataset.step === 'level' && full()));
   let idx = 0;
 
+  // Checkboxen kennen kein „mindestens eine“ – darum eigene Gültigkeit am ersten Feld
+  const goals = $$('[name=goal]', form);
+  const goalRequired = () => !full();
+  const syncGoal = () => goals[0].setCustomValidity(goalRequired() && !goals.some((g) => g.checked) ? 'Bitte wähle mindestens eine Antwort' : '');
   const syncTour = () => {
-    $$('[name=level], [name=goal], [name=worry]', form).forEach((r) => (r.required = !full()));
+    $$('[name=level], [name=worry]', form).forEach((r) => (r.required = !full()));
     $$('.opt-hint', form).forEach((h) => (h.hidden = !full()));
+    syncGoal();
   };
 
   const render = () => {
@@ -156,7 +168,8 @@ function initCheckin() {
     info.hidden = false;
     info.textContent = cur.dataset.step === 'final' ? 'Fast geschafft – noch ein Hinweis' : `Frage ${idx + 1} von ${list.length - 1}`;
     const answered = !!$('input:checked', cur);
-    const optional = cur.tagName === 'FIELDSET' && !$('input:required', cur);
+    const required = cur.dataset.step === 'goal' ? goalRequired() : !!$('input:required', cur);
+    const optional = cur.tagName === 'FIELDSET' && !required;
     nav.hidden = false;
     $('[data-step-back]', nav).hidden = idx === 0;
     $('[data-step-skip]', nav).hidden = !(optional && !answered);
@@ -194,7 +207,7 @@ function initCheckin() {
   };
 
   if (state.answers) {
-    Object.entries(state.answers).forEach(([k, v]) => { const el = v && form.querySelector(`[name=${k}][value=${v}]`); if (el) el.checked = true; });
+    Object.entries(state.answers).forEach(([k, v]) => [].concat(v ?? []).forEach((val) => { const el = form.querySelector(`[name=${k}][value=${val}]`); if (el) el.checked = true; }));
     form.disclaimer.checked = true;
   }
   syncTour();
@@ -205,6 +218,7 @@ function initCheckin() {
   form.addEventListener('change', (e) => {
     if (e.target.name === 'tour') syncTour();
     syncStart();
+    if (e.target.name === 'goal') syncGoal();
     if (form.classList.contains('tried')) showErrors();
     if (e.target.type === 'radio' && viaPointer) setTimeout(() => step(1), 220); // Antwort angetippt → nächste Frage
     else render();
@@ -226,10 +240,25 @@ function initCheckin() {
     }
     const d = new FormData(form);
     const tour = d.get('tour');
-    state.answers = { tour, level: tour === 'voll' ? null : d.get('level'), goal: d.get('goal'), worry: d.get('worry') };
+    state.answers = { tour, level: tour === 'voll' ? null : d.get('level'), goal: d.getAll('goal'), worry: d.get('worry') };
     state.consent = true;
     applyPersonalization(state.answers);
     go(nextIndex(0, 1));
+  });
+}
+
+function initShare() {
+  const url = 'https://whattheetf.de/';
+  const share = $('[data-share]');
+  // Natives Teilen-Menü (vor allem am Handy) – nur anbieten, wo der Browser es kann
+  if (navigator.share) {
+    share.hidden = false;
+    share.addEventListener('click', () => navigator.share({ title: 'What the (ET)F?', text: 'ETFs in 11 kurzen Kapiteln ehrlich erklärt', url }).catch(() => { /* abgebrochen */ }));
+  }
+  const note = $('[data-copy-note]');
+  $('[data-copy-link]').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(url); note.textContent = 'Link kopiert – du kannst ihn jetzt überall einfügen.'; }
+    catch { note.textContent = `Kopieren hat nicht geklappt. Der Link lautet: ${url}`; }
   });
 }
 
@@ -319,6 +348,7 @@ initWidgets();
 initLinks();
 initCheckin();
 initChecklist();
+initShare();
 initChrome();
 initTheme();
 applyPersonalization(state.answers);

@@ -35,21 +35,76 @@ function inflation(w) {
 }
 
 // --- Kapitel 2: Obstkorb --------------------------------------------------
+// Ein Apfel im 20×20-Raster; der äußere <g> positioniert, der innere wird per CSS faulig.
+const apple = (x, y, size, kind) => `<g transform="translate(${x - size / 2} ${y - size / 2}) scale(${size / 20})"><g class="apple ${kind}">
+  <path class="apple-body" d="M10 6.2C8.4 4.9 3.2 4.6 2.6 9.6 2.1 14 5 18.6 7.6 18.9c1 .1 1.6-.4 2.4-.4s1.4.5 2.4.4c2.6-.3 5.5-4.9 5-9.3C16.8 4.6 11.6 4.9 10 6.2z"/>
+  <path class="apple-stem" d="M10 6.4C10 4.6 10.6 3 11.6 1.8"/>
+  <path class="apple-leaf" d="M10.8 3.6c1.2-1.6 3.4-2 4.8-1.4-.8 1.6-3 2.4-4.8 1.4z"/>
+  <ellipse class="apple-shine" cx="6.2" cy="10" rx="1.1" ry="2" transform="rotate(20 6.2 10)"/>
+  <circle class="apple-spot" cx="12.4" cy="12.6" r="1.9"/><circle class="apple-spot" cx="8" cy="15.4" r="1.2"/>
+</g></g>`;
+
+// Korb in leichter Aufsicht: Öffnung als Ellipse, davor die Korbwand.
+const RIM = { cx: 130, cy: 100, rx: 115, ry: 32 };
+const BOTTOM = { cx: 130, cy: 172, rx: 82, ry: 20 };
+const ring = (t) => ({ rx: RIM.rx + (BOTTOM.rx - RIM.rx) * t, cy: RIM.cy + (BOTTOM.cy - RIM.cy) * t, ry: RIM.ry + (BOTTOM.ry - RIM.ry) * t });
+
+function wicker() {
+  const bands = [0.2, 0.4, 0.6, 0.8].map((t) => { const r = ring(t); return `M${130 - r.rx} ${r.cy}A${r.rx} ${r.ry} 0 0 0 ${130 + r.rx} ${r.cy}`; });
+  const staves = Array.from({ length: 11 }, (_, k) => {
+    const th = Math.PI * (k + 1) / 12;
+    return `M${(130 - RIM.rx * Math.cos(th)).toFixed(1)} ${(RIM.cy + RIM.ry * Math.sin(th)).toFixed(1)}L${(130 - BOTTOM.rx * Math.cos(th)).toFixed(1)} ${(BOTTOM.cy + BOTTOM.ry * Math.sin(th)).toFixed(1)}`;
+  });
+  return { weave: [...bands, ...staves].join(''), front: `M${130 - RIM.rx} ${RIM.cy}L${130 - BOTTOM.rx} ${BOTTOM.cy}A${BOTTOM.rx} ${BOTTOM.ry} 0 0 0 ${130 + BOTTOM.rx} ${BOTTOM.cy}L${130 + RIM.rx} ${RIM.cy}A${RIM.rx} ${RIM.ry} 0 0 1 ${130 - RIM.rx} ${RIM.cy}Z` };
+}
+
+// 14 Äpfel, dicht gestapelt; von hinten nach vorn gezeichnet, damit vordere die hinteren überdecken.
+const BASKET_APPLES = [
+  [128, 52, 40, 'a2'],
+  [86, 66, 42, 'a0'], [126, 70, 42, 'a1'], [168, 66, 42, 'a0'],
+  [52, 86, 44, 'a1'], [92, 90, 46, 'a2'], [134, 92, 46, 'a0'], [176, 88, 46, 'a2'], [212, 86, 44, 'a1'],
+  [64, 104, 48, 'a0'], [158, 104, 50, 'a1'], [200, 102, 48, 'a0'],
+  [112, 107, 52, 'rot'], // der spätere faulige Apfel: vorn und mittig, damit man ihn sofort findet
+].sort((p, q) => p[1] - q[1]);
+
+// Füllung unter den sichtbaren Äpfeln: viele kleinere Äpfel im Schatten, damit der Korb voll wirkt.
+const FILL = { cx: 130, cy: 106, rx: 106, ry: 24 };
+function shadedApples() {
+  const out = [];
+  for (let r = 0; r < 6; r++) {
+    for (let x = 18 + (r % 2) * 14; x < 250; x += 28) out.push(apple(x, 84 + r * 9, 32, `a${(out.length * 5) % 3}`));
+  }
+  return out.join('');
+}
+
 function basket(w) {
-  const dots = $('[data-dots]', w);
-  dots.innerHTML = '<i></i>'.repeat(100);
+  const single = $('[data-single]', w);
+  const fruit = $('[data-basket]', w);
+  single.innerHTML = apple(60, 62, 92, 'a1');
+  const { weave, front } = wicker();
+  fruit.innerHTML = `
+    <ellipse class="basket-shadow" cx="130" cy="186" rx="104" ry="12"/>
+    <ellipse class="basket-inside" cx="${RIM.cx}" cy="${RIM.cy}" rx="${RIM.rx}" ry="${RIM.ry}"/>
+    <path class="wicker-rim" d="M${130 - RIM.rx} ${RIM.cy}A${RIM.rx} ${RIM.ry} 0 0 1 ${130 + RIM.rx} ${RIM.cy}"/>
+    <clipPath id="basket-fill"><ellipse cx="${FILL.cx}" cy="${FILL.cy}" rx="${FILL.rx}" ry="${FILL.ry}"/></clipPath>
+    <g clip-path="url(#basket-fill)">${shadedApples()}<ellipse class="basket-depth" cx="${FILL.cx}" cy="${FILL.cy}" rx="${FILL.rx}" ry="${FILL.ry}"/></g>
+    ${BASKET_APPLES.map(([x, y, s, k]) => apple(x, y, s, k === 'rot' ? 'a1 will-rot' : k)).join('')}
+    <path class="wicker" d="${front}"/>
+    <path class="wicker-weave" d="${weave}"/>
+    <path class="wicker-rim" d="M${130 + RIM.rx} ${RIM.cy}A${RIM.rx} ${RIM.ry} 0 0 1 ${130 - RIM.rx} ${RIM.cy}"/>`;
+  const rotten = $('.will-rot', fruit);
   const btn = $('[data-crash]', w);
   let crashed = false;
   btn.addEventListener('click', () => {
     crashed = !crashed;
-    $('[data-single]', w).classList.toggle('gone', crashed);
-    dots.children[37].classList.toggle('gone', crashed);
+    single.querySelector('.apple').classList.toggle('rotten', crashed);
+    rotten.classList.toggle('rotten', crashed);
     $('[data-single-value]', w).textContent = crashed ? '0 €' : '10.000 €';
     $('[data-basket-value]', w).textContent = crashed ? '9.992 €' : '10.000 €';
-    $('[data-result]', w).textContent = crashed
-      ? 'Einzelaktie: −100 %. Welt-ETF: hier nur −0,08 %, denn die Firma war eine von rund 1.250. (Wie viel genau, hängt von ihrer Größe im Index ab – spürbar ist es kaum.)'
-      : '';
-    btn.textContent = crashed ? 'Nochmal von vorn' : 'Probier’s aus: Lass eine Firma pleitegehen (à la Wirecard)\u00a0→';
+    // Ergebnis je Szenario direkt unter dem Betrag – über dem Button, damit man es nicht sucht
+    $('[data-single-result]', w).innerHTML = crashed ? '<strong>−100&nbsp;%</strong> Dein einziger Apfel ist faulig. Das Geld ist weg.' : '';
+    $('[data-basket-result]', w).innerHTML = crashed ? '<strong>nur −0,08&nbsp;%</strong> Die Firma war eine von rund 1.250. Ein fauliger Apfel fällt im Korb kaum auf.' : '';
+    btn.textContent = crashed ? 'Nochmal von vorn' : 'Probier’s aus: Lass eine Firma pleitegehen\u00a0→';
     btn.classList.toggle('btn-primary', !crashed); // nach dem Klick zurückhaltend – die Aktion ist erledigt
   });
 }
