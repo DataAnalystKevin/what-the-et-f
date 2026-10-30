@@ -184,6 +184,9 @@ html:not(.js) .chapter { border-bottom: 1px solid var(--line); margin-bottom: 32
 /* Widgets */
 .widget, .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 16px; margin: 24px 0; }
 .widget-title { font-size: var(--fs-h3); margin-top: 0; }
+/* Innenabstand oben und unten gleich: Außenabstände des ersten/letzten Elements neutralisieren */
+.widget > :first-child, .card > :first-child, .worry > :first-child, .aha > :first-child { margin-top: 0; }
+.widget > :last-child, .card > :last-child, .worry > :last-child, .worry-a > :last-child, .aha > :last-child, .steps-card > :last-child, [role=tabpanel] > :last-child { margin-bottom: 0; }
 .widget > h3:first-child, .card > h3:first-child, details > h3:first-child { margin-top: 0; }
 .widget-result { font-weight: 600; }
 .widget-result:empty { display: none; }  /* kein leerer Platzhalter vor dem ersten Klick */
@@ -382,7 +385,7 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .share-btn:hover, .share-btn:focus-visible { border-color: var(--accent); }
 .share-note:empty { display: none; }
 .share-note { margin-top: 10px !important; }
-.reset-note { font-size: var(--fs-small); color: var(--muted); text-align: center; margin: 24px 0 0; }
+.reset-note { font-size: var(--fs-small); color: var(--muted); text-align: center; }
 .reset-note .link-btn { min-height: 0; padding: 0; }
 .kofi { border: 1.5px solid var(--accent); text-align: center; margin-top: 8px; }
 .kofi h3 { margin-top: 0; }
