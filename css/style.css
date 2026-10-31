@@ -353,8 +353,11 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .compare > div { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
 .compare > div:first-child { border-top: 0; }
 .compare span { padding: 10px; }
-.compare-head span { font-weight: 600; background: var(--bg); }
-.compare [role=rowheader] { grid-column: 1 / -1; text-align: center; font-weight: 600; background: var(--bg); border-bottom: 1px solid var(--line); }
+.compare-head span { font-weight: 600; font-size: var(--fs-body); padding: 12px 10px; border-bottom: 2px solid var(--ink); }
+.compare-head span + span { border-left: 1px solid var(--line); }
+.compare [role=cell] + [role=cell] { border-left: 1px solid var(--line); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+.compare-head [role=columnheader]:last-child { background: color-mix(in srgb, var(--accent) 7%, var(--surface)); border-bottom-color: var(--accent); }
+.compare [role=rowheader] { grid-column: 1 / -1; text-align: center; font-weight: 400; font-size: var(--fs-meta); color: var(--muted); background: var(--bg); border-bottom: 1px solid var(--line); }
 .compare-head span:first-child { display: none; }
 .compare .good { color: var(--accent); }
 .compare .good::before { content: '✓ '; font-weight: 700; }  /* Vorteil nicht nur über Farbe */
