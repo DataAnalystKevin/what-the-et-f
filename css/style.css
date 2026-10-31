@@ -350,20 +350,15 @@ input[type=range] { width: 100%; height: 44px; accent-color: var(--accent); marg
 .note { border-style: dashed; }
 .compare, .compare * { hyphens: manual; }
 .compare { display: grid; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); font-size: var(--fs-small); margin: 12px 0 20px; }
-.compare > div { display: grid; grid-template-columns: 1.1fr 1fr 1fr; border-top: 1px solid var(--line); }
+.compare > div { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
 .compare > div:first-child { border-top: 0; }
 .compare span { padding: 10px; }
 .compare-head span { font-weight: 600; background: var(--bg); }
-.compare [role=rowheader] { font-weight: 600; }
+.compare [role=rowheader] { grid-column: 1 / -1; text-align: center; font-weight: 600; background: var(--bg); border-bottom: 1px solid var(--line); }
+.compare-head span:first-child { display: none; }
 .compare .good { color: var(--accent); }
 .compare .good::before { content: '✓ '; font-weight: 700; }  /* Vorteil nicht nur über Farbe */
 .compare .bad { color: var(--muted); }
-@media (max-width: 560px) {
-  /* Auf dem Handy: Kriterium als Zeilenüberschrift, darunter beide Spalten */
-  .compare > div { grid-template-columns: 1fr 1fr; }
-  .compare [role=rowheader] { grid-column: 1 / -1; padding-bottom: 0; color: var(--muted); font-size: var(--fs-meta); }
-  .compare-head span:first-child { display: none; }
-}
 
 /* Schritte, Broker, Zusammenfassung */
 .steps-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin: 8px 0 32px; transition: background .5s ease; }
